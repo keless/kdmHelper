@@ -28,12 +28,12 @@ class GameplayStateView extends BaseStateView {
 		this.monsterView.addChild(discardAINode)
 
 		var deckHitNode = new NodeView()
-		deckHitNode.setImageStretch("gfx/imgs/WLimgAIBack.png", 0,0, 120, 200)
+		deckHitNode.setImageStretch("gfx/imgs/WLimgHLBack.png", 0,0, 120, 200)
 		deckHitNode.pos.setVal(-140, -100)
 		this.monsterView.addChild(deckHitNode)
 
 		var deckBasicActionNode = new NodeView()
-		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgAIBack.png", 0,0, 120, 200)
+		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgBABasiActi.png", 0,0, 120, 200)
 		deckBasicActionNode.pos.setVal(-40, -100)
 		this.monsterView.addChild(deckBasicActionNode)
 
