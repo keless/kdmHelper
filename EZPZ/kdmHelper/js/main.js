@@ -26,6 +26,7 @@ var game_create = function()
 			"gfx/ui/btn_dark.sprite",
 			"gfx/ui/btn_white.sprite",
 			"gfx/ui/btn_white_sm.sprite",
+			"gfx/imgs/WLimgAIBack.png"
 			];
 	stateController.gotoState("loading", [resources, "gameplay"]);
 	

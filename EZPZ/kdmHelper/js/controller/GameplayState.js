@@ -21,7 +21,6 @@ class GameplayStateModel extends BaseStateModel {
 		for( var e of this.entities ) {
 			e.Destroy()
 		}
-		this.entities = []
 
 		super.Destroy()
 	}
