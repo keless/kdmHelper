@@ -1,11 +1,11 @@
 class DeckModel {
   constructor() {
     this.name = "some deck"
-
+    this.cards = []
   }
 
   getCardCount() {
-    return 0;
+    return this.cards.length
   }
 
   arrangeDeckFromCards() {
