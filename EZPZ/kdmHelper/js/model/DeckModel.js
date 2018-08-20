@@ -22,6 +22,11 @@ class DeckModel {
     return result
   }
 
+  // return the top card without removing it from the deck
+  getTopCard() {
+    return this.cards[this.cards.length -1]
+  }
+
   // returns count number of CardModels removing them from the top of the deck
   drawXCards(count) {
     if (count > this.cards.length) {

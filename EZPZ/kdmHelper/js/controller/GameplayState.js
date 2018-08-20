@@ -41,7 +41,6 @@ class GameplayStateModel extends BaseStateModel {
 	}
 
 	Destroy() {
-
 		super.Destroy()
 	}
 	
