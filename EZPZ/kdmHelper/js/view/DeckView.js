@@ -27,7 +27,7 @@ class DeckView extends NodeView {
 
       this.badge = new NodeView()
       this.badge.setCircle(15, "#FF0000", "#FF0000")
-      this.badge.pos.setVal(100, 20)
+      this.badge.pos.setVal(40, -70)
       this.addChild(this.badge)
   
       var numCards = model.getNumCards()

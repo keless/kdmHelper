@@ -332,6 +332,11 @@ class Graphics {
 		this.ctx.drawImage(img, x,y);
 	}
 	drawImageEx(img, x,y, w,h, hFlip) {
+		if(this.drawCentered) {
+			x -= w/2;
+			y -= h/2;
+		}
+
 		if(!hFlip) {
 			this.ctx.drawImage(img, 0,0,img.width,img.height, x,y, w,h);
 		}else {

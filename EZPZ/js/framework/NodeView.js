@@ -209,6 +209,12 @@ class NodeView extends BaseListener {
       this.textInput.enabled = val;
     }
   }
+  get bottomY() {
+	  return this.pos.y + this.size.y
+  }
+  get topY() {
+	return this.pos.y - this.size.y
+  }
 	
 	getParent() {
 		return this.parent
@@ -309,10 +315,10 @@ class NodeView extends BaseListener {
 			if(self.alpha != 1.0) gfx.setAlpha(1.0);
 		});
 	}
-	setImageStretch( image, x,y, w,h ) {
+	setImageStretch( image, w,h ) {
 		if (this.serializable) {
 			if (isString(image)) {
-				this.serializeData.push({"call":"setImageStretch", "image":image, "x":x,"y":y, "w":w,"h":h})
+				this.serializeData.push({"call":"setImageStretch", "image":image, "w":w,"h":h})
 			}else {
 				console.warn("NodeView - cannot serialize setImageStretch with non-string image parameter")
 			}
@@ -327,7 +333,7 @@ class NodeView extends BaseListener {
 			return;
 		}
 		this.image = image;
-		this.size.setVal( Math.max(this.size.x, image.width), Math.max(this.size.y, image.height));
+		this.size.setVal( Math.max(this.size.x, w), Math.max(this.size.y, h));
 		
 		var self = this;
 		this.fnCustomDraw.push(function(gfx, x,y, ct){

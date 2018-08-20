@@ -7,9 +7,12 @@ class GameplayStateView extends BaseStateView {
 		
 		var screenSize = Graphics.ScreenSize
 
+		var playerPanelHeight = 150
 		
 		var monsterView = new NodeView()
-		monsterView.pos.setVal(462, 300)
+		//monsterView.setRect(924, 600, "#00FF00")
+		monsterView.size.setVal(924, screenSize.y - playerPanelHeight)
+		monsterView.pos.setVal(monsterView.size.x/2, monsterView.size.y/2) //874, 553
 		this.rootView.addChild(monsterView)
 		this.monsterView = monsterView
 		
@@ -20,124 +23,130 @@ class GameplayStateView extends BaseStateView {
 		
 
 		var BGNodeM = new NodeView()
-		BGNodeM.setImageStretch("gfx/imgs/WLimgBG.png", 0, 0, 874, 553)
-		BGNodeM.pos.setVal(-462, -300)
+		BGNodeM.setImageStretch("gfx/imgs/WLimgBG.png", monsterView.size.x, monsterView.size.y)
+		//BGNodeM.pos.setVal(-(screenSize.x-874)/2, -(screenSize.y - 553)/2)
 		this.monsterView.addChild(BGNodeM)
 		
+
+		var playerPanelView = new NodeView()
+		//playerPanelView.setRect(monsterView.size.x, playerPanelHeight, "#FF00FF")
+		playerPanelView.size.setVal(monsterView.size.x, playerPanelHeight)
+		playerPanelView.pos.setVal(monsterView.pos.x, screenSize.y - (playerPanelHeight/2))
+		this.rootView.addChild(playerPanelView)
+
 		var BGNodeP1 = new NodeView()
-		BGNodeP1.setImageStretch("gfx/imgs/PLimgOne.png", 0, 0, 220, 150)
-		BGNodeP1.pos.setVal(-462, 253)
-		this.monsterView.addChild(BGNodeP1)
+		BGNodeP1.setImageStretch("gfx/imgs/PLimgOne.png", playerPanelView.size.x/4, 150)
+		BGNodeP1.pos.setVal(-(playerPanelView.size.x * 3/8),0)
+		playerPanelView.addChild(BGNodeP1)
 
 		var BGNodeP2 = new NodeView()
-		BGNodeP2.setImageStretch("gfx/imgs/PLimgTwo.png", 0, 0, 218, 150)
-		BGNodeP2.pos.setVal(-242, 253)
-		this.monsterView.addChild(BGNodeP2)
+		BGNodeP2.setImageStretch("gfx/imgs/PLimgTwo.png", playerPanelView.size.x/4, 150)
+		BGNodeP2.pos.setVal(-(playerPanelView.size.x * 1/8),0)
+		playerPanelView.addChild(BGNodeP2)
 
 		var BGNodeP3 = new NodeView()
-		BGNodeP3.setImageStretch("gfx/imgs/PLimgThree.png", 0, 0, 218, 150)
-		BGNodeP3.pos.setVal(-24, 253)
-		this.monsterView.addChild(BGNodeP3)
+		BGNodeP3.setImageStretch("gfx/imgs/PLimgThree.png", playerPanelView.size.x/4, 150)
+		BGNodeP3.pos.setVal((playerPanelView.size.x * 1/8),0)
+		playerPanelView.addChild(BGNodeP3)
 
 		var BGNodeP4 = new NodeView()
-		BGNodeP4.setImageStretch("gfx/imgs/PLimgFour.png", 0, 0, 218, 150)
-		BGNodeP4.pos.setVal(194, 253)
-		this.monsterView.addChild(BGNodeP4)
+		BGNodeP4.setImageStretch("gfx/imgs/PLimgFour.png", playerPanelView.size.x/4, 150)
+		BGNodeP4.pos.setVal((playerPanelView.size.x * 3/8),0)
+		playerPanelView.addChild(BGNodeP4)
+
+
+		var rightSidePanelView = new NodeView()
+		rightSidePanelView.size.setVal( screenSize.x - monsterView.size.x, screenSize.y )
+		rightSidePanelView.pos.setVal(screenSize.x - (rightSidePanelView.size.x/2), screenSize.y/2 )
+		this.rootView.addChild(rightSidePanelView)
 
 		var BGNodeRS = new NodeView()
-		BGNodeRS.setImageStretch("gfx/imgs/REimgEX.png", 0, 0, 150, 703)
-		BGNodeRS.pos.setVal(412, -300)
-		this.monsterView.addChild(BGNodeRS)
-		
+		BGNodeRS.setImageStretch("gfx/imgs/REimgEX.png", rightSidePanelView.size.x, rightSidePanelView.size.y)
+		rightSidePanelView.addChild(BGNodeRS)
+
 		var deckAINode = new NodeView()
-		deckAINode.setImageStretch("gfx/imgs/WLimgAIBack.png", 0,0, 112, 177)
-		deckAINode.pos.setVal(-453, 69) 
+		deckAINode.setImageStretch("gfx/imgs/WLimgAIBack.png", 112, 177)
+		deckAINode.pos.setVal(-397, 180) 
 		this.monsterView.addChild(deckAINode)
 
 		var discardAINode = new NodeView()
-		discardAINode.setImageStretch("gfx/imgs/MimgLAAI.png", 0,0, 112, 177)
-		discardAINode.pos.setVal(-340, 69) 
+		discardAINode.setImageStretch("gfx/imgs/MimgLAAI.png", 112, 177)
+		discardAINode.pos.setVal(deckAINode.pos.x + 112, 180)  //anchor to the right of deckAINode
 		this.monsterView.addChild(discardAINode)
 
 		var deckHitNode = new NodeView()
-		deckHitNode.setImageStretch("gfx/imgs/WLimgHLBack.png", 0,0, 112, 177)
-		deckHitNode.pos.setVal(-453, -112) 
+		deckHitNode.setImageStretch("gfx/imgs/WLimgHLBack.png", 112, 177)
+		deckHitNode.pos.setVal(-397, 0) 
 		this.monsterView.addChild(deckHitNode)
 
 		var discardHitNode = new NodeView()
-		discardHitNode.setImageStretch("gfx/imgs/MimgLAHL.png", 0,0, 112, 177)
-		discardHitNode.pos.setVal(-340, -112) 
+		discardHitNode.setImageStretch("gfx/imgs/MimgLAHL.png", 112, 177)
+		discardHitNode.pos.setVal(deckHitNode.pos.x + 112, 0) //anchor to the right of deckHitNode
 		this.monsterView.addChild(discardHitNode)
 
-		var deckBasicActionNode = new NodeView()
-		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgBABasiActi.png", 0,0, 112, 177)
-		deckBasicActionNode.pos.setVal(-217, -112)
-		this.monsterView.addChild(deckBasicActionNode)
-		
 		var deckBasicInfoNode = new NodeView()
-		deckBasicInfoNode.setImageStretch("gfx/imgs/WLimgBAInfo.png", 0,0, 348, 177)
-		deckBasicInfoNode.pos.setVal(-453, -293)
+		deckBasicInfoNode.setImageStretch("gfx/imgs/WLimgBAInfo.png", 348, 177)
+		deckBasicInfoNode.pos.setVal(-(this.monsterView.size.x - deckBasicInfoNode.size.x)/2 + 10, 
+									 -(this.monsterView.size.y - deckBasicInfoNode.size.y)/2 + 10)
 		this.monsterView.addChild(deckBasicInfoNode)
 
+		var deckBasicActionNode = new NodeView()
+		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgBABasiActi.png", 112, 177)
+		deckBasicActionNode.pos.setVal(-161, 0)
+		this.monsterView.addChild(deckBasicActionNode)
+		
 		var deckWoundStackNode = new NodeView()
-		deckWoundStackNode.setImageStretch("gfx/imgs/MimgLAWS.png", 0,0, 112, 177)
-		deckWoundStackNode.pos.setVal(-217, 69)
+		deckWoundStackNode.setImageStretch("gfx/imgs/MimgLAWS.png", 112, 177)
+		deckWoundStackNode.pos.setVal(-161, 180)
 		this.monsterView.addChild(deckWoundStackNode)
 
+		var col1X = -44, col2X = col1X + 115, col3X = col2X + 115
+
 		var deckTraitMoodInjuryNode3 = new NodeView()
-		deckTraitMoodInjuryNode3.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode3.pos.setVal(132, -293)
+		deckTraitMoodInjuryNode3.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode3.pos.setVal(col3X, -180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode3)
 
 		var deckTraitMoodInjuryNode9 = new NodeView()
-		deckTraitMoodInjuryNode9.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode9.pos.setVal(132, 69)
+		deckTraitMoodInjuryNode9.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode9.pos.setVal(col3X, 180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode9)
 
 		var deckTraitMoodInjuryNode6 = new NodeView()
-		deckTraitMoodInjuryNode6.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode6.pos.setVal(132, -112)
+		deckTraitMoodInjuryNode6.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode6.pos.setVal(col3X, 0)
 		this.monsterView.addChild(deckTraitMoodInjuryNode6)
 
 		var deckTraitMoodInjuryNode2 = new NodeView()
-		deckTraitMoodInjuryNode2.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode2.pos.setVal(19, -293)
+		deckTraitMoodInjuryNode2.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode2.pos.setVal(col2X, -180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode2)
 
 		var deckTraitMoodInjuryNode8 = new NodeView()
-		deckTraitMoodInjuryNode8.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode8.pos.setVal(19, 69)
+		deckTraitMoodInjuryNode8.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode8.pos.setVal(col2X, 180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode8)
 
 		var deckTraitMoodInjuryNode5 = new NodeView()
-		deckTraitMoodInjuryNode5.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode5.pos.setVal(19, -112)
+		deckTraitMoodInjuryNode5.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode5.pos.setVal(col2X, 0)
 		this.monsterView.addChild(deckTraitMoodInjuryNode5)
 
 		var deckTraitMoodInjuryNode1 = new NodeView()
-		deckTraitMoodInjuryNode1.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode1.pos.setVal(-94, -293)
+		deckTraitMoodInjuryNode1.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode1.pos.setVal(col1X, -180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode1)
 
 		var deckTraitMoodInjuryNode7 = new NodeView()
-		deckTraitMoodInjuryNode7.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode7.pos.setVal(-94, 69)
+		deckTraitMoodInjuryNode7.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode7.pos.setVal(col1X, 180)
 		this.monsterView.addChild(deckTraitMoodInjuryNode7)
 
 		var deckTraitMoodInjuryNode4 = new NodeView()
-		deckTraitMoodInjuryNode4.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		deckTraitMoodInjuryNode4.pos.setVal(-94, -112)
+		deckTraitMoodInjuryNode4.setImageStretch("gfx/imgs/MimgTMI.png", 112, 177)
+		deckTraitMoodInjuryNode4.pos.setVal(col1X, 0)
 		this.monsterView.addChild(deckTraitMoodInjuryNode4)
 
-		//var RP = Service.Get("rp")
-		/*
-		this.btnNav = new ButtonView("btnNav", "gfx/ui/btn_blue.sprite", "Oh.. HELLO", "14px Arial", "#FFFF00");
-		this.btnNav.pos.setVal(500, 50)
-		this.rootView.addChild(this.btnNav)
-		*/
-
-
-		
 		//TODO: differentiate back based on monster (lion/antelope/etc)  
 		this.deckViewAI = new DeckView(this.pModel.deckAI, "gfx/imgs/WLimgAIBack.png")
 		deckAINode.addChild(this.deckViewAI)
