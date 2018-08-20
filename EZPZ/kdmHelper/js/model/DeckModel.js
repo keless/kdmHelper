@@ -1,5 +1,6 @@
-class DeckModel {
+class DeckModel extends EventBus {
   constructor() {
+    super("DeckModel")
     this.verbose = true
 
     this.name = "some deck"
@@ -37,6 +38,7 @@ class DeckModel {
       console.warn("drawXCards asked to remove more cards than exist in the deck")
     }
     var drawnCards = this.cards.splice(0, count)
+    this.dispatch("updated")
     return drawnCards
   }
 
@@ -48,6 +50,7 @@ class DeckModel {
 
     this.cards.push(card)
     console.log("placed card on top " + card.name)
+    this.dispatch("updated")
   }
 
   /// Utility functions

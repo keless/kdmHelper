@@ -136,10 +136,7 @@ class GameplayStateView extends BaseStateView {
 		this.rootView.addChild(this.btnNav)
 		*/
 
-		//deckAINode
-		//discardAINode
-		//deckHitNode
-		//discardHitNode
+
 		
 		//TODO: differentiate back based on monster (lion/antelope/etc)  
 		this.deckViewAI = new DeckView(this.pModel.deckAI, "gfx/imgs/WLimgAIBack.png")
@@ -154,6 +151,17 @@ class GameplayStateView extends BaseStateView {
 
 		this.discardDeckViewHL = new DeckView(this.pModel.deckHLDiscard, "gfx/imgs/WLimgHLBack.png")
 		discardHitNode.addChild(this.discardDeckViewHL)
+
+
+		//temp test code
+		var self = this
+		this.deckViewHL.setClick(()=>{
+			EventBus.ui.dispatch("hlDeckClicked")
+		})
+
+		this.deckViewAI.setClick(()=>{
+			EventBus.ui.dispatch("aiDeckClicked")
+		})
 	}
 
 	
