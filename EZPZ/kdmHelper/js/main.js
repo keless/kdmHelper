@@ -28,7 +28,17 @@ var game_create = function()
 			"gfx/ui/btn_white_sm.sprite",
 			"gfx/imgs/WLimgAIBack.png",
 			"gfx/imgs/WLimgBABasiActi.png",
-			"gfx/imgs/WLimgHLBack.png"
+			"gfx/imgs/WLimgHLBack.png",
+			"gfx/imgs/WLimgBG.png",
+			"gfx/imgs/WLimgREBack.png",
+			"gfx/imgs/MimgLAAI.png",
+			"gfx/imgs/MingLAHL.png",
+			"gfx/imgs/WLimgBAInfo.png",
+			"gfx/imgs/PLimgOne.png",
+			"gfx/imgs/PLimgTwo.png",
+			"gfx/imgs/PLimgThree.png",
+			"gfx/imgs/PLimgFour.png",
+			"gfx/imgs/MimgTMI.png"
 			];
 	stateController.gotoState("loading", [resources, "gameplay"]);
 	
