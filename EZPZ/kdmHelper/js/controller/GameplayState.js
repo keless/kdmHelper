@@ -15,12 +15,23 @@ class GameplayStateModel extends BaseStateModel {
 		super()
 		
 		this.pState = state
+		this.deckAI = null
+
+		this._testInit()
+	}
+
+	_testInit() {
+		this.loadForMonster("lion", 1)
+
+	}
+
+	loadForMonster(monsterName, level) {
+		this.deckAI = new DeckAIModel()
+		this.deckAI.createDeckForMonster(monsterName, level)
 	}
 
 	Destroy() {
-		for( var e of this.entities ) {
-			e.Destroy()
-		}
+
 
 		super.Destroy()
 	}

@@ -5,12 +5,7 @@ class CardModel {
   }
 
   loadFromJson(json) {
-
-  }
-
-  saveToJson() {
-    var json = {}
-
-    return json;
+    this.name = json.name
+    this.imgPath = json.img
   }
 }

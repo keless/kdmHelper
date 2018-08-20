@@ -15,6 +15,13 @@ var g_decks = {
       "img": "gfx/imgs/decks/ai/lion_merciless.png"
     },
     {
+      "name": "Indomitable",
+      "monster": "lion",
+      "trait": 1,
+      "type": "special",
+      "img": "gfx/imgs/decks/ai/lion_indomitable.png"
+    },
+    {
       "name": "Vanish",
       "monster": "lion",
       "duration": 1,
@@ -157,6 +164,13 @@ var g_decks = {
       "monster": "lion",
       "type": "basic",
       "img": "gfx/imgs/decks/ai/lion_revenge.png"
+    },
+    {
+      "name": "Indomitable",
+      "monster": "antelope",
+      "trait": 1,
+      "type": "special",
+      "img": "gfx/imgs/decks/ai/antelope_indomitable.png"
     }
   ],
   "HLDecks": [
@@ -471,21 +485,103 @@ var g_decks = {
       "monster": "antelope",
       "trap": 1,
       "img": "gfx/imgs/decks/hl/antelope_wailingslide.png"
+    }
+  ],
+  "Rules": [
+    {
+      "monster": "lion",
+      "level": 0,
+      "basic": 7,
+      "advanced": 3,
+      "legendary": 0,
+      "mov": 6,
+      "tgh": 6,
+      "spd": 0,
+      "dmg": 0
     },
     {
-      "img": "gfx/imgs/decks/hl/_.png"
+      "monster": "lion",
+      "level": 1,
+      "basic": 7,
+      "advanced": 3,
+      "legendary": 0,
+      "mov": 6,
+      "tgh": 8,
+      "spd": 0,
+      "dmg": 0
     },
     {
-      "img": "gfx/imgs/decks/hl/_.png"
+      "monster": "lion",
+      "level": 2,
+      "basic": 10,
+      "advanced": 5,
+      "legendary": 0,
+      "special": "cunning",
+      "mov": 7,
+      "tgh": 10,
+      "spd": 1,
+      "dmg": 1
     },
     {
-      "img": "gfx/imgs/decks/hl/_.png"
+      "monster": "lion",
+      "level": 3,
+      "basic": 10,
+      "advanced": 9,
+      "legendary": 2,
+      "special": [
+        "cunning",
+        "merciless",
+        "indomitable"
+      ],
+      "mov": 8,
+      "tgh": 14,
+      "spd": 2,
+      "dmg": 2
     },
     {
-      "img": "gfx/imgs/decks/hl/_.png"
+      "monster": "antelope",
+      "level": 1,
+      "basic": 7,
+      "advanced": 3,
+      "legendary": 0,
+      "special": "trample",
+      "mov": 6,
+      "tgh": 8,
+      "spd": 0,
+      "dmg": 0
     },
     {
-      "img": "gfx/imgs/decks/hl/_.png"
+      "monster": "antelope",
+      "level": 2,
+      "basic": 10,
+      "advanced": 5,
+      "legendary": 0,
+      "special": [
+        "trample",
+        "diabolical"
+      ],
+      "mov": 8,
+      "tgh": 10,
+      "spd": 1,
+      "dmg": 1
+    },
+    {
+      "monster": "antelope",
+      "level": 3,
+      "basic": 12,
+      "advanced": 8,
+      "legendary": 1,
+      "special": [
+        "trample",
+        "diabolical",
+        "hypermetabolism",
+        "indomitable",
+        "legendary horns"
+      ],
+      "mov": 8,
+      "tgh": 12,
+      "spd": 2,
+      "dmg": 2
     }
   ]
 }
