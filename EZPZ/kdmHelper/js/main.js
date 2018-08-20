@@ -38,7 +38,8 @@ var game_create = function()
 			"gfx/imgs/PLimgTwo.png",
 			"gfx/imgs/PLimgThree.png",
 			"gfx/imgs/PLimgFour.png",
-			"gfx/imgs/MimgTMI.png"
+			"gfx/imgs/MimgTMI.png",
+			"gfx/imgs/REimgEX.png"
 			];
 	stateController.gotoState("loading", [resources, "gameplay"]);
 	
