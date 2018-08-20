@@ -67,57 +67,57 @@ class GameplayStateView extends BaseStateView {
 
 		var deckBasicActionNode = new NodeView()
 		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgBABasiActi.png", 0,0, 112, 177)
-		deckBasicActionNode.pos.setVal(-227, -112)
+		deckBasicActionNode.pos.setVal(-217, -112)
 		this.monsterView.addChild(deckBasicActionNode)
 		
 		var deckBasicInfoNode = new NodeView()
 		deckBasicInfoNode.setImageStretch("gfx/imgs/WLimgBAInfo.png", 0,0, 112, 177)
-		deckBasicInfoNode.pos.setVal(-227, 69)
+		deckBasicInfoNode.pos.setVal(-217, 69)
 		this.monsterView.addChild(deckBasicInfoNode)
 
 		var cardTraitMoodInjuryNode3 = new NodeView()
 		cardTraitMoodInjuryNode3.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode3.pos.setVal(112, -293)
+		cardTraitMoodInjuryNode3.pos.setVal(132, -293)
 		this.monsterView.addChild(cardTraitMoodInjuryNode3)
 
 		var cardTraitMoodInjuryNode9 = new NodeView()
 		cardTraitMoodInjuryNode9.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode9.pos.setVal(112, 69)
+		cardTraitMoodInjuryNode9.pos.setVal(132, 69)
 		this.monsterView.addChild(cardTraitMoodInjuryNode9)
 
 		var cardTraitMoodInjuryNode6 = new NodeView()
 		cardTraitMoodInjuryNode6.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode6.pos.setVal(112, -112)
+		cardTraitMoodInjuryNode6.pos.setVal(132, -112)
 		this.monsterView.addChild(cardTraitMoodInjuryNode6)
 
 		var cardTraitMoodInjuryNode2 = new NodeView()
 		cardTraitMoodInjuryNode2.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode2.pos.setVal(-1, -293)
+		cardTraitMoodInjuryNode2.pos.setVal(19, -293)
 		this.monsterView.addChild(cardTraitMoodInjuryNode2)
 
 		var cardTraitMoodInjuryNode8 = new NodeView()
 		cardTraitMoodInjuryNode8.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode8.pos.setVal(-1, 69)
+		cardTraitMoodInjuryNode8.pos.setVal(19, 69)
 		this.monsterView.addChild(cardTraitMoodInjuryNode8)
 
 		var cardTraitMoodInjuryNode5 = new NodeView()
 		cardTraitMoodInjuryNode5.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode5.pos.setVal(-1, -112)
+		cardTraitMoodInjuryNode5.pos.setVal(19, -112)
 		this.monsterView.addChild(cardTraitMoodInjuryNode5)
 
 		var cardTraitMoodInjuryNode1 = new NodeView()
 		cardTraitMoodInjuryNode1.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode1.pos.setVal(-114, -293)
+		cardTraitMoodInjuryNode1.pos.setVal(-94, -293)
 		this.monsterView.addChild(cardTraitMoodInjuryNode1)
 
 		var cardTraitMoodInjuryNode7 = new NodeView()
 		cardTraitMoodInjuryNode7.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode7.pos.setVal(-114, 69)
+		cardTraitMoodInjuryNode7.pos.setVal(-94, 69)
 		this.monsterView.addChild(cardTraitMoodInjuryNode7)
 
 		var cardTraitMoodInjuryNode4 = new NodeView()
 		cardTraitMoodInjuryNode4.setImageStretch("gfx/imgs/MimgTMI.png", 0,0, 112, 177)
-		cardTraitMoodInjuryNode4.pos.setVal(-114, -112)
+		cardTraitMoodInjuryNode4.pos.setVal(-94, -112)
 		this.monsterView.addChild(cardTraitMoodInjuryNode4)
 
 		//var RP = Service.Get("rp")
