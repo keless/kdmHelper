@@ -28,6 +28,9 @@ class GameplayStateModel extends BaseStateModel {
 	loadForMonster(monsterName, level) {
 		this.deckAI = new DeckAIModel()
 		this.deckAI.createDeckForMonster(monsterName, level)
+
+		this.deckHL = new DeckHLModel()
+		this.deckHL.createDeckForMonster(monsterName)
 	}
 
 	Destroy() {
