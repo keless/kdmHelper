@@ -3,6 +3,7 @@ class DeckAIModel extends DeckModel {
     super()
 
     this.name = "AI"
+    this.verbose = false
     //inherited: 
     // this.cards = []
   }
@@ -10,7 +11,9 @@ class DeckAIModel extends DeckModel {
   _createDeckFromJsonArray(array) {
     var deck = []
     for (var jsonCard of array) {
-      console.log("create card for " + jsonCard.name )
+      if (this.verbose) {
+        console.log("create card for " + jsonCard.name )
+      }
       var cardModel = new CardAIModel()
       cardModel.loadFromJson(jsonCard)
       deck.push(cardModel)

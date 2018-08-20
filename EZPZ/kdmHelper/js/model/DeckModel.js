@@ -20,6 +20,15 @@ class DeckModel {
     return result
   }
 
+  // returns count number of CardModels removing them from the top of the deck
+  drawXCards(count) {
+    if (count > this.cards.length) {
+      console.warn("drawXCards asked to remove more cards than exist in the deck")
+    }
+    var drawnCards = this.cards.splice(0, count)
+    return drawnCards
+  }
+
   /// Utility functions
 
   // returns card (nullable), and array (modified)
