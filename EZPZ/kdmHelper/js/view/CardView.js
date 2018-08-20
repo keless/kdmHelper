@@ -33,8 +33,8 @@ class CardView extends NodeView {
     this.sprFront.setRect(112, 177, "#CCAACC")
 
     var self = this
-    RP.loadImage(this.pModel.img, (e)=> {
-      self.sprFront.setImageStretch(self.pModel.img, 0,0, 112, 177)
+    RP.loadImage(this.pModel.imgPath, (e)=> {
+      self.sprFront.setImageStretch(self.pModel.imgPath, 0,0, 112, 177)
     })
 
     this.sprFront.visible = false

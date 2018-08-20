@@ -28,8 +28,8 @@ class GameplayStateModel extends BaseStateModel {
 
 
 		//pull a cardout of HL and discard it
-		var card = this.deckHL.drawXCards(1)[0]
-		this.deckHLDiscard.placeOnTop(card)
+		var card = this.deckAI.drawXCards(1)[0]
+		this.deckAIDiscard.placeOnTop(card)
 	}
 
 	loadForMonster(monsterName, level) {

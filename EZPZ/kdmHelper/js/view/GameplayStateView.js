@@ -13,6 +13,10 @@ class GameplayStateView extends BaseStateView {
 		this.rootView.addChild(monsterView)
 		this.monsterView = monsterView
 		
+		this.deckViewAI = null
+		this.deckViewHL = null
+		this.deckViewAIDiscard = null
+		this.deckViewHLDiscard = null
 		
 
 		var BGNodeM = new NodeView()
@@ -132,6 +136,14 @@ class GameplayStateView extends BaseStateView {
 		this.rootView.addChild(this.btnNav)
 		*/
 
+		//deckAINode
+		//discardAINode
+		//deckHitNode
+		//discardHitNode
+		
+		
+		this.deckViewAI = new DeckView(this.pModel.deckAI, "gfx/imgs/WLimgAIBack.png")
+		deckAINode.addChild(this.deckViewAI)
 	}
 
 	

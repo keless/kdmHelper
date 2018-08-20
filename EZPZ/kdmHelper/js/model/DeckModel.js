@@ -22,6 +22,10 @@ class DeckModel {
     return result
   }
 
+  getNumCards() {
+    return this.cards.length
+  }
+
   // return the top card without removing it from the deck
   getTopCard() {
     return this.cards[this.cards.length -1]
