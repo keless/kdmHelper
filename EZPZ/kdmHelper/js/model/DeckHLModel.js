@@ -12,7 +12,7 @@ class DeckHLModel extends DeckModel {
     var deck = []
     for (var jsonCard of array) {
       if (this.verbose) {
-        console.log("create card for " + jsonCard.name )
+        //console.log("create card for " + jsonCard.name )
       }
       
       var cardModel = new CardHLModel()
