@@ -14,24 +14,24 @@ class DeckView extends NodeView {
   updateFromModel(model) {
     this.pModel = model
 
+    this.removeAllChildren(true)
+
     var topCardModel = model.getTopCard()
-    this.topCardView = new CardView(topCardModel, this.backImgName)
-    this.addChild(this.topCardView)
+    if (topCardModel) {
+      this.topCardView = new CardView(topCardModel, this.backImgName)
+      this.addChild(this.topCardView)
 
-    //todo: flip card?
-
-    this.badge = new NodeView()
-    this.badge.setCircle(20, "#FF0000", "#FF0000")
-    this.badge.pos.setVal(100, 20)
-    this.addChild(this.badge)
-
-    var numCards = model.getNumCards()
-
-    this.badgeLabel = new NodeView()
-    this.badgeLabel.setLabel("" + numCards, "Arial 12pt", "#FFFFFF")
-    this.badgeLabel.pos.setVal(0, 10)
-    this.badge.addChild(this.badgeLabel)
+      this.badge = new NodeView()
+      this.badge.setCircle(20, "#FF0000", "#FF0000")
+      this.badge.pos.setVal(100, 20)
+      this.addChild(this.badge)
+  
+      var numCards = model.getNumCards()
+  
+      this.badgeLabel = new NodeView()
+      this.badgeLabel.setLabel("" + numCards, "Arial 12pt", "#FFFFFF")
+      this.badgeLabel.pos.setVal(0, 10)
+      this.badge.addChild(this.badgeLabel)
+    }
   }
-
-
 }

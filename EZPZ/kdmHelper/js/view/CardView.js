@@ -10,15 +10,11 @@ class CardView extends NodeView {
     // CardViews always start "face down"
     this.loadBack(backImgName)
     this.loadFront()
-  }
 
-  flipCard() {
-    this.sprBack.visible = !this.sprBack.visible
-    this.sprFront.visible = !this.sprFront.visible
-  }
-
-  isFacingUp() {
-    return this.sprFront.visible
+    if (this.pModel.faceUp) {
+      this.sprFront.visible = true
+      this.sprBack.visible = false
+    }
   }
 
   loadBack(img) {
@@ -30,7 +26,7 @@ class CardView extends NodeView {
   loadFront() {
     var RP = Service.Get("rp")
     this.sprFront = new NodeView()
-    this.sprFront.setRect(112, 177, "#CCAACC")
+    this.sprFront.setRect(10, 10, "#CCAACC")
 
     var self = this
     RP.loadImage(this.pModel.imgPath, (e)=> {

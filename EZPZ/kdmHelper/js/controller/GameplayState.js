@@ -29,6 +29,7 @@ class GameplayStateModel extends BaseStateModel {
 
 		//pull a cardout of HL and discard it
 		var card = this.deckAI.drawXCards(1)[0]
+		card.faceUp = true
 		this.deckAIDiscard.placeOnTop(card)
 	}
 

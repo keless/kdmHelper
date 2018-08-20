@@ -15,8 +15,8 @@ class GameplayStateView extends BaseStateView {
 		
 		this.deckViewAI = null
 		this.deckViewHL = null
-		this.deckViewAIDiscard = null
-		this.deckViewHLDiscard = null
+		this.discardDeckViewAI = null
+		this.discardDeckViewHL = null
 		
 
 		var BGNodeM = new NodeView()
@@ -141,9 +141,19 @@ class GameplayStateView extends BaseStateView {
 		//deckHitNode
 		//discardHitNode
 		
-		
+		//TODO: differentiate back based on monster (lion/antelope/etc)  
 		this.deckViewAI = new DeckView(this.pModel.deckAI, "gfx/imgs/WLimgAIBack.png")
 		deckAINode.addChild(this.deckViewAI)
+
+		this.discardDeckViewAI = new DeckView(this.pModel.deckAIDiscard, "gfx/imgs/WLimgAIBack.png")
+		discardAINode.addChild(this.discardDeckViewAI)
+
+		//TODO: differentiate back based on monster (lion/antelope/etc)  
+		this.deckViewHL = new DeckView(this.pModel.deckHL, "gfx/imgs/WLimgHLBack.png")
+		deckHitNode.addChild(this.deckViewHL)
+
+		this.discardDeckViewHL = new DeckView(this.pModel.deckHLDiscard, "gfx/imgs/WLimgHLBack.png")
+		discardHitNode.addChild(this.discardDeckViewHL)
 	}
 
 	
