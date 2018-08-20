@@ -161,8 +161,6 @@ class GameplayStateView extends BaseStateView {
 		this.discardDeckViewHL = new DeckView(this.pModel.deckHLDiscard, "gfx/imgs/WLimgHLBack.png")
 		discardHitNode.addChild(this.discardDeckViewHL)
 
-
-		//temp test code
 		var self = this
 		this.deckViewHL.setClick(()=>{
 			EventBus.ui.dispatch("hlDeckClicked")
@@ -171,7 +169,36 @@ class GameplayStateView extends BaseStateView {
 		this.deckViewAI.setClick(()=>{
 			EventBus.ui.dispatch("aiDeckClicked")
 		})
+
+		//draggable tokens
+		var tokenY = -100
+		for (var i=0; i<10; i++) {
+			var tokenNode = this._makeTokenNode("#00CCAA")
+			tokenNode.pos.setVal(0 + Math.random() * 20, tokenY + Math.random() * 20 )
+			rightSidePanelView.addChild(tokenNode)
+		}
+
+		tokenY += 100
+		for (var i=0; i<10; i++) {
+			var tokenNode = this._makeTokenNode("#AACC00")
+			tokenNode.pos.setVal(0 + Math.random() * 20, tokenY + Math.random() * 20 )
+			rightSidePanelView.addChild(tokenNode)
+		}
+		
+		tokenY += 100
+		for (var i=0; i<10; i++) {
+			var tokenNode = this._makeTokenNode("#AA00CC")
+			tokenNode.pos.setVal(0 + Math.random() * 20, tokenY + Math.random() * 20 )
+			rightSidePanelView.addChild(tokenNode)
+		}
+
 	}
 
+	_makeTokenNode(color) {
+		var tokenNode = new NodeView()
+		tokenNode.setCircle(20, color) //"#00CCAA")
+		tokenNode.makeDraggable()
+		return tokenNode
+	}
 	
 }

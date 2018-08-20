@@ -596,10 +596,25 @@ class NodeView extends BaseListener {
 		}
 
 		if(this.isDraggable) {
-			if(!this.isDragging && Rect2D.isPointInArea(x, y, originX, originY, this.size.x, this.size.y)) {
-				this._startDragging();
-				e.isDone = true;
-				if(e.isDone) return;
+			if(!this.isDragging){
+				var inside = false
+			 	if (this.size.x > 0 && Rect2D.isPointInArea(x, y, originX, originY, this.size.x, this.size.y)) {
+					//handle rectangle case
+					inside = true
+				} else if(this.circleRadius) {
+					//check if clicked inside of circle
+					var dist = new Vec2D(x, y)
+					dist.subVec( new Vec2D(originX, originY) )
+					if (dist.getMagSq() < (this.circleRadius*this.circleRadius)) {
+						inside = true
+					}
+				}
+
+				if(inside) {
+					this._startDragging();
+					e.isDone = true;
+					if(e.isDone) return;
+				}
 			}
 		}
 	}
