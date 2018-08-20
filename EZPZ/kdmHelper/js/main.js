@@ -32,14 +32,15 @@ var game_create = function()
 			"gfx/imgs/WLimgBG.png",
 			"gfx/imgs/WLimgREBack.png",
 			"gfx/imgs/MimgLAAI.png",
-			"gfx/imgs/MingLAHL.png",
+			"gfx/imgs/MimgLAHL.png",
 			"gfx/imgs/WLimgBAInfo.png",
 			"gfx/imgs/PLimgOne.png",
 			"gfx/imgs/PLimgTwo.png",
 			"gfx/imgs/PLimgThree.png",
 			"gfx/imgs/PLimgFour.png",
 			"gfx/imgs/MimgTMI.png",
-			"gfx/imgs/REimgEX.png"
+			"gfx/imgs/REimgEX.png",
+			"gfx/imgs/MimgLAWS.png"
 			];
 	stateController.gotoState("loading", [resources, "gameplay"]);
 	
