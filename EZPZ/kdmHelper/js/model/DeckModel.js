@@ -3,6 +3,8 @@ class DeckModel {
     this.verbose = true
 
     this.name = "some deck"
+
+    //note: this.cards[0] is the "bottom" card
     this.cards = []
   }
 
@@ -27,6 +29,16 @@ class DeckModel {
     }
     var drawnCards = this.cards.splice(0, count)
     return drawnCards
+  }
+
+  // place a card  on "top" of deck-- should NOT already be in the deck
+  placeOnTop(card) {
+    if(this.cards.includes(card)) {
+      console.error("trying to place a card on top that already exists in deck")
+    }
+
+    this.cards.push(card)
+    console.log("placed card on top " + card.name)
   }
 
   /// Utility functions

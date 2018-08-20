@@ -16,6 +16,9 @@ class GameplayStateModel extends BaseStateModel {
 		
 		this.pState = state
 		this.deckAI = null
+		this.deckAIDiscard = new DeckModel()
+		this.deckHL = null
+		this.deckHLDiscard = new DeckModel()
 
 		this._testInit()
 	}
@@ -23,6 +26,10 @@ class GameplayStateModel extends BaseStateModel {
 	_testInit() {
 		this.loadForMonster("lion", 1)
 
+
+		//pull a cardout of HL and discard it
+		var card = this.deckHL.drawXCards(1)[0]
+		this.deckHLDiscard.placeOnTop(card)
 	}
 
 	loadForMonster(monsterName, level) {
@@ -34,7 +41,6 @@ class GameplayStateModel extends BaseStateModel {
 	}
 
 	Destroy() {
-
 
 		super.Destroy()
 	}
