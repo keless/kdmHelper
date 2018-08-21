@@ -148,8 +148,8 @@ SettlementModel.INNOVATIONS = Object.freeze({
 })
 
 SettlementModel.UNLOCK_TREE = Object.freeze({
-    "language":[ INNOVATIONS.ammonia, INNOVATIONS.drums, INNOVATIONS.hovel, INNOVATIONS.innerLantern, INNOVATIONS.paint, INNOVATIONS.symposium ],
-    "ammonia":[ INNOVATIONS.bloodletting, INNOVATIONS.lanternOven ],
-    "drums": [ INNOVATIONS.forbiddenDance, INNOVATIONS.songOfTheBrave ],
-    "forbiddenDance" : [ INNOVATIONS.heartFlute ],
+    "language":[ SettlementModel.INNOVATIONS.ammonia, SettlementModel.INNOVATIONS.drums, SettlementModel.INNOVATIONS.hovel, SettlementModel.INNOVATIONS.innerLantern, SettlementModel.INNOVATIONS.paint, SettlementModel.INNOVATIONS.symposium ],
+    "ammonia":[ SettlementModel.INNOVATIONS.bloodletting, SettlementModel.INNOVATIONS.lanternOven ],
+    "drums": [ SettlementModel.INNOVATIONS.forbiddenDance, SettlementModel.INNOVATIONS.songOfTheBrave ],
+    "forbiddenDance" : [ SettlementModel.INNOVATIONS.heartFlute ],
 })

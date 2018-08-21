@@ -21,6 +21,7 @@ class GameplayStateView extends BaseStateView {
 		this.discardDeckViewAI = null
 		this.discardDeckViewHL = null
 		
+		this.modalView = null
 
 		var BGNodeM = new NodeView()
 		BGNodeM.setImageStretch("gfx/imgs/WLimgBG.png", monsterView.size.x, monsterView.size.y)
@@ -192,13 +193,29 @@ class GameplayStateView extends BaseStateView {
 			rightSidePanelView.addChild(tokenNode)
 		}
 
+		this._addButton("btnSettlementInfo", "S", (screenSize.x - 50), (screenSize.y - 50), "gfx/ui/btn_white_sm.sprite" )
+
+		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
+		this.SetListener("closeSettlementInfoModalView", this.onBtnCloseSettlementInfo)
 	}
 
 	_makeTokenNode(color) {
 		var tokenNode = new NodeView()
-		tokenNode.setCircle(20, color) //"#00CCAA")
+		tokenNode.setCircle(20, color)
 		tokenNode.makeDraggable()
 		return tokenNode
+	}
+
+	onBtnSettlementInfo(e) {
+		//todo; show settlement info modal
+
+		this.modalView = new SettlementInfoModalView( this.pModel.settlement )
+		this.rootView.addChild(this.modalView)
+	}
+
+	onBtnCloseSettlementInfo(e) {
+		this.modalView.removeFromParent(true)
+		this.modalView = null
 	}
 	
 }

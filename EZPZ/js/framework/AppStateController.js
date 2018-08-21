@@ -98,8 +98,9 @@ class BaseStateView extends BaseListener {
 		super.Destroy();
 	}
 
-	_addButton(strEvt, strLabel, x,y) {
-		var btn = new ButtonView(strEvt, "gfx/btn_blue.sprite", strLabel, "12px Arial", "#FFFFFF");
+	_addButton(strEvt, strLabel, x,y, spriteName) {
+		spriteName = spriteName || "gfx/ui/btn_blue.sprite"
+		var btn = new ButtonView(strEvt, spriteName, strLabel, "12px Arial", "#FFFFFF");
 		btn.pos.setVal(x,y);
 		this.rootView.addChild(btn);
 	}

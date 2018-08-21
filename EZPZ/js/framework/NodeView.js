@@ -187,10 +187,9 @@ class NodeView extends BaseListener {
 	}
 
 	Destroy() {
-    
-    if(this.textInput) {
-      this.textInput.destroy();
-    }
+		if(this.textInput) {
+		this.textInput.destroy();
+		}
     
 		//override me to clean up
 		for(var child of this.children) {
@@ -200,21 +199,21 @@ class NodeView extends BaseListener {
 		super.Destroy();
 	}
   
-  get visible() {
-    return this._visible;
-  }
-  set visible(val) {
-    this._visible = val;
-    if(this.textInput) {
-      this.textInput.enabled = val;
-    }
-  }
-  get bottomY() {
-	  return this.pos.y + this.size.y
-  }
-  get topY() {
-	return this.pos.y - this.size.y
-  }
+	get visible() {
+		return this._visible;
+	}
+	set visible(val) {
+		this._visible = val;
+		if(this.textInput) {
+			this.textInput.enabled = val;
+		}
+	}
+	get bottomY() {
+		return this.pos.y + this.size.y
+	}
+	get topY() {
+		return this.pos.y - this.size.y
+	}
 	
 	getParent() {
 		return this.parent
@@ -472,7 +471,7 @@ class NodeView extends BaseListener {
 		this.labelStyle = style;
 	}
   
-  setTextInput( w, h ) {
+	setTextInput( w, h ) {
 		if (this.serializable) {
 			this.serializeData.push({"call":"setTextInput", "w":w, "h":h})
 		}
@@ -482,6 +481,8 @@ class NodeView extends BaseListener {
 			return;	
 		}
 		
+		this.eatClicks()
+
 		var margin = 2;
 		var gfx = Service.Get("gfx");
 		this.textInput = new CanvasInput({ 
@@ -643,52 +644,52 @@ class NodeView extends BaseListener {
 		this.RemoveListener("onMouseUp", this._stopDragging);
 	}
   
-  OnKeyDown(e, x,y) {
-    if(!this.visible) return;
-    
-		//make local to self origin
-		x -= this.pos.x;
-		y -= this.pos.y;
-		//rotate
-		if(this.rotation != 0) {
-			var v = new Vec2D(x,y);
-			v.rotate(-this.rotation);
-			x = v.x;
-			y = v.y;
+	OnKeyDown(e, x,y) {
+		if(!this.visible) return;
+		
+			//make local to self origin
+			x -= this.pos.x;
+			y -= this.pos.y;
+			//rotate
+			if(this.rotation != 0) {
+				var v = new Vec2D(x,y);
+				v.rotate(-this.rotation);
+				x = v.x;
+				y = v.y;
+			}
+		
+		if(this.textInput) {
+		this.textInput.keydown(e, this.textInput);
 		}
-    
-    if(this.textInput) {
-      this.textInput.keydown(e, this.textInput);
-    }
-    
-    for(var child of this.children) {
-      child.OnKeyDown(e, x, y);
-      if(e.isDone) return;
-    }
-  }
-  OnKeyUp(e, x,y) {
-    if(!this.visible) return;
-    
-		//make local to self origin
-		x -= this.pos.x;
-		y -= this.pos.y;
-		//rotate
-		if(this.rotation != 0) {
-			var v = new Vec2D(x,y);
-			v.rotate(-this.rotation);
-			x = v.x;
-			y = v.y;
+		
+		for(var child of this.children) {
+		child.OnKeyDown(e, x, y);
+		if(e.isDone) return;
 		}
-    
-    if(this.textInput) {
-      this.textInput.onkeyup(e, this.textInput);
-    }
-    
-    for(var child of this.children) {
-      child.OnKeyUp(e, x, y);
-      if(e.isDone) return;
-    }
-  }
+	}
+  	OnKeyUp(e, x,y) {
+		if(!this.visible) return;
+		
+			//make local to self origin
+			x -= this.pos.x;
+			y -= this.pos.y;
+			//rotate
+			if(this.rotation != 0) {
+				var v = new Vec2D(x,y);
+				v.rotate(-this.rotation);
+				x = v.x;
+				y = v.y;
+			}
+		
+		if(this.textInput) {
+		this.textInput.onkeyup(e, this.textInput);
+		}
+		
+		for(var child of this.children) {
+		child.OnKeyUp(e, x, y);
+		if(e.isDone) return;
+		}
+	}
 	
 	getWidth() {
 		return this.size.x;

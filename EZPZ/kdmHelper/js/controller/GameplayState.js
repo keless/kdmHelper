@@ -20,6 +20,8 @@ class GameplayStateModel extends BaseStateModel {
 		this.deckHL = null
 		this.deckHLDiscard = new DeckModel()
 
+		this.settlement = new SettlementModel()
+
 		this._testInit()
 
 		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
