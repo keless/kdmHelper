@@ -481,6 +481,7 @@ class NodeView extends BaseListener {
 			return;	
 		}
 		
+		// Clicking on text box should absorb click events
 		this.eatClicks()
 
 		var margin = 2;
@@ -502,7 +503,7 @@ class NodeView extends BaseListener {
 			EventBus.ui.dispatch({evtName:"textInputSubmitted", value:canvasInput.value(), node:self });
 		});
 		this.fnCustomDraw.push(function(gfx, x,y, ct){
-			self.textInput.renderNow(x, y);
+			self.textInput.renderNow(x, y, true);
 		});
 	}
   	
@@ -540,9 +541,10 @@ class NodeView extends BaseListener {
 	eatClicks() {
 		if(!this.fnOnClick) {
 			this.setClick(function(e, x,y) {
+				console.log("eating clicks")
 				e.isDone = true;
 				return;
-			}, true);
+			}, true, true);
 		}
 	}
 

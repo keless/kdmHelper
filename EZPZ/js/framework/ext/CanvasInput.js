@@ -1,11 +1,14 @@
 /*!
- *  CanvasInput v1.2.2
+ *  CanvasInput v1.2.7
  *  http://goldfirestudios.com/blog/108/CanvasInput-HTML5-Canvas-Text-Input
  *
- *  (c) 2013-2015, James Simpson of GoldFire Studios
+ *  (c) 2013-2017, James Simpson of GoldFire Studios
  *  goldfirestudios.com
  *
  *  MIT License
+ * 
+ *  Modified for use with EZPZ engine (search for "EZPZ play nice")
+ *  also applied: https://github.com/goldfire/CanvasInput/pull/35/files
  */
 
 (function() {
@@ -94,43 +97,57 @@
     }
 
     // setup main canvas events
+    self._removals = []; 
     if (self._canvas) {
-      self._canvas.addEventListener('mousemove', function(e) {
+      var mousemove = function(e) {
         e = e || window.event;
         self.mousemove(e, self);
-      }, false);
+      };
 
-      self._canvas.addEventListener('mousedown', function(e) {
+      var mousedown = function(e) {
         e = e || window.event;
         self.mousedown(e, self);
-      }, false);
+      };
 
-      self._canvas.addEventListener('mouseup', function(e) {
+      var mouseup = function(e) {
         e = e || window.event;
         self.mouseup(e, self);
-      }, false);
+      };
+
+      self._canvas.addEventListener('mousemove', mousemove, false);
+      self._canvas.addEventListener('mousedown', mousedown, false);
+      self._canvas.addEventListener('mouseup', mouseup, false);
+
+      self._removals.push([self._canvas, 'mousemove', mousemove, false]);
+      self._removals.push([self._canvas, 'mousedown', mousedown, false]);
+      self._removals.push([self._canvas, 'mouseup', mouseup, false]);
     }
 
     // setup a global mouseup to blur the input outside of the canvas
-    window.addEventListener('mouseup', function(e) {
+    var autoBlur = function(e) {
       e = e || window.event;
 
       if (self._hasFocus && !self._mouseDown) {
         self.blur();
       }
-    }, true);
-    
+    };
+    window.addEventListener('mouseup', autoBlur, true);
+    window.addEventListener('touchend', autoBlur, true);
+
+    self._removals.push([window, 'mouseup', autoBlur, true]);
+    self._removals.push([window, 'touchend', autoBlur, true]);
+
     // create the hidden input element
     self._hiddenInput = document.createElement('input');
     self._hiddenInput.type = 'text';
     self._hiddenInput.style.position = 'absolute';
     self._hiddenInput.style.opacity = 0;
     self._hiddenInput.style.pointerEvents = 'none';
-    self._hiddenInput.style.left = (self._x + self._extraX + (self._canvas ? self._canvas.offsetLeft : 0)) + 'px';
-    self._hiddenInput.style.top = (self._y + self._extraY + (self._canvas ? self._canvas.offsetTop : 0)) + 'px';
-    self._hiddenInput.style.width = self._width + 'px';
-    self._hiddenInput.style.height = self._height + 'px';
     self._hiddenInput.style.zIndex = 0;
+    // hide native blue text cursor on iOS
+    self._hiddenInput.style.transform = 'scale(0)';
+
+    self._updateHiddenInput();
     if (self._maxlength) {
       self._hiddenInput.maxLength = self._maxlength;
     }
@@ -142,6 +159,11 @@
       e = e || window.event;
 
       if (self._hasFocus) {
+        // hack to fix touch event bug in iOS Safari
+        window.focus();
+        self._hiddenInput.focus();
+
+        // continue with the keydown event
         self.keydown(e, self);
       }
     });
@@ -200,6 +222,7 @@
 
       if (typeof data !== 'undefined') {
         self._x = data;
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -217,6 +240,7 @@
 
       if (typeof data !== 'undefined') {
         self._y = data;
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -234,6 +258,7 @@
 
       if (typeof data !== 'undefined') {
         self._extraX = data;
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -251,6 +276,7 @@
 
       if (typeof data !== 'undefined') {
         self._extraY = data;
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -440,6 +466,7 @@
         self._width = data;
         self._calcWH();
         self._updateCanvasWH();
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -459,6 +486,7 @@
         self._height = data;
         self._calcWH();
         self._updateCanvasWH();
+        self._updateHiddenInput();
 
         return self.render();
       } else {
@@ -783,30 +811,29 @@
       self._hasFocus = true;
       if (self._readonly) {
         self._hiddenInput.readOnly = true;
-        return;
       } else {
         self._hiddenInput.readOnly = false;
+
+        // update the cursor position
+        self._cursorPos = (typeof pos === 'number') ? pos : self._clipText().length;
+
+        // clear the place holder
+        if (self._placeHolder === self._value) {
+          self._value = '';
+          self._hiddenInput.value = '';
+        }
+
+        self._cursor = true;
+
+        // setup cursor interval
+        if (self._cursorInterval) {
+          clearInterval(self._cursorInterval);
+        }
+        self._cursorInterval = setInterval(function() {
+          self._cursor = !self._cursor;
+          self.render();
+        }, 500);
       }
-
-      // update the cursor position
-      self._cursorPos = (typeof pos === 'number') ? pos : self._clipText().length;
-
-      // clear the place holder
-      if (self._placeHolder === self._value) {
-        self._value = '';
-        self._hiddenInput.value = '';
-      }
-
-      self._cursor = true;
-
-      // setup cursor interval
-      if (self._cursorInterval) {
-        clearInterval(self._cursorInterval);
-      }
-      self._cursorInterval = setInterval(function() {
-        self._cursor = !self._cursor;
-        self.render();
-      }, 500);
 
       // move the real focus to the hidden input
       var hasSelection = (self._selection[0] > 0 || self._selection[1] > 0);
@@ -1037,18 +1064,16 @@
       return this._renderCanvas;
     },
 
-    render: function() {
-      //xxx play nice
-      // override render so it doesnt go immediately
-    },
     /**
      * Clears and redraws the CanvasInput on an off-DOM canvas,
      * and if a main canvas is provided, draws it all onto that.
      * @return {CanvasInput}
      */
-    //xxx play nice
-    // inefficient, but we're redrawing every frame for now
-    renderNow: function(x, y) {
+    render: function() {
+      // EZPZ play nice - override render so it doesnt go immediately 
+    },
+
+    renderNow: function(x, y, drawCentered) {
       var self = this,
         ctx = self._renderCtx,
         w = self.outerW,
@@ -1063,8 +1088,7 @@
       }
 
       // clear the canvas
-//xxx play nice 
-//ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      // EZPZ play nice - ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
       // setup the box shadow
       ctx.shadowOffsetX = self._boxShadow.x;
@@ -1174,8 +1198,11 @@
 
         // draw to the visible canvas
         if (self._ctx) {
- //xxx play nice
- //         self._ctx.clearRect(self._x, self._y, ctx.canvas.width, ctx.canvas.height);
+          // EZPZ play nice - self._ctx.clearRect(self._x, self._y, ctx.canvas.width, ctx.canvas.height);
+          if (drawCentered) {
+            x -= w/2;
+            y -= h/2;
+          }
           self._ctx.drawImage(self._renderCanvas, x, y);
         }
 
@@ -1204,6 +1231,14 @@
       // remove the hidden input box
       document.body.removeChild(self._hiddenInput);
 
+      // remove event listeners
+      var removals = self._removals;
+      for (var i=0; i<removals.length; i++) {
+        var removal = removals[i];
+        var obj = removal[0];
+        obj.removeEventListener.apply(obj, removal.slice(1));
+      }
+      
       // remove off-DOM canvas
       self._renderCanvas = null;
       self._shadowCanvas = null;
@@ -1311,7 +1346,6 @@
      * Update the width and height of the off-DOM canvas when attributes are changed.
      */
     _updateCanvasWH: function() {
-
       var self = this,
         oldW = self._renderCanvas.width,
         oldH = self._renderCanvas.height;
@@ -1324,9 +1358,20 @@
 
       // clear the main canvas
       if (self._ctx) {
- //xxx play nice
- //       self._ctx.clearRect(self._x, self._y, oldW, oldH);
+        // EZPZ play nice - self._ctx.clearRect(self._x, self._y, oldW, oldH);
       }
+    },
+
+    /**
+     * Update the size and position of the hidden input (better UX on mobile).
+     */
+    _updateHiddenInput: function() {
+      var self = this;
+
+      self._hiddenInput.style.left = (self._x + self._extraX + (self._canvas ? self._canvas.offsetLeft : 0)) + 'px';
+      self._hiddenInput.style.top = (self._y + self._extraY + (self._canvas ? self._canvas.offsetTop : 0)) + 'px';
+      self._hiddenInput.style.width = (self._width + self._padding * 2) + 'px';
+      self._hiddenInput.style.height = (self._height + self._padding * 2) + 'px';
     },
 
     /**
@@ -1365,7 +1410,7 @@
      * @return {Boolean}   True if it is over the input box.
      */
     _overInput: function(x, y) {
-      //xxx play nice
+      // EZPZ play nice
       var self = this,
         xLeft = x >= self.vecPos.x + self._extraX,
         xRight = x <= self.vecPos.x + self._extraX + self._width + self._padding * 2,
@@ -1403,13 +1448,13 @@
         totalW = 0,
         pos = text.length;
 
-      //xxx play nice
+      // EZPZ play nice
       //if (x - (self._x + self._extraX) < self._textWidth(text)) {
       if (x - (self.vecPos.x + self._extraX) < self._textWidth(text)) {
         // loop through each character to identify the position
         for (var i=0; i<text.length; i++) {
           totalW += self._textWidth(text[i]);
-          //xxx play nice
+          // EZPZ play nice
           //if (totalW >= x - (self._x + self._extraX)) {
           if (totalW >= x - (self.vecPos.x + self._extraX)) {
             pos = i;
@@ -1428,7 +1473,21 @@
      */
     _mousePos: function(e) {
       var elm = e.target,
-        style = document.defaultView.getComputedStyle(elm, undefined),
+        x = e.pageX,
+        y = e.pageY;
+
+      // support touch events in page location calculation
+      if (e.touches && e.touches.length) {
+        elm = e.touches[0].target;
+        x = e.touches[0].pageX;
+        y = e.touches[0].pageY;
+      } else if (e.changedTouches && e.changedTouches.length) {
+        elm = e.changedTouches[0].target;
+        x = e.changedTouches[0].pageX;
+        y = e.changedTouches[0].pageY;
+      }
+
+      var style = document.defaultView.getComputedStyle(elm, undefined),
         paddingLeft = parseInt(style['paddingLeft'], 10) || 0,
         paddingTop = parseInt(style['paddingLeft'], 10) || 0,
         borderLeft = parseInt(style['borderLeftWidth'], 10) || 0,
@@ -1436,8 +1495,7 @@
         htmlTop = document.body.parentNode.offsetTop || 0,
         htmlLeft = document.body.parentNode.offsetLeft || 0,
         offsetX = 0,
-        offsetY = 0,
-        x, y;
+        offsetY = 0;
 
       // calculate the total offset
       if (typeof elm.offsetParent !== 'undefined') {
@@ -1452,8 +1510,8 @@
       offsetY += paddingTop + borderTop + htmlTop;
 
       return {
-        x: e.pageX - offsetX,
-        y: e.pageY - offsetY
+        x: x - offsetX,
+        y: y - offsetY
       };
     }
   };
