@@ -479,7 +479,7 @@ class NodeView extends BaseListener {
 		this.labelStyle = style;
 	}
   
-	setTextInput( w, h ) {
+	setTextInput( w, h, placeHolderText ) {
 		if (this.serializable) {
 			this.serializeData.push({"call":"setTextInput", "w":w, "h":h})
 		}
@@ -494,7 +494,7 @@ class NodeView extends BaseListener {
 		this.textInput = new CanvasInput({ 
 			canvas:gfx.canvas,
 			width:w - margin, 
-			height:h - margin, 
+			height:h - margin,
 			padding:0, 
 			borderRadius:margin,
 			boxShadow: '1px 1px 0px #fff',
@@ -502,8 +502,7 @@ class NodeView extends BaseListener {
 			});
 
 		var self = this;
-		var g = Service.Get("gfx")
-		var drawCentered = g.drawCentered
+		var drawCentered = gfx.drawCentered
 		this.textInput.getVecPos = () => { 
 			var vecPos = self.worldPosition
 			if (drawCentered) {
@@ -511,8 +510,12 @@ class NodeView extends BaseListener {
 				vecPos.y -= self.size.y/2
 			}
 			return vecPos
-		}; 
+		};
 			
+		if (placeHolderText) {
+			this.textInput.placeHolder(placeHolderText)
+		}
+
 		this.size.setVal( Math.max(this.size.x, w), Math.max(this.size.y, h));
 		
 		// Clicking on text box should absorb click events

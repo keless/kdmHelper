@@ -27,17 +27,21 @@ class SettlementInfoModalView extends ModalView {
         this.pModel = model
 
         var lblName = new NodeView()
-        lblName.setLabel("name: " + this.pModel.name)
-        lblName.pos.setVal(-50, -50)
+        lblName.setLabel("name: ")
+        lblName.pos.setVal(-150, -50)
         this.addChild(lblName)
 
         var inputText = new NodeView()
         inputText.setTextInput(150, 40)
+        inputText.setTextInputValue(this.pModel.name)
+        inputText.pos.setVal(0, -55)
         this.addChild(inputText)
 
+        
         var inputText2 = new NodeView()
         inputText2.setTextInput(150, 40)
-        inputText.pos.y += 50
+        inputText2.pos.y += 50
         this.addChild(inputText2)
+        
     }
 }
