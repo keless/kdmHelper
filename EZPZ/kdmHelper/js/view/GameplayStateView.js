@@ -67,7 +67,7 @@ class GameplayStateView extends BaseStateView {
 
 		var deckAINode = new NodeView()
 		deckAINode.setImageStretch("gfx/imgs/WLimgAIBack.png", 112, 177)
-		deckAINode.pos.setVal(-397, 180) 
+		deckAINode.pos.setVal(-396, 180) 
 		this.monsterView.addChild(deckAINode)
 
 		var discardAINode = new NodeView()
@@ -77,7 +77,7 @@ class GameplayStateView extends BaseStateView {
 
 		var deckHitNode = new NodeView()
 		deckHitNode.setImageStretch("gfx/imgs/WLimgHLBack.png", 112, 177)
-		deckHitNode.pos.setVal(-397, 0) 
+		deckHitNode.pos.setVal(-396, 0) 
 		this.monsterView.addChild(deckHitNode)
 
 		var discardHitNode = new NodeView()
@@ -86,19 +86,19 @@ class GameplayStateView extends BaseStateView {
 		this.monsterView.addChild(discardHitNode)
 
 		var deckBasicInfoNode = new NodeView()
-		deckBasicInfoNode.setImageStretch("gfx/imgs/WLimgBAInfo.png", 348, 177)
+		deckBasicInfoNode.setImageStretch("gfx/imgs/WLimgBAInfo.png", 344, 177)
 		deckBasicInfoNode.pos.setVal(-(this.monsterView.size.x - deckBasicInfoNode.size.x)/2 + 10, 
-									 -(this.monsterView.size.y - deckBasicInfoNode.size.y)/2 + 10)
+									 -(this.monsterView.size.y - deckBasicInfoNode.size.y)/2 + 8)
 		this.monsterView.addChild(deckBasicInfoNode)
 
 		var deckBasicActionNode = new NodeView()
 		deckBasicActionNode.setImageStretch("gfx/imgs/WLimgBABasiActi.png", 112, 177)
-		deckBasicActionNode.pos.setVal(-161, 0)
+		deckBasicActionNode.pos.setVal(-164, 0)
 		this.monsterView.addChild(deckBasicActionNode)
 		
 		var deckWoundStackNode = new NodeView()
 		deckWoundStackNode.setImageStretch("gfx/imgs/MimgLAWS.png", 112, 177)
-		deckWoundStackNode.pos.setVal(-161, 180)
+		deckWoundStackNode.pos.setVal(-164, 180)
 		this.monsterView.addChild(deckWoundStackNode)
 
 		var col1X = -44, col2X = col1X + 115, col3X = col2X + 115
