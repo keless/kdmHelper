@@ -239,6 +239,14 @@ class NodeView extends BaseListener {
 		}
 		return this.rotation;
 	}
+
+	//note: creates a bunch of 'new' objects-- not efficient!
+	get worldPosition() {
+		if (this.parent) {
+			return this.parent.worldPosition.getVecAdd(this.pos)
+		}
+		return this.pos
+	}
 	
 	setUserData( data ) {
 		this.pUser = data;
@@ -481,9 +489,6 @@ class NodeView extends BaseListener {
 			return;	
 		}
 		
-		// Clicking on text box should absorb click events
-		this.eatClicks()
-
 		var margin = 2;
 		var gfx = Service.Get("gfx");
 		this.textInput = new CanvasInput({ 
@@ -495,15 +500,29 @@ class NodeView extends BaseListener {
 			boxShadow: '1px 1px 0px #fff',
 			innerShadow: '0px 0px 2px rgba(0, 0, 0, 0.5)'
 			});
-		this.textInput.vecPos = this.pos;
+
+		var self = this;
+		var g = Service.Get("gfx")
+		var drawCentered = g.drawCentered
+		this.textInput.getVecPos = () => { 
+			var vecPos = self.worldPosition
+			if (drawCentered) {
+				vecPos.x -= self.size.x/2
+				vecPos.y -= self.size.y/2
+			}
+			return vecPos
+		}; 
 			
 		this.size.setVal( Math.max(this.size.x, w), Math.max(this.size.y, h));
-		var self = this;
+		
+		// Clicking on text box should absorb click events
+		this.eatClicks()
+
 		this.textInput.onsubmit( function(e, canvasInput) {
 			EventBus.ui.dispatch({evtName:"textInputSubmitted", value:canvasInput.value(), node:self });
 		});
 		this.fnCustomDraw.push(function(gfx, x,y, ct){
-			self.textInput.renderNow(x, y, true);
+			self.textInput.renderNow(x, y, drawCentered);
 		});
 	}
   	
@@ -541,9 +560,7 @@ class NodeView extends BaseListener {
 	eatClicks() {
 		if(!this.fnOnClick) {
 			this.setClick(function(e, x,y) {
-				console.log("eating clicks")
 				e.isDone = true;
-				return;
 			}, true, true);
 		}
 	}
@@ -561,7 +578,7 @@ class NodeView extends BaseListener {
 	
 	//x,y should be sent relative to node origin
 	OnMouseDown(e, x,y) {
-    if(!this.visible || e.isDone) return;
+    	if(!this.visible || e.isDone) return;
 		
 		//make local to self origin
 		x -= this.pos.x;
@@ -649,47 +666,39 @@ class NodeView extends BaseListener {
 	OnKeyDown(e, x,y) {
 		if(!this.visible) return;
 		
-			//make local to self origin
-			x -= this.pos.x;
-			y -= this.pos.y;
-			//rotate
-			if(this.rotation != 0) {
-				var v = new Vec2D(x,y);
-				v.rotate(-this.rotation);
-				x = v.x;
-				y = v.y;
-			}
-		
-		if(this.textInput) {
-		this.textInput.keydown(e, this.textInput);
+		//make local to self origin
+		x -= this.pos.x;
+		y -= this.pos.y;
+		//rotate
+		if(this.rotation != 0) {
+			var v = new Vec2D(x,y);
+			v.rotate(-this.rotation);
+			x = v.x;
+			y = v.y;
 		}
 		
 		for(var child of this.children) {
-		child.OnKeyDown(e, x, y);
-		if(e.isDone) return;
+			child.OnKeyDown(e, x, y);
+			if(e.isDone) return;
 		}
 	}
   	OnKeyUp(e, x,y) {
 		if(!this.visible) return;
 		
-			//make local to self origin
-			x -= this.pos.x;
-			y -= this.pos.y;
-			//rotate
-			if(this.rotation != 0) {
-				var v = new Vec2D(x,y);
-				v.rotate(-this.rotation);
-				x = v.x;
-				y = v.y;
-			}
-		
-		if(this.textInput) {
-		this.textInput.onkeyup(e, this.textInput);
+		//make local to self origin
+		x -= this.pos.x;
+		y -= this.pos.y;
+		//rotate
+		if(this.rotation != 0) {
+			var v = new Vec2D(x,y);
+			v.rotate(-this.rotation);
+			x = v.x;
+			y = v.y;
 		}
 		
 		for(var child of this.children) {
-		child.OnKeyUp(e, x, y);
-		if(e.isDone) return;
+			child.OnKeyUp(e, x, y);
+			if(e.isDone) return;
 		}
 	}
 	

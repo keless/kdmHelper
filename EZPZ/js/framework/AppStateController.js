@@ -114,15 +114,15 @@ class BaseStateView extends BaseListener {
 	OnMouseWheel(e, delta) {}
 	
 	OnKeyDown(e, x,y) { 
-    if( this.rootView ) {
-      this.rootView.OnKeyDown(e, x,y);
-    }
-  }
+		if( this.rootView ) {
+			this.rootView.OnKeyDown(e, x,y);
+		}
+  	}
 	OnKeyUp(e, x,y) { 
-    if( this.rootView ) {
-      this.rootView.OnKeyUp(e, x,y);
-    }
-  }
+		if( this.rootView ) {
+			this.rootView.OnKeyUp(e, x,y);
+		}
+	}
 	Draw( g, x,y, ct) { 
 		if(this.rootView) {
 			this.rootView.Draw(g, x,y, ct);

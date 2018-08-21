@@ -1412,10 +1412,11 @@
     _overInput: function(x, y) {
       // EZPZ play nice
       var self = this,
-        xLeft = x >= self.vecPos.x + self._extraX,
-        xRight = x <= self.vecPos.x + self._extraX + self._width + self._padding * 2,
-        yTop = y >= self.vecPos.y + self._extraY,
-        yBottom = y <= self.vecPos.y + self._extraY + self._height + self._padding * 2;
+        vecPos = self.getVecPos(),
+        xLeft = x >= vecPos.x + self._extraX,
+        xRight = x <= vecPos.x + self._extraX + self._width + self._padding * 2,
+        yTop = y >= vecPos.y + self._extraY,
+        yBottom = y <= vecPos.y + self._extraY + self._height + self._padding * 2;
       /*
       var self = this,
         xLeft = x >= self._x + self._extraX,
@@ -1450,13 +1451,14 @@
 
       // EZPZ play nice
       //if (x - (self._x + self._extraX) < self._textWidth(text)) {
-      if (x - (self.vecPos.x + self._extraX) < self._textWidth(text)) {
+      var vecPos = self.getVecPos()
+      if (x - (vecPos.x + self._extraX) < self._textWidth(text)) {
         // loop through each character to identify the position
         for (var i=0; i<text.length; i++) {
           totalW += self._textWidth(text[i]);
           // EZPZ play nice
           //if (totalW >= x - (self._x + self._extraX)) {
-          if (totalW >= x - (self.vecPos.x + self._extraX)) {
+          if (totalW >= x - (vecPos.x + self._extraX)) {
             pos = i;
             break;
           }

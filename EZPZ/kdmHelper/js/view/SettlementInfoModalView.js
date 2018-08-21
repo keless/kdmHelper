@@ -32,7 +32,12 @@ class SettlementInfoModalView extends ModalView {
         this.addChild(lblName)
 
         var inputText = new NodeView()
-        inputText.setTextInput(150, 50)
+        inputText.setTextInput(150, 40)
         this.addChild(inputText)
+
+        var inputText2 = new NodeView()
+        inputText2.setTextInput(150, 40)
+        inputText.pos.y += 50
+        this.addChild(inputText2)
     }
 }
