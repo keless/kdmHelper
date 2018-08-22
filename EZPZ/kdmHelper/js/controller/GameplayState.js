@@ -30,6 +30,9 @@ class GameplayStateModel extends BaseStateModel {
 
 	_testInit() {
 		this.loadForMonster("lion", 1)
+
+		this.settlement._testCreateSurvivors()
+		this.settlement._testCreateResources()
 	}
 
 	loadForMonster(monsterName, level) {

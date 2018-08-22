@@ -255,6 +255,60 @@ class NodeView extends BaseListener {
 		return this.pUser;
 	}
 	
+	snapToLeftOfParent(offset) {
+		offset = offset || 0
+		this.pos.x = -(this.parent.size.x - this.size.x)/2 + offset
+	}
+	snapToTopOfParent(offset) {
+		offset = offset || 0
+		this.pos.y = -(this.parent.size.y - this.size.y)/2 + offset
+	}
+	snapToRightOfParent(offset) {
+		offset = offset || 0
+		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
+	}
+	snapToBottomOfParent(offset) {
+		offset = offset || 0
+		this.pos.y = (this.parent.size.y - this.size.y)/2 + offset
+	}
+	snapToTopLeftOfParent(offsetX, offsetY) {
+		offsetY = offsetY || offsetX
+		this.snapToLeftOfParent(offsetX)
+		this.snapToTopOfParent(offsetY)
+	}
+	snapToRightOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToRightOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.x = sibling.pos.x + (((sibling.size.x + this.size.x)/2) + offset)
+	}
+	snapToLeftOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToLeftOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.x = sibling.pos.x - (((sibling.size.x + this.size.x)/2) + offset)
+	}
+	snapToSiblingY(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToSiblingY was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.y = sibling.pos.y + offset
+	}
+	snapToBottomOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
+	}
+
 	setCircle( radius, fillStyle, strokeStyle ) {
 		if (this.serializable) {
 			this.serializeData.push({"call":"setCircle", "radius":radius, "fillStyle":fillStyle, "strokeStyle":strokeStyle })

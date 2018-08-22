@@ -1,9 +1,10 @@
 
-
 class SettlementModel {
     constructor() {
         this.name = "settlement name"
         this.survivors = []
+
+        this.resources = [] // { name:"Monster Bone", count:1 }
 
         this.year = 0
         this.graveyard = []
@@ -13,6 +14,20 @@ class SettlementModel {
 
         this.improvements = []
         this.innovations = [ "language" ]
+    }
+
+    _testCreateSurvivors() {
+        for (var i=0; i<4; i++) {
+            var s1 = new SurvivorModel()
+            s1.name = "Player " + (1 + i)
+            this.survivors.push(s1)
+        }
+    }
+
+    _testCreateResources() {
+        this.resources.push( { name:"Monster Bone", count:5 })
+        this.resources.push( { name:"Organ", count:1 })
+        this.resources.push( { name:"???", count:1 })
     }
 
     hasInnovation( innovation ) {
@@ -77,6 +92,7 @@ class SettlementModel {
             this.graveyard.push(grave)
         }
 
+        this.resources = json.resources
         this.improvements = json.improvements
         this.innovations = json.innovations
     }
@@ -102,6 +118,7 @@ class SettlementModel {
         }
         json.graveyard = graveyardJson
 
+        json.resources = this.resources
         json.improvements = this.improvements
         json.innovations = this.innovations
 
