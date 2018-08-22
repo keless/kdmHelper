@@ -5,6 +5,7 @@ class SettlementModel {
         this.survivors = []
 
         this.resources = [] // { name:"Monster Bone", count:1 }
+        this.gear = [] // { name:"Bone Blade", count:1 }
 
         this.year = 0
         this.graveyard = []
@@ -12,6 +13,7 @@ class SettlementModel {
         this.survivalLimit = 1
         this.departingSurvival = 0
 
+        this.locations = []
         this.improvements = []
         this.innovations = [ "language" ]
     }
@@ -28,6 +30,10 @@ class SettlementModel {
         this.resources.push( { name:"Monster Bone", count:5 })
         this.resources.push( { name:"Organ", count:1 })
         this.resources.push( { name:"???", count:1 })
+    }
+
+    _testSetPrincipals() {
+        this.innovations.push(SettlementModel.INNOVATIONS.protectTheYoung)
     }
 
     hasInnovation( innovation ) {
@@ -51,19 +57,19 @@ class SettlementModel {
     }
 
     hasMilestoneFirstBirth() {
-        return this.hasPrincipal(INNOVATIONS.protectTheYoung) || this.hasPrincipal(INNOVATIONS.survivalOfTheFittest)
+        return this.hasInnovation(INNOVATIONS.protectTheYoung) || this.hasInnovation(INNOVATIONS.survivalOfTheFittest)
     }
 
     hasMilestoneFirstDeath() {
-        return this.hasPrincipal(INNOVATIONS.cannibalize) || this.hasPrincipal(INNOVATIONS.graves)
+        return this.hasInnovation(INNOVATIONS.cannibalize) || this.hasInnovation(INNOVATIONS.graves)
     }
 
     hasMilestoneSociety() {
-        return this.hasPrincipal(INNOVATIONS.collectiveToll) || this.hasPrincipal(INNOVATIONS.acceptTheDarkness)
+        return this.hasInnovation(INNOVATIONS.collectiveToll) || this.hasInnovation(INNOVATIONS.acceptTheDarkness)
     }
 
     hasMilestoneConviction() {
-        return this.hasPrincipal(INNOVATIONS.barbaric) || this.hasPrincipal(INNOVATIONS.romantic)
+        return this.hasInnovation(INNOVATIONS.barbaric) || this.hasInnovation(INNOVATIONS.romantic)
     }
 
     get population() {
@@ -93,6 +99,8 @@ class SettlementModel {
         }
 
         this.resources = json.resources
+        this.gear = json.gear
+        this.locations = json.locations
         this.improvements = json.improvements
         this.innovations = json.innovations
     }
@@ -119,6 +127,8 @@ class SettlementModel {
         json.graveyard = graveyardJson
 
         json.resources = this.resources
+        json.gear = this.gear
+        json.locations = this.locations
         json.improvements = this.improvements
         json.innovations = this.innovations
 

@@ -259,9 +259,26 @@ class NodeView extends BaseListener {
 		offset = offset || 0
 		this.pos.x = -(this.parent.size.x - this.size.x)/2 + offset
 	}
+	snapToRightOfParent(offset) {
+		offset = offset || 0
+		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
+	}
 	snapToTopOfParent(offset) {
 		offset = offset || 0
 		this.pos.y = -(this.parent.size.y - this.size.y)/2 + offset
+	}
+	snapToXCenterOfParent(offset) {
+		offset = offset || 0
+		this.pos.x = 0 + offset
+	}
+	snapToYCenterOfParent(offset) {
+		offset = offset || 0
+		this.pos.y = 0 + offset
+	}
+	snapToTopCenterOfParent(offsetX, offsetY) {
+		offsetY = offsetY || offsetX
+		this.snapToXCenterOfParent(offsetX)
+		this.snapToTopOfParent(offsetY)
 	}
 	snapToRightOfParent(offset) {
 		offset = offset || 0
@@ -277,60 +294,44 @@ class NodeView extends BaseListener {
 		this.snapToTopOfParent(offsetY)
 	}
 	snapToTopOfSibling(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToTopOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.y = sibling.pos.y - ((sibling.size.y + this.size.y)/2) + offset
 	}
 	snapToBottomOfSibling(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.y = sibling.pos.y + ((sibling.size.y + this.size.y)/2) + offset
 	}
 	snapToRightOfSibling(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToRightOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.x = sibling.pos.x + ((sibling.size.x + this.size.x)/2) + offset
 	}
 	snapToLeftOfSibling(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToLeftOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.x = sibling.pos.x - ((sibling.size.x + this.size.x)/2) + offset
 	}
 	snapToBottomOfSibling(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
 	}
 	snapToSiblingY(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToSiblingY was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.y = sibling.pos.y + offset
 	}
 	snapToSiblingX(sibling, offset) {
-		if(sibling.parent != this.parent) {
-			console.warn("snapToSiblingX was given a nodeview that isnt a sibling (doesnt have same parent)")
-			return
-		}
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0
 		this.pos.x = sibling.pos.x + offset
+	}
+	alignToLeftOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
+		offset = offset || 0
+		this.pos.x = (sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2)
 	}
 
 	setCircle( radius, fillStyle, strokeStyle ) {
@@ -400,7 +401,7 @@ class NodeView extends BaseListener {
 			if(self.alpha != 1.0) gfx.setAlpha(1.0);
 		});
 	}
-	setImageStretch( image, w,h ) {
+	setImageStretch( image, w,h, hFlip ) {
 		if (this.serializable) {
 			if (isString(image)) {
 				this.serializeData.push({"call":"setImageStretch", "image":image, "w":w,"h":h})
@@ -408,6 +409,9 @@ class NodeView extends BaseListener {
 				console.warn("NodeView - cannot serialize setImageStretch with non-string image parameter")
 			}
 		}
+		
+		hFlip = hFlip || false;
+
 		if( isString(image) ) {
 			var RP = Service.Get("rp");
 			image = RP.getImage(image); //load image url into image resource
@@ -418,12 +422,13 @@ class NodeView extends BaseListener {
 			return;
 		}
 		this.image = image;
+		this.hFlip = hFlip;
 		this.size.setVal( Math.max(this.size.x, w), Math.max(this.size.y, h));
 		
 		var self = this;
 		this.fnCustomDraw.push(function(gfx, x,y, ct){
 			if(self.alpha != 1.0) gfx.setAlpha(self.alpha);
-			gfx.drawImageEx(self.image, x, y, w, h);
+			gfx.drawImageEx(self.image, x, y, w, h, self.hFlip);
 			if(self.alpha != 1.0) gfx.setAlpha(1.0);
 		});
 	}
