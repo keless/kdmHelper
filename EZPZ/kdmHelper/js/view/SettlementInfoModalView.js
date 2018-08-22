@@ -21,7 +21,12 @@ class ModalView extends NodeView {
     }
 
     onBtnClose() {
+        this.willCloseModal()
         EventBus.ui.dispatch("closeSettlementInfoModalView")
+    }
+
+    willCloseModal() {
+        //subclass this if you need to clean up
     }
 }
 
@@ -35,10 +40,10 @@ class SettlementInfoModalView extends ModalView {
         this.inputSettlementName = null
 
         var lblName = new NodeView()
-        lblName.setLabel("name: ")
+        lblName.setLabel("Settlement: ", "24px Arial", "#FFFFFF")
         //lblName.pos.setVal(-150, -50)
         this.addChild(lblName)
-        lblName.snapToTopLeftOfParent(5)
+        lblName.snapToTopLeftOfParent(10)
 
         var inputText = new NodeView()
         inputText.setTextInput(150, 20)
@@ -46,41 +51,53 @@ class SettlementInfoModalView extends ModalView {
         inputText.pos.setVal(0, -55)
         this.addChild(inputText)
         inputText.snapToRightOfSibling(lblName)
-        inputText.snapToSiblingY(lblName)
+        inputText.snapToSiblingY(lblName, -7)
         this.inputSettlementName = inputText
 
-        var settlementRosterView = new NodeView()
-        settlementRosterView.setRect(105,205, "#555555")
-        var survivorTable = new TableView(100, 200)
-        // Settlement roster
-        for (var survivor of this.pModel.survivors) {
-            var survivorNameView = new NodeView();
-            survivorNameView.setRect(100, 10, "#000000")
-            survivorNameView.setLabel(survivor.name, "8px Arial", "#FFFFFF")
-            survivorTable.addCell(survivorNameView)
-        }
-        settlementRosterView.addChild(survivorTable)
+        var settlementRosterView = this._createListView(this.pModel.survivors, 105, 205, (item)=>{ return item.name; })
         settlementRosterView.pos.setVal(-100, 100)
         this.addChild(settlementRosterView)
+        this._setLabelForListView("Roster", settlementRosterView)
 
-        var itemStorageView 
-        var itemStorageView = new NodeView()
-        itemStorageView.setRect(105,205, "#555555")
-        var resourcesTable = new TableView(100, 200)
-        // Settlement roster
-        for (var resource of this.pModel.resources) {
-            var itemNameView = new NodeView();
-            itemNameView.setRect(100, 10, "#000000")
-            //todo: split this in two (so one cell contains two label nodes and "5x" is left justified)
-            var resourceStr = "" + resource.count + "x " + resource.name
-            itemNameView.setLabel(resourceStr, "8px Arial", "#FFFFFF")
-            resourcesTable.addCell(itemNameView)
-        }
-        itemStorageView.addChild(resourcesTable)
-        itemStorageView.pos.setVal(100, 100)
+        var itemStorageView = this._createListView(this.pModel.resources, 105, 205, (item)=>{ return ("" + item.count + "x " + item.name); })
         this.addChild(itemStorageView)
+        itemStorageView.snapToRightOfSibling(settlementRosterView, 5)
+        itemStorageView.snapToSiblingY(settlementRosterView)
+        this._setLabelForListView("Storage", itemStorageView)
+        
+        var innovationsView = this._createListView(this.pModel.innovations, 105, 205, (item)=>{ return item; })
+        this.addChild(innovationsView)
+        innovationsView.snapToRightOfSibling(itemStorageView, 5)
+        innovationsView.snapToSiblingY(itemStorageView)
+        this._setLabelForListView("Innovations", innovationsView)
         
         this.SetListener("textInputSubmitted", this.onTextInputSubmitted)
+    }
+
+    _setLabelForListView(label, listView) {
+        var labelView = new NodeView()
+        labelView.setLabel(label, "12px Arial", "#FFFFFF")
+        this.addChild(labelView)
+        labelView.snapToTopOfSibling(listView)
+        labelView.snapToSiblingX(listView)
+    }
+
+    _createListView(items, w, h, fnGetItemName) {
+        var listBackground = new NodeView()
+        listBackground.setRect(105,205, "#555555")
+        var tableView = new TableView(100, 200)
+        // Settlement roster
+        for (var item of items) {
+            var itemView = new NodeView();
+            itemView.setRect(100, 10, "#000000")
+            var labelText = fnGetItemName(item)
+            if (!labelText) continue;
+            itemView.setLabel(labelText, "8px Arial", "#FFFFFF")
+            tableView.addCell(itemView)
+        }
+        listBackground.addChild(tableView)
+        listBackground.pos.setVal(-100, 100)
+        return listBackground
     }
 
     onTextInputSubmitted(e) {
@@ -89,5 +106,10 @@ class SettlementInfoModalView extends ModalView {
             this.pModel.name = e.value
             console.log("updated settlement name to " + e.value)
         }
+    }
+
+    willCloseModal() {
+        //store settlement name if it changed
+        this.pModel.name = this.inputSettlementName.getTextInputValue()
     }
 }

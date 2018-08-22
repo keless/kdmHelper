@@ -276,13 +276,29 @@ class NodeView extends BaseListener {
 		this.snapToLeftOfParent(offsetX)
 		this.snapToTopOfParent(offsetY)
 	}
+	snapToTopOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToTopOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.y = sibling.pos.y - ((sibling.size.y + this.size.y)/2) + offset
+	}
+	snapToBottomOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.y = sibling.pos.y + ((sibling.size.y + this.size.y)/2) + offset
+	}
 	snapToRightOfSibling(sibling, offset) {
 		if(sibling.parent != this.parent) {
 			console.warn("snapToRightOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
 			return
 		}
 		offset = offset || 0
-		this.pos.x = sibling.pos.x + (((sibling.size.x + this.size.x)/2) + offset)
+		this.pos.x = sibling.pos.x + ((sibling.size.x + this.size.x)/2) + offset
 	}
 	snapToLeftOfSibling(sibling, offset) {
 		if(sibling.parent != this.parent) {
@@ -290,7 +306,15 @@ class NodeView extends BaseListener {
 			return
 		}
 		offset = offset || 0
-		this.pos.x = sibling.pos.x - (((sibling.size.x + this.size.x)/2) + offset)
+		this.pos.x = sibling.pos.x - ((sibling.size.x + this.size.x)/2) + offset
+	}
+	snapToBottomOfSibling(sibling, offset) {
+		if(sibling.parent != this.parent) {
+			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			return
+		}
+		offset = offset || 0
+		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
 	}
 	snapToSiblingY(sibling, offset) {
 		if(sibling.parent != this.parent) {
@@ -300,13 +324,13 @@ class NodeView extends BaseListener {
 		offset = offset || 0
 		this.pos.y = sibling.pos.y + offset
 	}
-	snapToBottomOfSibling(sibling, offset) {
+	snapToSiblingX(sibling, offset) {
 		if(sibling.parent != this.parent) {
-			console.warn("snapToBottomOfSibling was given a nodeview that isnt a sibling (doesnt have same parent)")
+			console.warn("snapToSiblingX was given a nodeview that isnt a sibling (doesnt have same parent)")
 			return
 		}
 		offset = offset || 0
-		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
+		this.pos.x = sibling.pos.x + offset
 	}
 
 	setCircle( radius, fillStyle, strokeStyle ) {

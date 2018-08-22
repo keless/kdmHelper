@@ -487,6 +487,641 @@ var g_decks = {
       "img": "gfx/imgs/decks/hl/antelope_wailingslide.png"
     }
   ],
+  "Equipment": [
+    {
+      " name": "Cloth",
+      "set": "starter",
+      "location": "waist",
+      "armor": 1,
+      "keywords": [
+        "armor"
+      ],
+      "img": "gfx/imgs/decks/equipment/starter_cloth.png"
+    },
+    {
+      " name": "Founding Stone",
+      "set": "starter",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "melee",
+        "stone"
+      ],
+      "speed": 2,
+      "accuracy": 7,
+      "strength": 1,
+      "img": "gfx/imgs/decks/equipment/starter_foundingstone.png"
+    },
+    {
+      " name": "Newborn",
+      "set": "rare",
+      "keywords": [
+        "item",
+        "heavy",
+        "fragile"
+      ],
+      "special": [
+        "irreplaceable"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_newborn.png"
+    },
+    {
+      " name": "Blue Lantern",
+      "set": "rare",
+      "keywords": [
+        "item",
+        "lantern",
+        "order",
+        "other"
+      ],
+      "special": [
+        "sentient",
+        "cursed"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_bluelantern.png"
+    },
+    {
+      " name": "Regal Faults",
+      "set": "rare",
+      "location": "waist",
+      "armor": 1,
+      "keywords": [
+        "armor",
+        "bone",
+        "metal"
+      ],
+      "special": [
+        "cursed"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_regalfaults.png"
+    },
+    {
+      " name": "Bloodskin",
+      "set": "rare",
+      "keywords": [
+        "item",
+        "consumable",
+        "other"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_bloodskin.png"
+    },
+    {
+      " name": "Dormant Twilight Cloak",
+      "set": "rare",
+      "location": "head",
+      "armor": 1,
+      "keywords": [
+        "item",
+        "heavy",
+        "order",
+        "other"
+      ],
+      "special": [
+        "unique",
+        "irreplaceable",
+        "accessory"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_dormanttwilightcloak.png"
+    },
+    {
+      " name": "Final Lantern",
+      "set": "rare",
+      "keywords": [
+        "item",
+        "other"
+      ],
+      "special": [
+        "vital"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_finallantern.png"
+    },
+    {
+      " name": "Forsaker Mask",
+      "set": "rare",
+      "location": "head",
+      "armor": 1,
+      "keywords": [
+        "item",
+        "mask",
+        "metal",
+        "other"
+      ],
+      "special": [
+        "unique",
+        "irreplaceable",
+        "accessory"
+      ],
+      "img": "gfx/imgs/decks/equipment/rare_forsakermask.png"
+    },
+    {
+      " name": "Almanac",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "soluble",
+        "flammable"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_almanac.png"
+    },
+    {
+      " name": "Brain Mint",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_brainmint.png"
+    },
+    {
+      " name": "Bug Trap",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "soluble"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_bugtrap.png"
+    },
+    {
+      " name": "Elder Earrings",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "jewelry"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_elderearrings.png"
+    },
+    {
+      " name": "First Aid Kit",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "heavy"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_firstaidkit.png"
+    },
+    {
+      " name": "Musk Bomb",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "stinky",
+        "thrown",
+        "fragile"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_muskbomb.png"
+    },
+    {
+      " name": "Speed Powder",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "soluble"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_speedpowder.png"
+    },
+    {
+      " name": "Scavenger Kit",
+      "set": "barber",
+      "keywords": [
+        "item",
+        "heavy"
+      ],
+      "special": [
+        "unique"
+      ],
+      "img": "gfx/imgs/decks/equipment/barber_scavengerkit.png"
+    },
+    {
+      " name": "Bone Club",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "melee",
+        "two-handed",
+        "heavy",
+        "club",
+        "bone"
+      ],
+      "special": [
+        "cumbersome"
+      ],
+      "speed": 2,
+      "accuracy": 6,
+      "strength": 5,
+      "img": "gfx/imgs/decks/equipment/bone_boneclub.png"
+    },
+    {
+      " name": "Bone Blade",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "melee",
+        "sword",
+        "bone"
+      ],
+      "special": [
+        "frail"
+      ],
+      "speed": 2,
+      "accuracy": 6,
+      "strength": 2,
+      "img": "gfx/imgs/decks/equipment/bone_boneblade.png"
+    },
+    {
+      " name": "Bone Darts",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "ranged",
+        "thrown",
+        "bone"
+      ],
+      "special": [
+        "frail"
+      ],
+      "speed": 1,
+      "accuracy": 7,
+      "strength": 3,
+      "range": 6,
+      "img": "gfx/imgs/decks/equipment/bone_bonedarts.png"
+    },
+    {
+      " name": "Bone Pickaxe",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "item",
+        "tool",
+        "pickaxe",
+        "bone"
+      ],
+      "special": [
+        "mineral gathering"
+      ],
+      "speed": 1,
+      "accuracy": 8,
+      "strength": 2,
+      "img": "gfx/imgs/decks/equipment/bone_bonepickaxe.png"
+    },
+    {
+      " name": "Bone Sickle",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "item",
+        "tool",
+        "sickle",
+        "bone"
+      ],
+      "special": [
+        "herb gathering"
+      ],
+      "speed": 2,
+      "accuracy": 8,
+      "strength": 1,
+      "img": "gfx/imgs/decks/equipment/bone_bonesickle.png"
+    },
+    {
+      " name": "Bone Dagger",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "melee",
+        "dagger",
+        "bone"
+      ],
+      "special": [
+        "perfect hit"
+      ],
+      "speed": 3,
+      "accuracy": 7,
+      "strength": 1,
+      "img": "gfx/imgs/decks/equipment/bone_bonedagger.png"
+    },
+    {
+      " name": "Bone Axe",
+      "set": "bone",
+      "location": "weapon",
+      "keywords": [
+        "weapon",
+        "melee",
+        "axe",
+        "bone"
+      ],
+      "special": [
+        "frail",
+        "savage"
+      ],
+      "speed": 2,
+      "accuracy": 6,
+      "strength": 3,
+      "img": "gfx/imgs/decks/equipment/bone_boneaxe.png"
+    },
+    {
+      " name": "Skull Helm",
+      "set": "bone",
+      "location": "head",
+      "armor": 3,
+      "keywords": [
+        "armor",
+        "bone",
+        "fragile"
+      ],
+      "img": "gfx/imgs/decks/equipment/bone_skullhelm.png"
+    }
+  ],
+  "Innovations": [
+    {
+      "name": "Accept Darkness",
+      "type": "society principle",
+      "img": "gfx/imgs/decks/innovations/acceptdarkness.png"
+    },
+    {
+      "name": "Ammonia",
+      "unlocks": [
+        "Bloodletting",
+        "Lantern Oven"
+      ],
+      "type": "science",
+      "departing_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/ammonia.png"
+    },
+    {
+      "name": "Barbaric",
+      "type": "conviction principle",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/barbaric.png"
+    },
+    {
+      "name": "Bed",
+      "type": "home",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/bed.png"
+    },
+    {
+      "name": "Bloodletting",
+      "type": "science",
+      "img": "gfx/imgs/decks/innovations/bloodletting.png"
+    },
+    {
+      "name": "Cannibalize",
+      "type": "death principle",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/cannibalize.png"
+    },
+    {
+      "name": "Clan of Death",
+      "type": "home",
+      "img": "gfx/imgs/decks/innovations/clanofdeath.png"
+    },
+    {
+      "name": "Collective Toil",
+      "type": "society principle",
+      "img": "gfx/imgs/decks/innovations/collectivetoil.png"
+    },
+    {
+      "name": "Cooking",
+      "type": "science",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/cooking.png"
+    },
+    {
+      "name": "Destiny",
+      "type": "faith",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/destiny.png"
+    },
+    {
+      "name": "Drums",
+      "unlocks": [
+        "Forbidden Dance",
+        "Song of the Brave"
+      ],
+      "type": "music",
+      "img": "gfx/imgs/decks/innovations/drums.png"
+    },
+    {
+      "name": "Face Painting",
+      "type": "art",
+      "img": "gfx/imgs/decks/innovations/facepainting.png"
+    },
+    {
+      "name": "Family",
+      "unlocks": [
+        "Clan of Death"
+      ],
+      "type": "home",
+      "departing_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/family.png"
+    },
+    {
+      "name": "Final Fighting Art",
+      "type": "education",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/finalfightingart.png"
+    },
+    {
+      "name": "Forbidden Dance",
+      "unlocks": [
+        "Heart Flute"
+      ],
+      "type": "music",
+      "img": "gfx/imgs/decks/innovations/forbiddendance.png"
+    },
+    {
+      "name": "Graves",
+      "type": "death principle",
+      "img": "gfx/imgs/decks/innovations/graves.png"
+    },
+    {
+      "name": "Guidepost",
+      "type": "other",
+      "departing_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/guidepost.png"
+    },
+    {
+      "name": "Heart Flute",
+      "type": "music",
+      "img": "gfx/imgs/decks/innovations/heartflute.png"
+    },
+    {
+      "name": "Hovel",
+      "unlocks": [
+        "Bed",
+        "Family",
+        "Partnership"
+      ],
+      "type": "home",
+      "survival_bonus": 1,
+      "departing_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/hovel.png"
+    },
+    {
+      "name": "Inner Lantern",
+      "unlocks": [
+        "Shrine",
+        "Scarification"
+      ],
+      "type": "faith",
+      "img": "gfx/imgs/decks/innovations/innerlantern.png"
+    },
+    {
+      "name": "Language",
+      "unlocks": [
+        "Ammonia",
+        "Inner Lantern",
+        "Hovel",
+        "Paint",
+        "Drums",
+        "Symposium"
+      ],
+      "type": "starting innovation",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/language.png"
+    },
+    {
+      "name": "Lantern Oven",
+      "unlocks": [
+        "Cooking",
+        "Scrap Smelting"
+      ],
+      "type": "science",
+      "img": "gfx/imgs/decks/innovations/lanternoven.png"
+    },
+    {
+      "name": "Momento Mori",
+      "type": "art",
+      "img": "gfx/imgs/decks/innovations/momentomori.png"
+    },
+    {
+      "name": "Nightmare Training",
+      "type": "education",
+      "img": "gfx/imgs/decks/innovations/nightmaretraining.png"
+    },
+    {
+      "name": "Paint",
+      "unlocks": [
+        "Face Painting",
+        "Pictograph",
+        "Sculpture"
+      ],
+      "type": "art",
+      "img": "gfx/imgs/decks/innovations/paint.png"
+    },
+    {
+      "name": "Partnership",
+      "type": "home",
+      "img": "gfx/imgs/decks/innovations/partnership.png"
+    },
+    {
+      "name": "Pictograph",
+      "unlocks": [
+        "Momento Mori"
+      ],
+      "type": "art",
+      "img": "gfx/imgs/decks/innovations/pictograph.png"
+    },
+    {
+      "name": "Pottery",
+      "type": "art",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/pottery.png"
+    },
+    {
+      "name": "Protect the Young",
+      "type": "new life principle",
+      "img": "gfx/imgs/decks/innovations/protecttheyoung.png"
+    },
+    {
+      "name": "Records",
+      "type": "education",
+      "img": "gfx/imgs/decks/innovations/records.png"
+    },
+    {
+      "name": "Romantic",
+      "type": "conviction principle",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/romantic.png"
+    },
+    {
+      "name": "Sacrifice",
+      "type": "faith",
+      "img": "gfx/imgs/decks/innovations/sacrifice.png"
+    },
+    {
+      "name": "Saga",
+      "type": "music",
+      "img": "gfx/imgs/decks/innovations/saga.png"
+    },
+    {
+      "name": "Scarification",
+      "type": "faith",
+      "img": "gfx/imgs/decks/innovations/scarification.png"
+    },
+    {
+      "name": "Scrap Smelting",
+      "img": "gfx/imgs/decks/innovations/scrapsmelting.png"
+    },
+    {
+      "name": "Sculpture",
+      "unlocks": [
+        "Pottery"
+      ],
+      "type": "art",
+      "img": "gfx/imgs/decks/innovations/sculpture.png"
+    },
+    {
+      "name": "Shrine",
+      "unlocks": [
+        "Sacrifice"
+      ],
+      "type": "faith",
+      "img": "gfx/imgs/decks/innovations/shrine.png"
+    },
+    {
+      "name": "Song of the Brave",
+      "unlocks": [
+        "Saga"
+      ],
+      "type": "music",
+      "img": "gfx/imgs/decks/innovations/songofthebrave.png"
+    },
+    {
+      "name": "Storytelling",
+      "unlocks": [
+        "Records"
+      ],
+      "type": "education",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/storytelling.png"
+    },
+    {
+      "name": "Survival of the Fittest",
+      "type": "new life principle",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/survivalofthefittest.png"
+    },
+    {
+      "name": "Symposium",
+      "unlocks": [
+        "Storytelling",
+        "Nightmare Training"
+      ],
+      "type": "education",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/symposium.png"
+    },
+    {
+      "name": "Ultimate Weapon",
+      "type": "science",
+      "survival_bonus": 1,
+      "img": "gfx/imgs/decks/innovations/ultimateweapon.png"
+    }
+  ],
   "Rules": [
     {
       "monster": "lion",
@@ -516,7 +1151,9 @@ var g_decks = {
       "basic": 10,
       "advanced": 5,
       "legendary": 0,
-      "special": "cunning",
+      "special": [
+        "cunning"
+      ],
       "mov": 7,
       "tgh": 10,
       "spd": 1,
@@ -544,7 +1181,9 @@ var g_decks = {
       "basic": 7,
       "advanced": 3,
       "legendary": 0,
-      "special": "trample",
+      "special": [
+        "trample"
+      ],
       "mov": 6,
       "tgh": 8,
       "spd": 0,
