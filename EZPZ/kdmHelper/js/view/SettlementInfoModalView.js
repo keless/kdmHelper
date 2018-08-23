@@ -1,34 +1,3 @@
-class ModalView extends NodeView {
-    constructor(w, h) {
-        super()
-
-        // Make modal: size of whole screen, and eats clicks
-        var screenSize = Graphics.ScreenSize
-        this.size.setVec(screenSize)
-        this.pos.setVal(this.size.x/2, this.size.y/2)
-        this.setClick(()=>{ self.onBtnClose() }, true, true)
-
-        this.contentView = new NodeView()
-        this.contentView.setRect(w, h, "#222222")
-        var self = this
-        this.contentView.eatClicks()
-        super.addChild(this.contentView)
-    }
-
-    // because we're modal, we want our views to be added to the contentView only
-    addChild(child) {
-        this.contentView.addChild(child)
-    }
-
-    onBtnClose() {
-        this.willCloseModal()
-        EventBus.ui.dispatch("closeModalView")
-    }
-
-    willCloseModal() {
-        //subclass this if you need to clean up
-    }
-}
 
 class SettlementInfoModalView extends ModalView {
     constructor(model) {

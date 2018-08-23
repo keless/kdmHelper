@@ -15,7 +15,7 @@ class SettlementModel {
 
         this.locations = []
         this.improvements = []
-        this.innovations = [ "language" ]
+        this.innovations = []
     }
 
     _testCreateSurvivors() {
@@ -33,6 +33,8 @@ class SettlementModel {
     }
 
     _testSetPrincipals() {
+        this.innovations.push(SettlementModel.INNOVATIONS.language)
+        this.innovations.push(SettlementModel.INNOVATIONS.symposium)
         this.innovations.push(SettlementModel.INNOVATIONS.protectTheYoung)
     }
 
@@ -161,7 +163,7 @@ SettlementModel.INNOVATIONS = Object.freeze({
     "scarification": "Scarification",
     "sculpture": "Sculpture",
     "songOfTheBrave": "Song of the Brave",
-    "symposium": "Symposum",
+    "symposium": "Symposium",
 
     /// Principals
     "protectTheYoung": "Protect the Young",
