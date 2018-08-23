@@ -42,7 +42,7 @@ var game_create = function()
 			"gfx/imgs/REimgEX.png",
 			"gfx/imgs/MimgLAWS.png"
 			];
-	stateController.gotoState("loading", [resources, "gameplay"]);
+	stateController.gotoState("loading", [resources, "gameplay", "test"]);
 	
 	app.Play();
 };

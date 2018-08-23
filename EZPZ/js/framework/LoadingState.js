@@ -1,9 +1,9 @@
 "use strict"; //ES6
 
 class LoadingState extends AppState {
-	constructor( params /*resNameArr, nextStateName*/ ) {
+	constructor( params /*resNameArr, nextStateName, paramsForNextState*/ ) {
 		super();
-		this.view = new LoadingView(params[0], params[1]);
+		this.view = new LoadingView(params[0], params[1], params[2]);
 	}
 }
 
@@ -19,7 +19,7 @@ class LoadingState extends AppState {
  */
 
 class LoadingView extends BaseStateView {
-	constructor( resNameArr, nextStateName ) {
+	constructor( resNameArr, nextStateName, paramsForNextState ) {
 		super();
 		this.resLoaded = 0;
 		this.resToLoad = resNameArr.slice(); //copy
@@ -27,6 +27,7 @@ class LoadingView extends BaseStateView {
 		this.resLoaded = [];
 		this.loadingName = "";
 		this.nextStateName = nextStateName;
+		this.paramsForNextState = paramsForNextState
 		
 		this.verbose = false;
 
@@ -40,7 +41,7 @@ class LoadingView extends BaseStateView {
 			EventBus.ui.dispatch({evtName:"loadingComplete"});
 			if (this.nextStateName) {
 				var stateController = Service.Get("state");
-				stateController.gotoState(this.nextStateName);
+				stateController.gotoState(this.nextStateName, this.paramsForNextState);
 			}
 			return;
 		}

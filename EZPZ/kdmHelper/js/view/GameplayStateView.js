@@ -193,9 +193,11 @@ class GameplayStateView extends BaseStateView {
 			rightSidePanelView.addChild(tokenNode)
 		}
 
-		this._addButton("btnSettlementInfo", "S", (screenSize.x - 50), (screenSize.y - 50), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnSettlementInfo", "S", (screenSize.x - 50), (screenSize.y - 100), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnMainMenu", "M", (screenSize.x - 50), (screenSize.y - 50), "gfx/ui/btn_white_sm.sprite" )
 
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
+		this.SetListener("btnMainMenu", this.onBtnMainMenu)
 		this.SetListener("closeSettlementInfoModalView", this.onBtnCloseSettlementInfo)
 	}
 
@@ -207,10 +209,12 @@ class GameplayStateView extends BaseStateView {
 	}
 
 	onBtnSettlementInfo(e) {
-		//todo; show settlement info modal
-
 		this.modalView = new SettlementInfoModalView( this.pModel.settlement )
 		this.rootView.addChild(this.modalView)
+	}
+
+	onBtnMainMenu(e) {
+		Service.Get("state").gotoState("menu");
 	}
 
 	onBtnCloseSettlementInfo(e) {
