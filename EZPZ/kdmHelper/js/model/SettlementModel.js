@@ -86,7 +86,7 @@ class SettlementModel {
         this.survivalLimit = json.survivalLimit
         this.departingSurvival = json.departingSurvival
 
-        for (var survivorJson of json.surivors) {
+        for (var survivorJson of json.survivors) {
             var survivor = new SurvivorModel()
             survivor.loadFromJson(survivorJson)
             this.survivors.push(survivor)

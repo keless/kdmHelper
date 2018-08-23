@@ -22,7 +22,7 @@ class ModalView extends NodeView {
 
     onBtnClose() {
         this.willCloseModal()
-        EventBus.ui.dispatch("closeSettlementInfoModalView")
+        EventBus.ui.dispatch("closeModalView")
     }
 
     willCloseModal() {

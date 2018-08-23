@@ -193,12 +193,14 @@ class GameplayStateView extends BaseStateView {
 			rightSidePanelView.addChild(tokenNode)
 		}
 
+		this._addButton("btnInnovationTree", "I", (screenSize.x - 50), (screenSize.y - 150), "gfx/ui/btn_white_sm.sprite" )
 		this._addButton("btnSettlementInfo", "S", (screenSize.x - 50), (screenSize.y - 100), "gfx/ui/btn_white_sm.sprite" )
 		this._addButton("btnMainMenu", "M", (screenSize.x - 50), (screenSize.y - 50), "gfx/ui/btn_white_sm.sprite" )
 
+		this.SetListener("btnInnovationTree", this.onBtnInnovationTree)
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
 		this.SetListener("btnMainMenu", this.onBtnMainMenu)
-		this.SetListener("closeSettlementInfoModalView", this.onBtnCloseSettlementInfo)
+		this.SetListener("closeModalView", this.onBtnCloseSettlementInfo)
 	}
 
 	_makeTokenNode(color) {
@@ -206,6 +208,11 @@ class GameplayStateView extends BaseStateView {
 		tokenNode.setCircle(20, color)
 		tokenNode.makeDraggable()
 		return tokenNode
+	}
+
+	onBtnInnovationTree(e) {
+		this.modalView = new InnovationTreeModalView( this.pModel.settlement )
+		this.rootView.addChild(this.modalView)
 	}
 
 	onBtnSettlementInfo(e) {
