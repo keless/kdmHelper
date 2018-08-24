@@ -62,13 +62,17 @@ class GameplayStateModel extends BaseStateModel {
 	}
 
 	loadSavedSettlementJson(json) {
-		this.loadForMonster("lion", 1)
-		this.settlement.loadFromJson(json)
+		this.loadForMonster("lion", 1) //todo: replace this when we save actual battle state
+		this.settlement.loadFromJson(json.settlement)
 	}
 	saveSettlementJson(saveGameID) {
 		var saveData = Service.Get("sd")
 		var settlementJson = this.settlement.saveToJson()
-		saveData.save(saveGameID, settlementJson)
+
+		var timeSeconds =  Math.round(new Date().getTime()/1000)
+		var saveGame = { "lastPlayed":timeSeconds, "settlement":settlementJson }
+
+		saveData.save(saveGameID, saveGame)
 	}
 
 	loadForMonster(monsterName, level) {

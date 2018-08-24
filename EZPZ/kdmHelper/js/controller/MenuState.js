@@ -33,11 +33,33 @@ class MenuStateView extends BaseStateView {
 			btnView.snapToBottomOfSibling(above, 10)
 			btnView.snapToSiblingX(above)
 
-			//TODO; add delete button to the right of this
+			// delete button
 			var btnDelete = new ButtonView("btnDel"+i, "gfx/ui/btn_white_sm.sprite", "X", null, "#000000");
 			this.rootView.addChild(btnDelete)
 			btnDelete.snapToRightOfSibling(btnView, 10)
 			btnDelete.snapToSiblingY(btnView)
+
+			if (hasSaveData) {
+				// basic save game info (year, population, last time played)
+				var timeMS = save.lastPlayed * 1000
+				var time = new Date(timeMS)
+
+				var str = "Last Played: " + time.getMonth() + "/" + time.getDate() + "/" + time.getFullYear() + " " + time.getHours() + ":" + time.getMinutes()
+				
+				var gameYear = save.settlement.year 
+				str += "  Year: " + gameYear
+
+				var population = save.settlement.survivors.length
+				str += "  Population: " + population
+				
+				var lastPlayedNode = new NodeView()
+				lastPlayedNode.setLabel(str, "12px Arial", "#000000")
+				this.rootView.addChild(lastPlayedNode)
+				lastPlayedNode.snapToRightOfSibling(btnDelete, 10)
+				lastPlayedNode.snapToSiblingY(btnDelete)
+
+				
+			}
 
 			above = btnView
 		}
