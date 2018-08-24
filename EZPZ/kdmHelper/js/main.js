@@ -19,6 +19,7 @@ var game_create = function()
 	var stateController = Service.Get("state");
 	stateController.addState("loading", LoadingState);
 	stateController.addState("menu", MenuState);
+	stateController.addState("newgame", NewGameState);
 	stateController.addState("gameplay", GameplayState);
 	
 	var resources = [

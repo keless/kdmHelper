@@ -58,22 +58,22 @@ class MenuStateView extends BaseStateView {
 	}
 	
 	onBtnTest() {
-		Service.Get("state").gotoState("gameplay", "test");
+		Service.Get("state").gotoState("newgame", "test");
 	}
 	onBtnNew0() {
-		Service.Get("state").gotoState("gameplay", "save0");
+		Service.Get("state").gotoState("newgame", "save0");
 	}
 	onBtnNew1() {
-		Service.Get("state").gotoState("gameplay", "save1");
+		Service.Get("state").gotoState("newgame", "save1");
 	}
 	onBtnNew2() {
-		Service.Get("state").gotoState("gameplay", "save2");
+		Service.Get("state").gotoState("newgame", "save2");
 	}
 	onBtnNew3() {
-		Service.Get("state").gotoState("gameplay", "save3");
+		Service.Get("state").gotoState("newgame", "save3");
 	}
 	onBtnNew4() {
-		Service.Get("state").gotoState("gameplay", "save4");
+		Service.Get("state").gotoState("newgame", "save4");
 	}
 
 	onBtnDel0() {
