@@ -3,6 +3,10 @@ class SurvivorSheetModalView extends ModalView {
     constructor(survivorModel) {
         super(750, 600)
 
+        this.lblName = null
+        this.valSurvival = null
+        this.valLimit = null
+
         this.pModel = survivorModel
         // name 
         this.lblName = new NodeView() 
@@ -17,25 +21,24 @@ class SurvivorSheetModalView extends ModalView {
         male.snapToRightCenterOfSibling(this.lblName, 50)
         female.snapToRightCenterOfSibling(male, 5)
 
-        var boxSurvival = new NodeView()
-        var sizeH = 20
-        boxSurvival.setPolygon([ new Vec2D(-sizeH, -sizeH), new Vec2D(sizeH, -sizeH), new Vec2D(sizeH,sizeH), new Vec2D(-sizeH, sizeH) ], "#000000", "#FFFFFF" )
-        boxSurvival.size.setVal(sizeH * 2, sizeH * 2)
-        this.addChild(boxSurvival)
-        boxSurvival.snapToBottomOfSibling(this.lblName, 35)
-        boxSurvival.snapToLeftOfParent(20)
+        var survival = this._createValueBox("Survival", 40, "99")
+        this.addChild(survival.root)
+        survival.root.snapToBottomOfSibling(this.lblName, 35)
+        survival.root.snapToLeftOfParent(20)
+        this.valSurvival = survival.val
+        //todo: add survival "lock" icon
 
+        var limit = this._createValueBox("Limit", 20, "99")
+        this.addChild(limit.root)
+        limit.root.snapToRightCenterOfSibling(survival.root, 10)
+        this.valLimit = limit.val
 
-        this.valSurvival = new NodeView()
-        this.valSurvival.setLabel("99", "24px Arial", "#FFFFFF")
-        boxSurvival.addChild(this.valSurvival)
-        this.valSurvival.pos.y += 10
+        var actions = new NodeView()
+        actions.setRect(100, 100, "#FFFFFF")
 
-        var lblSurvival = new NodeView() 
-        lblSurvival.setLabel("Survival", "12px Arial", "#FFFFFF")
-        this.addChild(lblSurvival)
-        lblSurvival.snapToTopCenterOfSibling(boxSurvival, 5)
+        this.addChild(actions)
         
+
 
         this.updateFromModel()
     }
@@ -47,6 +50,31 @@ class SurvivorSheetModalView extends ModalView {
         //todo; toggle survival "lock"
     }
 
+    // return { root:RootNode, val:ValueNode }
+    _createValueBox(name, size, value) {
+        var boxSurvival = new NodeView()
+        var sizeH = size/2
+        boxSurvival.setPolygon([ new Vec2D(-sizeH, -sizeH), new Vec2D(sizeH, -sizeH), new Vec2D(sizeH,sizeH), new Vec2D(-sizeH, sizeH) ], "#000000", "#FFFFFF" )
+        boxSurvival.size.setVal(sizeH * 2, sizeH * 2)
+        //this.addChild(boxSurvival)
+
+        var f1 = "24px Arial", f2 = "12px Arial"
+        if (size < 40) {
+            f1 = "12px Arial", f2 = "10px Arial"
+        }
+
+        var valSurvival = new NodeView()
+        valSurvival.setLabel(value, f1, "#FFFFFF")
+        boxSurvival.addChild(valSurvival)
+        valSurvival.pos.y += size/4
+
+        var lblSurvival = new NodeView() 
+        lblSurvival.setLabel(name, f2, "#FFFFFF")
+        boxSurvival.addChild(lblSurvival)
+        lblSurvival.snapToTopCenterOfParent(0, -(lblSurvival.size.y/2 + 5))
+
+        return { "root":boxSurvival, "val":valSurvival }
+    }
 
     _createChoiceBox(label, selected, font) {
         var choiceBox = new NodeView()
