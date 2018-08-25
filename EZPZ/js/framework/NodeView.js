@@ -318,6 +318,22 @@ class NodeView extends BaseListener {
 		offset = offset || 0
 		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
 	}
+	snapToRightCenterOfSibling(sibling, offset) {
+		this.snapToRightOfSibling(sibling, offset)
+		this.snapToSiblingY(sibling, 0)
+	}
+	snapToLeftCenterOfSibling(sibling, offset) {
+		this.snapToLeftOfSibling(sibling, offset)
+		this.snapToSiblingY(sibling, 0)
+	}
+	snapToTopCenterOfSibling(sibling, offset) {
+		this.snapToTopOfSibling(sibling, offset) 
+		this.snapToSiblingX(sibling, 0)
+	}
+	snapToBottomCenterOfSibling(sibling, offset) {
+		this.snapToBottomOfSibling(sibling, offset) 
+		this.snapToSiblingX(sibling, 0)
+	}
 	snapToSiblingY(sibling, offset) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
 		offset = offset || 0

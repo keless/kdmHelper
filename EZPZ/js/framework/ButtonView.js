@@ -10,8 +10,8 @@ class ButtonView extends NodeView {
 		this.state = ButtonView.STATE_NORMAL
 		this.disabled = false
     
-    this.evt = onClickData || {}
-    this.evt["evtName"] = btnID || "btnID"
+    	this.evt = onClickData || {}
+    	this.evt["evtName"] = btnID || "btnID"
 		
 		if (sprite || label) {
 			this._init(sprite, label, labelFont, labelStyle)

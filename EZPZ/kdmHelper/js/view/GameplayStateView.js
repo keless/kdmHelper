@@ -35,25 +35,25 @@ class GameplayStateView extends BaseStateView {
 		playerPanelView.pos.setVal(monsterView.pos.x, screenSize.y - (playerPanelHeight/2))
 		this.rootView.addChild(playerPanelView)
 
-		var BGNodeP1 = new NodeView()
-		BGNodeP1.setImageStretch("gfx/imgs/PLimgOne.png", playerPanelView.size.x/4, 150)
-		BGNodeP1.pos.setVal(-(playerPanelView.size.x * 3/8),0)
-		playerPanelView.addChild(BGNodeP1)
+		var playerPanelImgs = ["gfx/imgs/PLimgOne.png", "gfx/imgs/PLimgTwo.png", "gfx/imgs/PLimgThree.png", "gfx/imgs/PLimgFour.png"]
+		var prev = null
+		var self = this
+		for(var i=0; i<4; i++) {
+			var BGNodePlayer = new NodeView()
+			BGNodePlayer.setImageStretch(playerPanelImgs[i], playerPanelView.size.x/4, playerPanelView.size.y)
+			playerPanelView.addChild(BGNodePlayer)
+			BGNodePlayer.snapToTopLeftOfParent()
+			if (prev != null) {
+				BGNodePlayer.snapToRightOfSibling(prev)
+			}
+			prev = BGNodePlayer
 
-		var BGNodeP2 = new NodeView()
-		BGNodeP2.setImageStretch("gfx/imgs/PLimgTwo.png", playerPanelView.size.x/4, 150)
-		BGNodeP2.pos.setVal(-(playerPanelView.size.x * 1/8),0)
-		playerPanelView.addChild(BGNodeP2)
-
-		var BGNodeP3 = new NodeView()
-		BGNodeP3.setImageStretch("gfx/imgs/PLimgThree.png", playerPanelView.size.x/4, 150)
-		BGNodeP3.pos.setVal((playerPanelView.size.x * 1/8),0)
-		playerPanelView.addChild(BGNodeP3)
-
-		var BGNodeP4 = new NodeView()
-		BGNodeP4.setImageStretch("gfx/imgs/PLimgFour.png", playerPanelView.size.x/4, 150)
-		BGNodeP4.pos.setVal((playerPanelView.size.x * 3/8),0)
-		playerPanelView.addChild(BGNodeP4)
+			if (this.pModel.saveGameID != "test") {
+				// hidden menu option for skipcycle feature
+				var createClickFunction = function(idx) { return ()=> { EventBus.ui.dispatch({"evtName":"showChar", "idx":idx}) } }
+				BGNodePlayer.setClick(createClickFunction(i))
+			}
+		}
 
 
 		var rightSidePanelView = new NodeView()
@@ -200,7 +200,8 @@ class GameplayStateView extends BaseStateView {
 		this.SetListener("btnInnovationTree", this.onBtnInnovationTree)
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
 		this.SetListener("btnMainMenu", this.onBtnMainMenu)
-		this.SetListener("closeModalView", this.onBtnCloseSettlementInfo)
+		this.SetListener("closeModalView", this.onBtnCloseModal)
+		this.SetListener("showChar", this.onBtnShowChar)
 	}
 
 	_makeTokenNode(color) {
@@ -224,9 +225,14 @@ class GameplayStateView extends BaseStateView {
 		Service.Get("state").gotoState("menu");
 	}
 
-	onBtnCloseSettlementInfo(e) {
+	onBtnCloseModal(e) {
 		this.modalView.removeFromParent(true)
 		this.modalView = null
+	}
+
+	onBtnShowChar(e) {
+		this.modalView = new SurvivorSheetModalView( this.pModel.getBattleSurvivorByIdx(e.idx) )
+		this.rootView.addChild(this.modalView)
 	}
 	
 }

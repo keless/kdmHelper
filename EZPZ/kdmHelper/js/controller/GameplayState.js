@@ -14,8 +14,6 @@ class GameplayState extends AppState {
 class GameplayStateModel extends BaseStateModel {
 	constructor( state, saveGameID ) {
 		super()
-		
-
 
 		this.pState = state
 		this.deckAI = null
@@ -26,6 +24,7 @@ class GameplayStateModel extends BaseStateModel {
 		this.settlement = new SettlementModel()
 
 		if (!saveGameID || saveGameID == "test") {
+			this.saveGameID = "test"
 			console.log("load TEST settlement")
 			this._createTestSettlement()
 		} else {
@@ -42,10 +41,13 @@ class GameplayStateModel extends BaseStateModel {
 			}
 		}
 
-		
-
 		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
 		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
+	}
+
+	getBattleSurvivorByIdx( battleIdx ) {
+		//todo: settlement.survivors idx != battleIdx
+		return this.settlement.survivors[battleIdx]
 	}
 
 	createNewSettlement() {
