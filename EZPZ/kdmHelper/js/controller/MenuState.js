@@ -45,7 +45,7 @@ class MenuStateView extends BaseStateView {
 			btnDelete.snapToRightOfSibling(btnView, 10)
 			btnDelete.snapToSiblingY(btnView)
 
-			if (hasSaveData) {
+			if (hasSaveData && save.settlement) {
 				// basic save game info (year, population, last time played)
 				var timeMS = save.lastPlayed * 1000
 				var time = new Date(timeMS)
@@ -85,8 +85,10 @@ class MenuStateView extends BaseStateView {
 		Service.Get("state").gotoState("gameplay", e.saveGameID);
 	}
 	onBtnDel(e) {
-		var save = Service.Get("sd").clear(e.saveGameID)
-		Service.Get("state").gotoState("menu");
+		if (confirm("Are you sure you want to delete this save?")) {
+			var save = Service.Get("sd").clear(e.saveGameID)
+			Service.Get("state").gotoState("menu");
+		}
 	}
 	
 }
