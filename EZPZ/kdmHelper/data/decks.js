@@ -493,16 +493,14 @@ var g_decks = {
       "set": "starter",
       "location": "waist",
       "armor": 1,
-      "keywords": [
-        "armor"
-      ],
+      "arr_keywords": "armor",
       "img": "gfx/imgs/decks/equipment/starter_cloth.png"
     },
     {
       " name": "Founding Stone",
       "set": "starter",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "melee",
         "stone"
@@ -515,26 +513,24 @@ var g_decks = {
     {
       " name": "Newborn",
       "set": "rare",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "heavy",
         "fragile"
       ],
-      "special": [
-        "irreplaceable"
-      ],
+      "arr_special": "irreplaceable",
       "img": "gfx/imgs/decks/equipment/rare_newborn.png"
     },
     {
       " name": "Blue Lantern",
       "set": "rare",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "lantern",
         "order",
         "other"
       ],
-      "special": [
+      "arr_special": [
         "sentient",
         "cursed"
       ],
@@ -545,20 +541,18 @@ var g_decks = {
       "set": "rare",
       "location": "waist",
       "armor": 1,
-      "keywords": [
+      "arr_keywords": [
         "armor",
         "bone",
         "metal"
       ],
-      "special": [
-        "cursed"
-      ],
+      "arr_special": "cursed",
       "img": "gfx/imgs/decks/equipment/rare_regalfaults.png"
     },
     {
       " name": "Bloodskin",
       "set": "rare",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "consumable",
         "other"
@@ -570,13 +564,13 @@ var g_decks = {
       "set": "rare",
       "location": "head",
       "armor": 1,
-      "keywords": [
+      "arr_keywords": [
         "item",
         "heavy",
         "order",
         "other"
       ],
-      "special": [
+      "arr_special": [
         "unique",
         "irreplaceable",
         "accessory"
@@ -586,13 +580,11 @@ var g_decks = {
     {
       " name": "Final Lantern",
       "set": "rare",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "other"
       ],
-      "special": [
-        "vital"
-      ],
+      "arr_special": "vital",
       "img": "gfx/imgs/decks/equipment/rare_finallantern.png"
     },
     {
@@ -600,13 +592,13 @@ var g_decks = {
       "set": "rare",
       "location": "head",
       "armor": 1,
-      "keywords": [
+      "arr_keywords": [
         "item",
         "mask",
         "metal",
         "other"
       ],
-      "special": [
+      "arr_special": [
         "unique",
         "irreplaceable",
         "accessory"
@@ -616,7 +608,7 @@ var g_decks = {
     {
       " name": "Almanac",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "soluble",
         "flammable"
@@ -626,7 +618,7 @@ var g_decks = {
     {
       " name": "Brain Mint",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "consumable"
       ],
@@ -635,7 +627,7 @@ var g_decks = {
     {
       " name": "Bug Trap",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "soluble"
       ],
@@ -644,7 +636,7 @@ var g_decks = {
     {
       " name": "Elder Earrings",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "jewelry"
       ],
@@ -653,7 +645,7 @@ var g_decks = {
     {
       " name": "First Aid Kit",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "heavy"
       ],
@@ -662,7 +654,7 @@ var g_decks = {
     {
       " name": "Musk Bomb",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "stinky",
         "thrown",
@@ -673,7 +665,7 @@ var g_decks = {
     {
       " name": "Speed Powder",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "soluble"
       ],
@@ -682,20 +674,18 @@ var g_decks = {
     {
       " name": "Scavenger Kit",
       "set": "barber",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "heavy"
       ],
-      "special": [
-        "unique"
-      ],
+      "arr_special": "unique",
       "img": "gfx/imgs/decks/equipment/barber_scavengerkit.png"
     },
     {
       " name": "Bone Club",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "melee",
         "two-handed",
@@ -703,9 +693,7 @@ var g_decks = {
         "club",
         "bone"
       ],
-      "special": [
-        "cumbersome"
-      ],
+      "arr_special": "cumbersome",
       "speed": 2,
       "accuracy": 6,
       "strength": 5,
@@ -715,15 +703,13 @@ var g_decks = {
       " name": "Bone Blade",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "melee",
         "sword",
         "bone"
       ],
-      "special": [
-        "frail"
-      ],
+      "arr_special": "frail",
       "speed": 2,
       "accuracy": 6,
       "strength": 2,
@@ -733,15 +719,13 @@ var g_decks = {
       " name": "Bone Darts",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "ranged",
         "thrown",
         "bone"
       ],
-      "special": [
-        "frail"
-      ],
+      "arr_special": "frail",
       "speed": 1,
       "accuracy": 7,
       "strength": 3,
@@ -752,15 +736,13 @@ var g_decks = {
       " name": "Bone Pickaxe",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "tool",
         "pickaxe",
         "bone"
       ],
-      "special": [
-        "mineral gathering"
-      ],
+      "arr_special": "mineral gathering",
       "speed": 1,
       "accuracy": 8,
       "strength": 2,
@@ -770,15 +752,13 @@ var g_decks = {
       " name": "Bone Sickle",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "item",
         "tool",
         "sickle",
         "bone"
       ],
-      "special": [
-        "herb gathering"
-      ],
+      "arr_special": "herb gathering",
       "speed": 2,
       "accuracy": 8,
       "strength": 1,
@@ -788,15 +768,13 @@ var g_decks = {
       " name": "Bone Dagger",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "melee",
         "dagger",
         "bone"
       ],
-      "special": [
-        "perfect hit"
-      ],
+      "arr_special": "perfect hit",
       "speed": 3,
       "accuracy": 7,
       "strength": 1,
@@ -806,13 +784,13 @@ var g_decks = {
       " name": "Bone Axe",
       "set": "bone",
       "location": "weapon",
-      "keywords": [
+      "arr_keywords": [
         "weapon",
         "melee",
         "axe",
         "bone"
       ],
-      "special": [
+      "arr_special": [
         "frail",
         "savage"
       ],
@@ -826,12 +804,287 @@ var g_decks = {
       "set": "bone",
       "location": "head",
       "armor": 3,
-      "keywords": [
+      "arr_keywords": [
         "armor",
         "bone",
         "fragile"
       ],
       "img": "gfx/imgs/decks/equipment/bone_skullhelm.png"
+    }
+  ],
+  "HuntResources": [
+    {
+      "name": "Eye of Cat",
+      "monster": "lion",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/lion_eyeofcat.png"
+    },
+    {
+      "name": "Golden Whiskers",
+      "monster": "lion",
+      "arr_keywords": "organ",
+      "img": "gfx/imgs/decks/resources/lion_goldenwhiskers.png"
+    },
+    {
+      "name": "Lion Tail",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_liontail.png"
+    },
+    {
+      "name": "Lion Testes",
+      "monster": "lion",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/lion_liontestes.png"
+    },
+    {
+      "name": "Shimmering Mane",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_shimmeringmane.png"
+    },
+    {
+      "name": "Curios Hand",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "insanity_bonus": 1,
+      "img": "gfx/imgs/decks/resources/lion_curioshand.png"
+    },
+    {
+      "name": "Sinew",
+      "monster": "lion",
+      "arr_keywords": "organ",
+      "img": "gfx/imgs/decks/resources/lion_sinew.png"
+    },
+    {
+      "name": "Sinew",
+      "monster": "lion",
+      "arr_keywords": "organ",
+      "img": "gfx/imgs/decks/resources/lion_sinew.png"
+    },
+    {
+      "name": "Great Cat Bones",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_greatcatbones.png"
+    },
+    {
+      "name": "Great Cat Bones",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_greatcatbones.png"
+    },
+    {
+      "name": "Great Cat Bones",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_greatcatbones.png"
+    },
+    {
+      "name": "Great Cat Bones",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_greatcatbones.png"
+    },
+    {
+      "name": "Lion Claw",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_lionclaw.png"
+    },
+    {
+      "name": "Lion Claw",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_lionclaw.png"
+    },
+    {
+      "name": "Lion Claw",
+      "monster": "lion",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/lion_lionclaw.png"
+    },
+    {
+      "name": "White Fur",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_whitefur.png"
+    },
+    {
+      "name": "White Fur",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_whitefur.png"
+    },
+    {
+      "name": "White Fur",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_whitefur.png"
+    },
+    {
+      "name": "White Fur",
+      "monster": "lion",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/lion_whitefur.png"
+    },
+    {
+      "name": "Skull",
+      "monster": "basic",
+      "arr_keywords": "bone",
+      "insanity_bonus": 1,
+      "img": "gfx/imgs/decks/resources/basic_skull.png"
+    },
+    {
+      "name": "Monster Bone",
+      "monster": "basic",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/basic_monsterbone.png"
+    },
+    {
+      "name": "Monster Bone",
+      "monster": "basic",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/basic_monsterbone.png"
+    },
+    {
+      "name": "Monster Bone",
+      "monster": "basic",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/basic_monsterbone.png"
+    },
+    {
+      "name": "Monster Bone",
+      "monster": "basic",
+      "arr_keywords": "bone",
+      "img": "gfx/imgs/decks/resources/basic_monsterbone.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Monster Hide",
+      "monster": "basic",
+      "arr_keywords": "hide",
+      "img": "gfx/imgs/decks/resources/basic_monsterhide.png"
+    },
+    {
+      "name": "Love Juice",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_lovejuice.png"
+    },
+    {
+      "name": "Love Juice",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_lovejuice.png"
+    },
+    {
+      "name": "Monster Organ",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_monsterorgan.png"
+    },
+    {
+      "name": "Monster Organ",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_monsterorgan.png"
+    },
+    {
+      "name": "Monster Organ",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_monsterorgan.png"
+    },
+    {
+      "name": "???",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "bone",
+        "hide",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_misc.png"
+    },
+    {
+      "name": "???",
+      "monster": "basic",
+      "arr_keywords": [
+        "organ",
+        "bone",
+        "hide",
+        "consumable"
+      ],
+      "img": "gfx/imgs/decks/resources/basic_misc.png"
+    },
+    {
+      "name": "Broken Lantern",
+      "monster": "basic",
+      "arr_keywords": "scrap",
+      "img": "gfx/imgs/decks/resources/basic_brokenlantern.png"
+    },
+    {
+      "name": "Broken Lantern",
+      "monster": "basic",
+      "arr_keywords": "scrap",
+      "img": "gfx/imgs/decks/resources/basic_brokenlantern.png"
     }
   ],
   "Innovations": [
@@ -842,7 +1095,7 @@ var g_decks = {
     },
     {
       "name": "Ammonia",
-      "unlocks": [
+      "arr_unlocks": [
         "Bloodletting",
         "Lantern Oven"
       ],
@@ -897,7 +1150,7 @@ var g_decks = {
     },
     {
       "name": "Drums",
-      "unlocks": [
+      "arr_unlocks": [
         "Forbidden Dance",
         "Song of the Brave"
       ],
@@ -911,9 +1164,7 @@ var g_decks = {
     },
     {
       "name": "Family",
-      "unlocks": [
-        "Clan of Death"
-      ],
+      "arr_unlocks": "Clan of Death",
       "type": "home",
       "departing_bonus": 1,
       "img": "gfx/imgs/decks/innovations/family.png"
@@ -926,9 +1177,7 @@ var g_decks = {
     },
     {
       "name": "Forbidden Dance",
-      "unlocks": [
-        "Heart Flute"
-      ],
+      "arr_unlocks": "Heart Flute",
       "type": "music",
       "img": "gfx/imgs/decks/innovations/forbiddendance.png"
     },
@@ -950,7 +1199,7 @@ var g_decks = {
     },
     {
       "name": "Hovel",
-      "unlocks": [
+      "arr_unlocks": [
         "Bed",
         "Family",
         "Partnership"
@@ -962,7 +1211,7 @@ var g_decks = {
     },
     {
       "name": "Inner Lantern",
-      "unlocks": [
+      "arr_unlocks": [
         "Shrine",
         "Scarification"
       ],
@@ -971,7 +1220,7 @@ var g_decks = {
     },
     {
       "name": "Language",
-      "unlocks": [
+      "arr_unlocks": [
         "Ammonia",
         "Inner Lantern",
         "Hovel",
@@ -985,7 +1234,7 @@ var g_decks = {
     },
     {
       "name": "Lantern Oven",
-      "unlocks": [
+      "arr_unlocks": [
         "Cooking",
         "Scrap Smelting"
       ],
@@ -1004,7 +1253,7 @@ var g_decks = {
     },
     {
       "name": "Paint",
-      "unlocks": [
+      "arr_unlocks": [
         "Face Painting",
         "Pictograph",
         "Sculpture"
@@ -1019,9 +1268,7 @@ var g_decks = {
     },
     {
       "name": "Pictograph",
-      "unlocks": [
-        "Momento Mori"
-      ],
+      "arr_unlocks": "Momento Mori",
       "type": "art",
       "img": "gfx/imgs/decks/innovations/pictograph.png"
     },
@@ -1068,33 +1315,25 @@ var g_decks = {
     },
     {
       "name": "Sculpture",
-      "unlocks": [
-        "Pottery"
-      ],
+      "arr_unlocks": "Pottery",
       "type": "art",
       "img": "gfx/imgs/decks/innovations/sculpture.png"
     },
     {
       "name": "Shrine",
-      "unlocks": [
-        "Sacrifice"
-      ],
+      "arr_unlocks": "Sacrifice",
       "type": "faith",
       "img": "gfx/imgs/decks/innovations/shrine.png"
     },
     {
       "name": "Song of the Brave",
-      "unlocks": [
-        "Saga"
-      ],
+      "arr_unlocks": "Saga",
       "type": "music",
       "img": "gfx/imgs/decks/innovations/songofthebrave.png"
     },
     {
       "name": "Storytelling",
-      "unlocks": [
-        "Records"
-      ],
+      "arr_unlocks": "Records",
       "type": "education",
       "survival_bonus": 1,
       "img": "gfx/imgs/decks/innovations/storytelling.png"
@@ -1107,7 +1346,7 @@ var g_decks = {
     },
     {
       "name": "Symposium",
-      "unlocks": [
+      "arr_unlocks": [
         "Storytelling",
         "Nightmare Training"
       ],
@@ -1151,9 +1390,7 @@ var g_decks = {
       "basic": 10,
       "advanced": 5,
       "legendary": 0,
-      "special": [
-        "cunning"
-      ],
+      "arr_special": "cunning",
       "mov": 7,
       "tgh": 10,
       "spd": 1,
@@ -1165,7 +1402,7 @@ var g_decks = {
       "basic": 10,
       "advanced": 9,
       "legendary": 2,
-      "special": [
+      "arr_special": [
         "cunning",
         "merciless",
         "indomitable"
@@ -1181,9 +1418,7 @@ var g_decks = {
       "basic": 7,
       "advanced": 3,
       "legendary": 0,
-      "special": [
-        "trample"
-      ],
+      "arr_special": "trample",
       "mov": 6,
       "tgh": 8,
       "spd": 0,
@@ -1195,7 +1430,7 @@ var g_decks = {
       "basic": 10,
       "advanced": 5,
       "legendary": 0,
-      "special": [
+      "arr_special": [
         "trample",
         "diabolical"
       ],
@@ -1210,7 +1445,7 @@ var g_decks = {
       "basic": 12,
       "advanced": 8,
       "legendary": 1,
-      "special": [
+      "arr_special": [
         "trample",
         "diabolical",
         "hypermetabolism",

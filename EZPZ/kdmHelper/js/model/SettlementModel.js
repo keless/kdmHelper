@@ -28,7 +28,7 @@ class SettlementModel {
 
     _testCreateResources() {
         this.resources.push( { name:"Monster Bone", count:5 })
-        this.resources.push( { name:"Organ", count:1 })
+        this.resources.push( { name:"Monster Organ", count:1 })
         this.resources.push( { name:"???", count:1 })
     }
 

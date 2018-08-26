@@ -32,7 +32,7 @@ class DeckModel extends EventBus {
     return this.cards[this.cards.length -1]
   }
 
-  // returns count number of CardModels removing them from the top of the deck
+  // returns min(count, cards.length) number of CardModels removing them from the top of the deck
   drawXCards(count) {
     if (count > this.cards.length) {
       console.warn("drawXCards asked to remove more cards than exist in the deck")
@@ -40,6 +40,10 @@ class DeckModel extends EventBus {
     var drawnCards = this.cards.splice(0, count)
     this.dispatch("updated")
     return drawnCards
+  }
+
+  clearDeck() {
+    this.cards = []
   }
 
   // place a card  on "top" of deck-- should NOT already be in the deck
@@ -51,6 +55,13 @@ class DeckModel extends EventBus {
     this.cards.push(card)
     console.log("placed card on top " + card.name)
     this.dispatch("updated")
+  }
+
+  shuffleInDiscardPile( discardPile ) {
+    this.cards.concat( discardPile.cards )
+    discardPile.clearDeck()
+    
+    this.shuffleDeck()
   }
 
   /// Utility functions

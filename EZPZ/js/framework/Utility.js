@@ -117,7 +117,7 @@ function CreateSimpleImageButton( strLabel, img, strEvt, bus ) {
   var btn = new NodeView();
   btn.setImage(img);
   if(strLabel) {
-    btn.setLabel(strLabel, "14px Arial");
+    btn.setLabel(strLabel, "14px Arial", "#FFFFFF");
   }
   btn.setClick(function(){
     bus.dispatch({evtName:strEvt, from:btn});
@@ -197,6 +197,12 @@ function CreateSimpleEditBox( strMsg, strDefaultTxt, strBtnLabel, okEvt, strBus 
   pop.addChild(label);
   
   //TODO: how to text field
+
+  var editBox = new NodeView()
+  editBox.setTextInput(btn.size.x * 2, btn.size.y * 2)
+
+  pop.editBox = editBox
+
   return pop;
 }
 
