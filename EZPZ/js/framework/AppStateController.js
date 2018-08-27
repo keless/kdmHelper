@@ -92,6 +92,14 @@ class BaseStateView extends BaseListener {
 	constructor() {
 		super();
 		this.rootView = new NodeView();
+
+		// set size of screen
+		var screenSize = Graphics.ScreenSize
+		this.rootView.size.setVec(screenSize)
+		if (Service.Get("gfx").drawCentered) {
+			this.rootView.pos.setVal( screenSize.x/2, screenSize.y/2 )
+		}
+		
 	}
 	
 	Destroy() {

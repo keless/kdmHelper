@@ -6,7 +6,7 @@ class ModalView extends NodeView {
         var screenSize = Graphics.ScreenSize
         this.setRect(screenSize.x, screenSize.y, "rgba(0,0,0,0.45)")
         //this.size.setVec(screenSize)
-        this.pos.setVal(this.size.x/2, this.size.y/2)
+        //this.pos.setVal(this.size.x/2, this.size.y/2)
         this.setClick(()=>{ self.onBtnClose() }, true, true)
 
         this.contentView = new NodeView()

@@ -44,7 +44,6 @@ class GameplayStateModel extends BaseStateModel {
 			}
 		}
 
-		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
 		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
 	}
 
@@ -91,18 +90,6 @@ class GameplayStateModel extends BaseStateModel {
 		this.deckHL.createDeckForMonster(monsterName)
 	}
 
-	onHLDeckClicked(e) {
-		console.log("hit location deck clicked")
-		//pull a cardout of HL and discard it
-		if (this.deckHL.getNumCards() > 0) {
-			var card = this.deckHL.drawXCards(1)[0]
-			card.faceUp = true
-			this.deckHLDiscard.placeOnTop(card)
-		} else {
-			console.log("deck empty, aborting")
-		}
-	}
-
 	onAIDeckClicked(e) {
 		console.log("AI deck clicked")
 		//pull a cardout of HL and discard it
@@ -117,7 +104,7 @@ class GameplayStateModel extends BaseStateModel {
 
 	// functions for wound flow substates to call
 	drawHitLocations(numHits) {
-		var drawnCards = drawXCardsFromDeckShufflingDiscardIfNeccessary(numHits, this.deckHL, this.deckHLDiscard)
+		var drawnCards = this.drawXCardsFromDeckShufflingDiscardIfNeccessary(numHits, this.deckHL, this.deckHLDiscard)
 
 		if (drawnCards.length != numHits) {
 			console.error("drawHitLocations failed to return as many cards as requested " + drawnCards.length + " vs " + numHits)

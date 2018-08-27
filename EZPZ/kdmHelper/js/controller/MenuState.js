@@ -13,7 +13,7 @@ class MenuStateView extends BaseStateView {
 
 		// loads a specific test settlement
 		var btnTest = new ButtonView("btnTest", "gfx/ui/btn_blue.sprite", "Test");
-		btnTest.pos.setVal(150, 150);
+		btnTest.pos.setVal(-150, -150);
 		this.rootView.addChild(btnTest);
 		//btnTest.snapToBottomOfSibling(btnNew, 10)
 		//btnTest.snapToSiblingX(btnNew)

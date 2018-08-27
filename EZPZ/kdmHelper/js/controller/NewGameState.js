@@ -17,7 +17,6 @@ class NewGameStateView extends BaseStateView {
         this.rootView.addChild(bg)
         bg.snapToTopLeftOfParent()
 
-
         var text = new NodeView()
         text.setLabel("intro story blah blah")
         bg.addChild(text)

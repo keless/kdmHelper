@@ -12,8 +12,8 @@ class GameplayStateView extends BaseStateView {
 		var monsterView = new NodeView()
 		//monsterView.setRect(924, 600, "#00FF00")
 		monsterView.size.setVal(924, screenSize.y - playerPanelHeight)
-		monsterView.pos.setVal(monsterView.size.x/2, monsterView.size.y/2) //874, 553
 		this.rootView.addChild(monsterView)
+		monsterView.snapToTopLeftOfParent()
 		this.monsterView = monsterView
 		
 		this.deckViewAI = null
@@ -32,8 +32,10 @@ class GameplayStateView extends BaseStateView {
 		var playerPanelView = new NodeView()
 		//playerPanelView.setRect(monsterView.size.x, playerPanelHeight, "#FF00FF")
 		playerPanelView.size.setVal(monsterView.size.x, playerPanelHeight)
-		playerPanelView.pos.setVal(monsterView.pos.x, screenSize.y - (playerPanelHeight/2))
+		//playerPanelView.pos.setVal(monsterView.pos.x, screenSize.y - (playerPanelHeight/2))
 		this.rootView.addChild(playerPanelView)
+		playerPanelView.snapToBottomOfSibling(this.monsterView)
+		playerPanelView.snapToLeftOfParent()
 
 		var playerPanelImgs = ["gfx/imgs/PLimgOne.png", "gfx/imgs/PLimgTwo.png", "gfx/imgs/PLimgThree.png", "gfx/imgs/PLimgFour.png"]
 		var prev = null
@@ -58,8 +60,9 @@ class GameplayStateView extends BaseStateView {
 
 		var rightSidePanelView = new NodeView()
 		rightSidePanelView.size.setVal( screenSize.x - monsterView.size.x, screenSize.y )
-		rightSidePanelView.pos.setVal(screenSize.x - (rightSidePanelView.size.x/2), screenSize.y/2 )
+		//rightSidePanelView.pos.setVal(screenSize.x - (rightSidePanelView.size.x/2), screenSize.y/2 )
 		this.rootView.addChild(rightSidePanelView)
+		rightSidePanelView.snapToRightOfSibling(this.monsterView)
 
 		var BGNodeRS = new NodeView()
 		BGNodeRS.setImageStretch("gfx/imgs/REimgEX.png", rightSidePanelView.size.x, rightSidePanelView.size.y)
@@ -193,15 +196,17 @@ class GameplayStateView extends BaseStateView {
 			rightSidePanelView.addChild(tokenNode)
 		}
 
-		this._addButton("btnInnovationTree", "I", (screenSize.x - 50), (screenSize.y - 150), "gfx/ui/btn_white_sm.sprite" )
-		this._addButton("btnSettlementInfo", "S", (screenSize.x - 50), (screenSize.y - 100), "gfx/ui/btn_white_sm.sprite" )
-		this._addButton("btnMainMenu", "M", (screenSize.x - 50), (screenSize.y - 50), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnInnovationTree", "I", (screenSize.x/2 - 50), (screenSize.y/2 - 150), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnSettlementInfo", "S", (screenSize.x/2 - 50), (screenSize.y/2 - 100), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnMainMenu", "M", (screenSize.x/2 - 50), (screenSize.y/2 - 50), "gfx/ui/btn_white_sm.sprite" )
 
 		this.SetListener("btnInnovationTree", this.onBtnInnovationTree)
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
 		this.SetListener("btnMainMenu", this.onBtnMainMenu)
 		this.SetListener("closeModalView", this.onBtnCloseModal)
 		this.SetListener("showChar", this.onBtnShowChar)
+
+		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
 	}
 
 	_makeTokenNode(color) {
@@ -212,13 +217,11 @@ class GameplayStateView extends BaseStateView {
 	}
 
 	onBtnInnovationTree(e) {
-		this.modalView = new InnovationTreeModalView( this.pModel.settlement )
-		this.rootView.addChild(this.modalView)
+		this._setModal( new InnovationTreeModalView( this.pModel.settlement ) )
 	}
 
 	onBtnSettlementInfo(e) {
-		this.modalView = new SettlementInfoModalView( this.pModel.settlement )
-		this.rootView.addChild(this.modalView)
+		this._setModal( new SettlementInfoModalView( this.pModel.settlement ) )
 	}
 
 	onBtnMainMenu(e) {
@@ -226,13 +229,29 @@ class GameplayStateView extends BaseStateView {
 	}
 
 	onBtnCloseModal(e) {
+		this._clearModal()
+	}
+
+	onBtnShowChar(e) {
+		this._setModal(new SurvivorSheetModalView( this.pModel.getBattleSurvivorByIdx(e.idx)))
+	}
+
+	onHLDeckClicked(e) {
+		//start wound monster flow
+		this._setModal(new MonsterWoundFlowModalView(this.pModel))
+	}
+	
+	_clearModal() {
 		this.modalView.removeFromParent(true)
 		this.modalView = null
 	}
 
-	onBtnShowChar(e) {
-		this.modalView = new SurvivorSheetModalView( this.pModel.getBattleSurvivorByIdx(e.idx) )
-		this.rootView.addChild(this.modalView)
+	_setModal(newModal) {
+		if (this.modalView != null) {
+			console.warn("setting modal when one is already present")
+		}
+		this.modalView = newModal
+		this.rootView.addChild(newModal)
 	}
-	
+
 }
