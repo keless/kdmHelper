@@ -1,6 +1,8 @@
 class ModalView extends NodeView {
-    constructor(w, h) {
+    constructor(w, h, fillStyle) {
         super()
+
+        fillStyle = fillStyle || "#222222"
 
         // Make modal: size of whole screen, and eats clicks
         var screenSize = Graphics.ScreenSize
@@ -10,7 +12,7 @@ class ModalView extends NodeView {
         this.setClick(()=>{ self.onBtnClose() }, true, true)
 
         this.contentView = new NodeView()
-        this.contentView.setRect(w, h, "#222222")
+        this.contentView.setRect(w, h, fillStyle)
         var self = this
         this.contentView.eatClicks()
         super.addChild(this.contentView)

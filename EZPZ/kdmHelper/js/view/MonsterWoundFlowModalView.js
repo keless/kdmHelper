@@ -1,6 +1,6 @@
 class MonsterWoundFlowModalView extends ModalView {
   constructor(battleStateModel) {
-    super(750, 600)
+    super(750, 600, "rgba(0,0,0, 0.0)")
 
     this.monsterName = battleStateModel.monsterName
     this.monsterLevel = battleStateModel.monsterLevel
@@ -67,7 +67,9 @@ var MWF_STATE = Object.freeze({
 
 class MWF_AskNumHits extends ModalView {
   constructor(MWF) {
-    super(400, 400)
+
+    var screenSize = Graphics.ScreenSize
+    super(screenSize.x, screenSize.y, "rgba(0, 0, 0, 0.001)")
 
     this.topState = MWF
 
@@ -80,18 +82,49 @@ class MWF_AskNumHits extends ModalView {
     this.addChild(label)
     label.snapToTopOfParent(10)
 
+    /*
     this.btnDraw = CreateSimpleButton("Draw", "btnDraw")
     this.addChild(this.btnDraw)
     this.btnDraw.snapToBottomOfSibling(label)
     this.btnDraw.snapToLeftOfParent(50)
+    */
+
+    //HL deck - place it the same way GameplayStateView places it
+    var playerPanelHeight = 150
+		var monsterView = new NodeView()
+		monsterView.size.setVal(924, screenSize.y - playerPanelHeight)
+		this.addChild(monsterView)
+		monsterView.snapToTopLeftOfParent()
+		this.monsterView = monsterView
+
+		var deckHitNode = new NodeView()
+		deckHitNode.size.setVal( 112, 177)
+		deckHitNode.pos.setVal(-396, 0) 
+		this.monsterView.addChild(deckHitNode)
+
+    this.deckViewHL = new DeckView(this.topState.pBattleStateModel.deckHL, "gfx/imgs/WLimgHLBack.png")
+    deckHitNode.addChild(this.deckViewHL)
+
+
+    this.deckViewHL.setClick(()=>{
+			EventBus.ui.dispatch("btnDraw")
+		})
+
+
 
     this.btnDone = CreateSimpleButton("Done", "btnDone")
     this.addChild(this.btnDone)
     this.btnDone.snapToBottomOfSibling(label)
-    this.btnDone.snapToRightOfParent(50)
+    this.btnDone.snapToRightOfParent(-50)
 
     this.SetListener("btnDraw", this.onBtnDraw)
     this.SetListener("btnDone", this.onBtnDone)
+
+    //initiate first click immediately
+    setTimeout(()=>{
+      this.onBtnDraw()
+    })
+    
   }
 
   onBtnDraw() {
@@ -104,13 +137,20 @@ class MWF_AskNumHits extends ModalView {
     cardModel.faceUp = true
     var cardView = new CardView(cardModel, "gfx/imgs/WLimgHLBack.png") //todo: determine this algorithmically
     this.addChild(cardView)
-    cardView.snapToRightOfParent( cardView.size.x ) //start off screen
-    //cardView.snapToBottomOfSibling(this.btnDraw, 50)
+    //cardView.pos.setVal(- this.size.x/2, 0) //start off screen (left)
+
+    var screenSize = Graphics.ScreenSize
+    var adjustedPos = this.deckViewHL.worldPosition
+    adjustedPos.x -= screenSize.x/2
+    adjustedPos.y -= screenSize.y/2
+
+    cardView.pos.setVec( adjustedPos )
+
 
     //animate card view in
-    var end = -(cardView.parent.size.x/2 - 50)
-    var offset = this.cardModels.length * 20
-    cardView.tweenPos(1, new Vec2D(end + offset, 0)) //todo: offset by num of cards
+    var end = -(cardView.parent.size.x/2 - 150)
+    var offset = this.cardModels.length * 50
+    cardView.tweenPos(0.4, new Vec2D(end + offset, getRand(-50, 50))) //todo: offset by num of cards
 
   }
 
