@@ -16,6 +16,9 @@ class SettlementModel {
         this.locations = []
         this.improvements = []
         this.innovations = []
+        this.actions = []
+
+        this.serializeSimpleValues = ["name", "year", "survivalLimit", "departingSurvival", "resources", "gear", "locations", "actions", "improvements", "innovations"]
     }
 
     _testCreateSurvivors() {
@@ -74,6 +77,30 @@ class SettlementModel {
         return this.hasInnovation(INNOVATIONS.barbaric) || this.hasInnovation(INNOVATIONS.romantic)
     }
 
+    hasAction( action ) {
+        return this.actions.includes(action)
+    }
+
+    hasActionEncourage() {
+        return this.hasAction(ACTIONS.encourage)
+    }
+
+    hasActionSurge() {
+        return this.hasAction(ACTIONS.surge)
+    }
+
+    hasActionEndure() {
+        return this.hasAction(ACTIONS.endure)
+    }
+
+    hasActionDodge() {
+        return this.hasAction(ACTIONS.dodge)
+    }
+
+    hasActionDash() {
+        return this.hasAction(ACTIONS.dash)
+    }
+
     get population() {
         return this.survivors.length
     }
@@ -83,10 +110,8 @@ class SettlementModel {
     }
 
     loadFromJson(json) {
-        this.name = json.name
-        this.year = json.year
-        this.survivalLimit = json.survivalLimit
-        this.departingSurvival = json.departingSurvival
+ 
+        this._setSimpleValues(this, json, this.serializeSimpleValues)
 
         for (var survivorJson of json.survivors) {
             var survivor = new SurvivorModel()
@@ -100,19 +125,12 @@ class SettlementModel {
             this.graveyard.push(grave)
         }
 
-        this.resources = json.resources
-        this.gear = json.gear
-        this.locations = json.locations
-        this.improvements = json.improvements
-        this.innovations = json.innovations
     }
 
     saveToJson() {
         var json = {}
-        json.name = this.name
-        json.year = this.year
-        json.survivalLimit = this.survivalLimit
-        json.departingSurvival = this.departingSurvival
+
+        this._setSimpleValues(json, this, this.serializeSimpleValues)
 
         var survivorsJson = []
         for (var survivor of this.survivors) {
@@ -128,15 +146,28 @@ class SettlementModel {
         }
         json.graveyard = graveyardJson
 
-        json.resources = this.resources
-        json.gear = this.gear
-        json.locations = this.locations
-        json.improvements = this.improvements
-        json.innovations = this.innovations
-
         return json
     }
+
+    _setSimpleValues(toObj, fromObj, arrValues) {
+        for(var value of arrValues) {
+          if (!fromObj.hasOwnProperty(value)) {
+            console.error("cannot _setSimpleValues for missing property " + value)
+            continue
+          }
+    
+          toObj[value] = fromObj[value]
+        }
+      }
 }
+
+SettlementModel.ACTIONS = Object.freeze({
+    "dash":"Dash",
+    "dodge":"Dodge",
+    "encourage":"Encourage",
+    "endure":"Endure",
+    "surge":"Surge"
+})
 
 SettlementModel.INNOVATIONS = Object.freeze({
 

@@ -50,7 +50,7 @@ class GameplayStateView extends BaseStateView {
 			}
 			prev = BGNodePlayer
 
-			if (this.pModel.saveGameID != "test") {
+			if (this.pModel.saveGameID != "test" || true) {
 				// hidden menu option for skipcycle feature
 				var createClickFunction = function(idx) { return ()=> { EventBus.ui.dispatch({"evtName":"showChar", "idx":idx}) } }
 				BGNodePlayer.setClick(createClickFunction(i))
@@ -233,7 +233,7 @@ class GameplayStateView extends BaseStateView {
 	}
 
 	onBtnShowChar(e) {
-		this._setModal(new SurvivorSheetModalView( this.pModel.getBattleSurvivorByIdx(e.idx)))
+		this._setModal(new SurvivorSheetModalView( this.pModel.getBattleSurvivorByIdx(e.idx), this.pModel.settlement ))
 	}
 
 	onHLDeckClicked(e) {

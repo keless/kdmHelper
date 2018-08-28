@@ -255,67 +255,65 @@ class NodeView extends BaseListener {
 		return this.pUser;
 	}
 	
-	snapToLeftOfParent(offset) {
-		offset = offset || 0
+	snapToLeftOfParent(offset = 0) {
 		this.pos.x = -(this.parent.size.x - this.size.x)/2 + offset
 	}
-	snapToRightOfParent(offset) {
-		offset = offset || 0
+	snapToRightOfParent(offset = 0) {
 		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
 	}
-	snapToTopOfParent(offset) {
-		offset = offset || 0
+	snapToTopOfParent(offset = 0) {
 		this.pos.y = -(this.parent.size.y - this.size.y)/2 + offset
 	}
-	snapToXCenterOfParent(offset) {
-		offset = offset || 0
+	snapToXCenterOfParent(offset = 0) {
 		this.pos.x = 0 + offset
 	}
-	snapToYCenterOfParent(offset) {
-		offset = offset || 0
+	snapToYCenterOfParent(offset = 0) {
 		this.pos.y = 0 + offset
 	}
-	snapToTopCenterOfParent(offsetX, offsetY) {
-		offsetY = offsetY || offsetX
+	snapToTopCenterOfParent(offsetX, offsetY = offsetX) {
 		this.snapToXCenterOfParent(offsetX)
 		this.snapToTopOfParent(offsetY)
 	}
-	snapToRightOfParent(offset) {
-		offset = offset || 0
+	snapToRightOfParent(offset = 0) {
 		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
 	}
-	snapToBottomOfParent(offset) {
-		offset = offset || 0
+	snapToBottomOfParent(offset = 0) {
 		this.pos.y = (this.parent.size.y - this.size.y)/2 + offset
 	}
-	snapToTopLeftOfParent(offsetX, offsetY) {
-		offsetY = offsetY || offsetX
+	snapToTopLeftOfParent(offsetX, offsetY = offsetX) {
 		this.snapToLeftOfParent(offsetX)
 		this.snapToTopOfParent(offsetY)
 	}
-	snapToTopOfSibling(sibling, offset) {
+	snapToTopRightOfParent(offsetX, offsetY = offsetX) {
+		this.snapToRightOfParent(offsetX)
+		this.snapToTopOfParent(offsetY)
+	}
+	snapToBottomLeftOfParent(offsetX, offsetY = offsetX) {
+		this.snapToLeftOfParent(offsetX)
+		this.snapToBottomOfParent(offsetY)
+	}
+	snapToBottomRightOfParent(offsetX, offsetY = offsetX) {
+		this.snapToRightOfParent(offsetX)
+		this.snapToBottomOfParent(offsetY)
+	}
+	snapToTopOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.y = sibling.pos.y - ((sibling.size.y + this.size.y)/2) + offset
 	}
-	snapToBottomOfSibling(sibling, offset) {
+	snapToBottomOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.y = sibling.pos.y + ((sibling.size.y + this.size.y)/2) + offset
 	}
-	snapToRightOfSibling(sibling, offset) {
+	snapToRightOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.x = sibling.pos.x + ((sibling.size.x + this.size.x)/2) + offset
 	}
-	snapToLeftOfSibling(sibling, offset) {
+	snapToLeftOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.x = sibling.pos.x - ((sibling.size.x + this.size.x)/2) + offset
 	}
-	snapToBottomOfSibling(sibling, offset) {
+	snapToBottomOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
 	}
 	snapToRightCenterOfSibling(sibling, offset) {
@@ -334,20 +332,17 @@ class NodeView extends BaseListener {
 		this.snapToBottomOfSibling(sibling, offset) 
 		this.snapToSiblingX(sibling, 0)
 	}
-	snapToSiblingY(sibling, offset) {
+	snapToSiblingY(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.y = sibling.pos.y + offset
 	}
-	snapToSiblingX(sibling, offset) {
+	snapToSiblingX(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
 		this.pos.x = sibling.pos.x + offset
 	}
-	alignToLeftOfSibling(sibling, offset) {
+	alignToLeftOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		offset = offset || 0
-		this.pos.x = (sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2)
+		this.pos.x = (sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2) + offset
 	}
 
 	setCircle( radius, fillStyle, strokeStyle ) {
@@ -384,11 +379,15 @@ class NodeView extends BaseListener {
 			this.serializeData.push({"call":"setPolygon", "arrVerts":arrVerts, "fill":fill, "stroke":stroke, "strokeSize":strokeSize})
 		}
 		var self = this;
+		this.polyFill = fill
 		this.fnCustomDraw.push(function(gfx,x,y,ct) {
 			if(self.alpha != 1.0) gfx.setAlpha(self.alpha);
-			gfx.drawPolygonEx(arrVerts, fill, stroke, strokeSize );
+			gfx.drawPolygonEx(arrVerts, self.polyFill, stroke, strokeSize );
 			if(self.alpha != 1.0) gfx.setAlpha(1.0);
 		});
+	}
+	updatePolygonFill( fill ) {
+		this.polyFill = fill
 	}
 	setImage( image ) {
 		if (this.serializable) {
