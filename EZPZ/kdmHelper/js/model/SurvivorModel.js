@@ -7,11 +7,14 @@ class SurvivorModel {
 
     this.fightingArts = [] //string array
     this.disorders = [] //string array
+    this.permanentInjuries = []
+    this.abilities = []
 
-    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders"]
+    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders", "permanentInjuries", "abilities"]
 
     //unserialized variables
     this.tokens = []
+    this.temporaryInjuries = []
   }
 
   calculateMovement() {

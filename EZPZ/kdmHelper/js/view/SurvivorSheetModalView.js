@@ -158,7 +158,77 @@ class SurvivorSheetModalView extends ModalView {
         this.valLegsL = legs.lval
         this.valLegsH = legs.hval
 
+        //courage + understanding
+        
+        //weapon proficiency
+
+        //injuries/impairments
+        var injuries = this._createList("Impairments", 6)
+        this.addChild(injuries.root)
+        injuries.root.snapToBottomRightOfParent()
+        this.valInjuries = injuries.slots
+
+        //disorders
+        var disorders = this._createList("Disorders", 3)
+        this.addChild(disorders.root)
+        disorders.root.snapToRightOfParent()
+        disorders.root.snapToTopOfSibling(injuries.root)
+        this.valDisorders = disorders.slots
+
+        //abilities
+        var abilities = this._createList("Abilities", 4)
+        this.addChild(abilities.root)
+        abilities.root.snapToBottomRightOfParent()
+        abilities.root.snapToTopOfSibling(disorders.root)
+        this.valAbilities = abilities.slots
+
+        //fighting arts
+        var fa = this._createList("Fighting Arts", 3)
+        this.addChild(fa.root)
+        fa.root.snapToRightOfParent()
+        fa.root.snapToTopOfSibling(abilities.root)
+        this.valFightingArts = fa.slots
+        
+        //gear grid
+        this.gearGrid = new GearGridView(this.pModel)
+        this.addChild(this.gearGrid)
+        this.gearGrid.snapToBottomLeftOfParent(100, 0)
+
         this.updateFromModel()
+    }
+
+    _createList(label, numSlots) {
+        var node = new NodeView()
+        var width = 300
+
+        var sizeP = 20
+        node.size.setVal(width, sizeP + numSlots*sizeP)
+
+        var lbl = new NodeView()
+        lbl.setLabel(label, this.font2, "#FFFFFF")
+        node.addChild(lbl)
+        lbl.snapToTopLeftOfParent()
+
+        var slots = []
+        var prev = lbl
+        for (var i=0; i<numSlots; i++) {
+            var val = new NodeView()
+            val.setLabel("some long value " + i, this.font1, "#FFFFFF")
+            node.addChild(val)
+            val.snapToBottomOfSibling(prev, 5)
+            val.snapToLeftOfParent()
+
+            slots.push(val)
+
+            var hr = new NodeView()
+            hr.setPolygon([ new Vec2D(-width/2, 0), new Vec2D(width/2, 0) ], null, "#FFFFFF", 1)
+            node.addChild(hr)
+            hr.snapToBottomOfSibling(val)
+
+            prev = val
+        }
+
+        return { "root":node, "slots": slots }
     }
 
     _createAttributeBox(lbl, sibling ) {
@@ -172,6 +242,7 @@ class SurvivorSheetModalView extends ModalView {
     updateFromModel() {
         this.lblName.updateLabel(this.pModel.name)
         this.valSurvival.updateLabel(this.pModel.survivalPts) //todo; toggle survival "lock"
+        this.valLimit.updateLabel(this.pSettlementModel.survivalLimit)
         this.valMovement.updateLabel(this.pModel.calculateMovement())
         this.valAccuracy.updateLabel(this.pModel.calculateAccuracy())
         this.valStrength.updateLabel(this.pModel.calculateStrength())
@@ -200,6 +271,37 @@ class SurvivorSheetModalView extends ModalView {
 
         this.valLegsL.updatePolygonFill( this.pModel.isWoundedLight(SurvivorModel.LOCATIONS.legs) ? "#FFFFFF" : "rgba(0,0,0,0)" )
         this.valLegsH.updatePolygonFill( this.pModel.isWoundedHeavy(SurvivorModel.LOCATIONS.legs) ? "#FFFFFF" : "rgba(0,0,0,0)" )
+
+        var injuries = this.pModel.permanentInjuries
+        var tempInjuries = this.pModel.temporaryInjuries
+        injuries.concat(tempInjuries)
+        this._updateListValues(injuries, 6, this.valInjuries)
+
+   
+        var disorders = this.pModel.disorders
+        this._updateListValues(disorders, 3, this.valDisorders)
+
+        var abilities = this.pModel.abilities
+        this._updateListValues(abilities, 4, this.valAbilities)
+
+        var fightingArts = this.pModel.fightingArts
+        for (var i=0; i<3; i++) {
+            if (i >= fightingArts.length) {
+                this.valFightingArts[i].updateLabel("")
+            } else {
+                this.valFightingArts[i].updateLabel(fightingArts[i])
+            }
+        }
+    }
+
+    _updateListValues( list, num, values ) {
+        for (var i=0; i<num; i++) {
+            if (i >= list.length) {
+                values[i].updateLabel("")
+            } else {
+                values[i].updateLabel(list[i])
+            }
+        }
     }
 
     _createArmorBox(name, makeLightBox, makeHeavyBox) { //, size, value) {
