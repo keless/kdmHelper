@@ -9,6 +9,7 @@ class CardView extends NodeView {
 
     // CardViews always start "face down"
     this.loadBack(backImgName)
+    this.size.setVec(this.sprBack.size)
     this.loadFront()
 
     if (this.pModel.faceUp) {

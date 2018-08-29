@@ -13,7 +13,7 @@ class MonsterWoundFlowModalView extends ModalView {
   }
 
   // flow controller code
-  gotoSubstate(substate) {
+  gotoSubstate(substate, params) {
     switch(substate) {
       case MWF_STATE.ASK_NUM_HITS: {
         this._setModal( new MWF_AskNumHits( this ) )
@@ -22,27 +22,40 @@ class MonsterWoundFlowModalView extends ModalView {
         //xxx todo
       }break;
       case MWF_STATE.SELECT_ORDER: {
-        //xxx todo
+        this._setModal( new MWF_OrderHits(this, params[0], params[1]) )
       }break;
+      case MWF_STATE.RESOLVE_HITS: {
+        //xxx todo
+      }
     }
   }
 
 
-  onAskNumHitsComplete( drawnCards ) {
+  onAskNumHitsComplete( drawnCards, cardViews, trapDrawn ) {
+    //detatch from root
+    for (var cv of cardViews) {
+      cv.removeFromParent( trapDrawn ) // send false here if !trap because we want to keep them alive to attach to a new parent
+    }
+
     this._clearModal()
 
     console.log("onAskNumHitsComplete - got " + drawnCards.length + " cards")
 
-    var hasTrap = drawnCards.find((e)=>{ return e.hasOwnProperty("trap") })
+    var hasTrap = trapDrawn //drawnCards.find((e)=>{ return e.hasOwnProperty("trap") })
     if (hasTrap) {
       console.log(" -- TRAP!! --")
       //2) if trap card, goto: TRAP_HAPPENED
       this.gotoSubstate(MWF_STATE.TRAP_HAPPENED)
     } else {
-      console.log("todo: select order screen")
+      console.log("select order screen")
       //3) else, goto: SELECT_ORDER
-      this.gotoSubstate(MWF_STATE.SELECT_ORDER)
+      this.gotoSubstate(MWF_STATE.SELECT_ORDER, [drawnCards, cardViews])
     }
+  }
+
+  onOrderConfirm( sortedCardModels ) {
+    this._clearModal()
+    this.gotoSubstate(MWF_STATE.RESOLVE_HITS, sortedCardModels)
   }
 
   _clearModal() {
@@ -62,18 +75,115 @@ var MWF_STATE = Object.freeze({
     "ASK_NUM_HITS": 1,
     "TRAP_HAPPENED": 2,
     "SELECT_ORDER": 3,
-    "blah": 4,
+    "RESOLVE_HITS": 4,
 })
+
+class MWF_ResolveHits extends ModalView {
+  constructor(MWF, cardModels) {
+    var screenSize = Graphics.ScreenSize
+    super(screenSize.x, screenSize.y, "rgba(0,0,0,0)")
+
+    this.topState = MWF
+    this.cardModels = cardModels
+
+    //todo:
+
+    //monster stats (toughness, mv, spd, dmg, curr hitpoints, etc)
+
+    //show current card (large)
+
+    //show next two cards, if available (small)
+
+    //show options for card (hit, crit, reflex, stopHits etc) 
+
+  }
+}
+
+class MWF_OrderHits extends ModalView {
+  constructor(MWF, cardModels, cardViews) {
+    var screenSize = Graphics.ScreenSize
+    super(screenSize.x, screenSize.y, "rgba(0,0,0,0)")
+
+    this.topState = MWF
+
+    this.cardModels = cardModels
+    this.cardViews = cardViews
+
+    var label = new NodeView()
+    label.setLabel("Order cards left (first) to right (last)", "24px Arial", "#FFFFFF")
+    this.addChild(label)
+    label.snapToTopOfParent(10)
+
+    this.btnDone = CreateSimpleButton("Done", "btnDone")
+    this.addChild(this.btnDone)
+    this.btnDone.snapToBottomOfSibling(label)
+    this.btnDone.snapToRightOfParent(-50)
+
+    this.btnConfirm = CreateSimpleButton("Confirm", "btnConfirm")
+    this.addChild(this.btnConfirm)
+    this.btnConfirm.snapToBottomOfSibling(label)
+    this.btnConfirm.snapToRightOfParent(-50)
+    this.btnConfirm.visible = false
+
+    this.btnCancel = CreateSimpleButton("Cancel", "btnCancel")
+    this.addChild(this.btnCancel)
+    this.btnCancel.snapToBottomOfSibling(this.btnConfirm, 5)
+    this.btnCancel.snapToRightOfParent(-50)
+    this.btnCancel.visible = false
+
+    // attach existing cardViews to new root
+    for (var cv of cardViews) {
+      this.addChild(cv)
+      var marginX2 = 100*2
+      cv.makeDraggable(new Rect2D(-(screenSize.x - marginX2)/2, -(screenSize.y - marginX2)/2, (screenSize.x - marginX2), screenSize.y - marginX2))
+    }
+
+    this.SetListener("btnDone", this.onBtnDone)
+    this.SetListener("btnConfirm", this.onBtnConfirm)
+    this.SetListener("btnCancel", this.onBtnCancel)
+  }
+
+  onBtnDone(e) {
+    this.btnDone.visible = false
+    this.btnConfirm.visible = true
+    this.btnCancel.visible = true
+  }
+
+  onBtnCancel(e) {
+    this.btnDone.visible = true
+    this.btnConfirm.visible = false
+    this.btnCancel.visible = false
+  }
+
+  onBtnConfirm(e) {
+    //1) sort cards by x
+    var pairs = []
+    for (var i=0; i<this.cardModels.length; i++) {
+      pairs.push({ "m":this.cardModels[i], "v":this.cardViews[i] })
+    }
+
+    pairs.sort((a, b)=>{
+      return a.v.pos.x - b.v.pos.x
+    })
+
+    var sortedCardModels = []
+    for (var pair of pairs) {
+      sortedCardModels.push(pair.m)
+    }
+
+    this.topState.onOrderConfirm(sortedCardModels)
+  }
+}
 
 class MWF_AskNumHits extends ModalView {
   constructor(MWF) {
 
     var screenSize = Graphics.ScreenSize
-    super(screenSize.x, screenSize.y, "rgba(0, 0, 0, 0.001)")
+    super(screenSize.x, screenSize.y, "rgba(0,0,0,0)")
 
     this.topState = MWF
 
-    this.isAnimating = false
+    this.trapDrawn = false
     this.cardModels = []
     this.cardViews = []
 
@@ -128,8 +238,16 @@ class MWF_AskNumHits extends ModalView {
   }
 
   onBtnDraw() {
+    if (this.trapDrawn) {
+      return; //dont allow drawing more cards after a trap is drawn
+    }
+
     var cardArr = this.topState.pBattleStateModel.drawHitLocations(1)
     var cardModel = cardArr[0]
+
+    if (cardModel.isTrap) {
+      this.trapDrawn = true
+    }
 
     this.cardModels.push(cardModel)
     
@@ -151,10 +269,10 @@ class MWF_AskNumHits extends ModalView {
     var end = -(cardView.parent.size.x/2 - 150)
     var offset = this.cardModels.length * 50
     cardView.tweenPos(0.4, new Vec2D(end + offset, getRand(-50, 50))) //todo: offset by num of cards
-
+    this.cardViews.push(cardView)
   }
 
   onBtnDone() {
-    this.topState.onAskNumHitsComplete(this.cardModels)
+    this.topState.onAskNumHitsComplete(this.cardModels, this.cardViews, this.trapDrawn)
   }
 }

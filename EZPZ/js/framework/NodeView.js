@@ -683,7 +683,7 @@ class NodeView extends BaseListener {
 	
 	//x,y should be sent relative to node origin
 	OnMouseDown(e, x,y) {
-    	if(!this.visible || e.isDone) return;
+    if(!this.visible || e.isDone) return;
 		
 		//make local to self origin
 		x -= this.pos.x;
