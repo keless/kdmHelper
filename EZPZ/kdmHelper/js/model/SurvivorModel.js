@@ -5,12 +5,20 @@ class SurvivorModel {
     this.survivalPts = 0
     this.huntXP = 0
 
+    this.weaponProficiency = null
+    this.weaponXP = 0
+
+    this.courage = 0
+    this.courageSpecialty = null
+    this.understanding = 0
+    this.understandingSpecialty = null
+
     this.fightingArts = [] //string array
     this.disorders = [] //string array
     this.permanentInjuries = []
     this.abilities = []
 
-    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders", "permanentInjuries", "abilities"]
+    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders", "permanentInjuries", "abilities", "weaponProficiency", "weaponXP", "courage", "courageSpecialty", "understanding", "understandingSpecialty"]
 
     //unserialized variables
     this.tokens = []
@@ -100,6 +108,12 @@ class SurvivorModel {
 }
 
 SurvivorModel.MAX_XP = 16
+
+SurvivorModel.MAX_WEAPON_XP = 8
+
+SurvivorModel.MAX_COURAGE = 9
+
+SurvivorModel.MAX_UNDERSTANDING = 9
 
 SurvivorModel.LOCATIONS = Object.freeze({
   "head":"Head",

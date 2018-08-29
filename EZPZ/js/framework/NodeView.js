@@ -342,7 +342,11 @@ class NodeView extends BaseListener {
 	}
 	alignToLeftOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.x = (sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2) + offset
+		this.pos.x = ((sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2)) + offset
+	}
+	alignToRightOfSibling(sibling, offset = 0) {
+		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
+		this.pos.x = ((sibling.pos.x + (sibling.size.x/2)) - (this.size.x/2)) + offset
 	}
 
 	setCircle( radius, fillStyle, strokeStyle ) {

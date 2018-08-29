@@ -1,7 +1,7 @@
 
 class SurvivorSheetModalView extends ModalView {
     constructor(survivorModel, settlementModel) {
-        super(750, 600)
+        super(750, 530)
 
         this.lblName = null
         this.valSurvival = null
@@ -72,7 +72,7 @@ class SurvivorSheetModalView extends ModalView {
         this.valLimit = limit.val
 
         var actions = new NodeView()
-        actions.size.setVal(100, 80)
+        actions.size.setVal(80, 80)
         this.addChild(actions)
 
         var actionList = [ SettlementModel.ACTIONS.encourage, SettlementModel.ACTIONS.dodge, SettlementModel.ACTIONS.dash, SettlementModel.ACTIONS.surge, SettlementModel.ACTIONS.endure]
@@ -96,22 +96,18 @@ class SurvivorSheetModalView extends ModalView {
         // Stats
         var movement = this._createAttributeBox("Movement", actions)
         this.valMovement = movement.val
-
         var accuracy = this._createAttributeBox("Accuracy", movement.root)
         this.valAccuracy = accuracy.val
-
         var strength = this._createAttributeBox("Strength", accuracy.root)
         this.valStrength = strength.val
-
         var evasion = this._createAttributeBox("Evasion", strength.root)
         this.valEvasion = evasion.val
-
         var luck = this._createAttributeBox("Luck", evasion.root)
         this.valLuck = luck.val
-
         var speed = this._createAttributeBox("Speed", luck.root)
         this.valSpeed = speed.val
 
+        // armor
         var armorSpacing = 5
         var brain = this._createArmorBox("Brain", true, false)
         this.addChild(brain.root)
@@ -158,10 +154,6 @@ class SurvivorSheetModalView extends ModalView {
         this.valLegsL = legs.lval
         this.valLegsH = legs.hval
 
-        //courage + understanding
-        
-        //weapon proficiency
-
         //injuries/impairments
         var injuries = this._createList("Impairments", 6)
         this.addChild(injuries.root)
@@ -188,55 +180,35 @@ class SurvivorSheetModalView extends ModalView {
         fa.root.snapToRightOfParent()
         fa.root.snapToTopOfSibling(abilities.root)
         this.valFightingArts = fa.slots
+
+        //weapon proficiency
+        var wp = this._createNamedXPView("Weapon Proficiency", this.pModel.weaponXP, SurvivorModel.MAX_WEAPON_XP)
+        this.addChild(wp.root)
+        wp.root.snapToBottomOfSibling(hr, 10)
+        wp.root.snapToRightOfSibling(actions)
+        this.valWeaponProf = wp.val
         
         //gear grid
         this.gearGrid = new GearGridView(this.pModel)
         this.addChild(this.gearGrid)
         this.gearGrid.snapToBottomLeftOfParent(100, 0)
 
+        // courage
+        var courage = this._createNamedXPView("Courage", this.pModel.courage, SurvivorModel.MAX_COURAGE)
+        this.addChild(courage.root)
+        courage.root.snapToBottomOfSibling(wp.root, 30)
+        courage.root.alignToLeftOfSibling(this.gearGrid)
+        this.valCourageSpecialization = courage.val
+
+        // understanding
+        var understanding = this._createNamedXPView("Understanding", this.pModel.understanding, SurvivorModel.MAX_UNDERSTANDING)
+        this.addChild(understanding.root)
+        understanding.root.snapToRightCenterOfSibling(courage.root, 15)
+        this.valUnderstandingSpecialization = understanding.val
+
+        
+
         this.updateFromModel()
-    }
-
-    _createList(label, numSlots) {
-        var node = new NodeView()
-        var width = 300
-
-        var sizeP = 20
-        node.size.setVal(width, sizeP + numSlots*sizeP)
-
-        var lbl = new NodeView()
-        lbl.setLabel(label, this.font2, "#FFFFFF")
-        node.addChild(lbl)
-        lbl.snapToTopLeftOfParent()
-
-        var slots = []
-        var prev = lbl
-        for (var i=0; i<numSlots; i++) {
-            var val = new NodeView()
-            val.setLabel("some long value " + i, this.font1, "#FFFFFF")
-            node.addChild(val)
-            val.snapToBottomOfSibling(prev, 5)
-            val.snapToLeftOfParent()
-
-            slots.push(val)
-
-            var hr = new NodeView()
-            hr.setPolygon([ new Vec2D(-width/2, 0), new Vec2D(width/2, 0) ], null, "#FFFFFF", 1)
-            node.addChild(hr)
-            hr.snapToBottomOfSibling(val)
-
-            prev = val
-        }
-
-        return { "root":node, "slots": slots }
-    }
-
-    _createAttributeBox(lbl, sibling ) {
-        var node = this._createValueBox(lbl, 20, "99")
-        this.addChild(node.root)
-        node.root.snapToBottomOfSibling(sibling, 15)
-        node.root.snapToLeftOfParent(30)
-        return node
     }
 
     updateFromModel() {
@@ -277,7 +249,6 @@ class SurvivorSheetModalView extends ModalView {
         injuries.concat(tempInjuries)
         this._updateListValues(injuries, 6, this.valInjuries)
 
-   
         var disorders = this.pModel.disorders
         this._updateListValues(disorders, 3, this.valDisorders)
 
@@ -285,13 +256,11 @@ class SurvivorSheetModalView extends ModalView {
         this._updateListValues(abilities, 4, this.valAbilities)
 
         var fightingArts = this.pModel.fightingArts
-        for (var i=0; i<3; i++) {
-            if (i >= fightingArts.length) {
-                this.valFightingArts[i].updateLabel("")
-            } else {
-                this.valFightingArts[i].updateLabel(fightingArts[i])
-            }
-        }
+        this._updateListValues(fightingArts, 3, this.valFightingArts)
+
+        this.valWeaponProf.updateLabel( this.pModel.weaponProficiency || "" )
+        this.valCourageSpecialization.updateLabel( this.pModel.courageSpecialization || "" )
+        this.valUnderstandingSpecialization.updateLabel( this.pModel.understandingSpecialization || "" )
     }
 
     _updateListValues( list, num, values ) {
@@ -304,6 +273,81 @@ class SurvivorSheetModalView extends ModalView {
         }
     }
 
+    // returns { "root":RootNode, "val":ValNode }
+    _createNamedXPView(name, xpVal, maxXP) {
+        var wp = new NodeView()
+        wp.size.setVal(140, 60)
+
+        var namedLabel =  this._createList(name, 1, 150)
+        var valNode = namedLabel.slots[0]
+        wp.addChild(namedLabel.root)
+
+        var prev = null
+        var thickIdx = [3, 8]
+        for (var i=1; i<=maxXP; i++) {
+            var filled = i <= xpVal
+            var strokeSize = 2
+            if (thickIdx.includes(i)) {
+                strokeSize = 3
+            }
+            var box = this._createFillBox(10, filled, "#FFFFFF", "#FFFFFF", strokeSize)
+            wp.addChild(box)
+            if (prev == null) {
+                box.snapToLeftOfParent(5)
+                box.snapToBottomOfSibling(namedLabel.root, 5)
+            } else {
+                box.snapToRightCenterOfSibling(prev, 5)
+            }
+            prev = box
+        }
+
+        return { "root":wp, "val":valNode }
+    }
+
+    // returns { "root":RootNode, "slots":[ ValueNode, ... ] }
+    _createList(label, numSlots, w) {
+        var node = new NodeView()
+        var width = w || 300
+
+        var sizeP = 20
+        node.size.setVal(width, sizeP + numSlots*sizeP)
+
+        var lbl = new NodeView()
+        lbl.setLabel(label, this.font2, "#FFFFFF")
+        node.addChild(lbl)
+        lbl.snapToTopLeftOfParent()
+
+        var slots = []
+        var prev = lbl
+        for (var i=0; i<numSlots; i++) {
+            var val = new NodeView()
+            val.setLabel("some long value " + i, this.font1, "#FFFFFF")
+            node.addChild(val)
+            val.snapToBottomOfSibling(prev, 5)
+            val.snapToLeftOfParent()
+
+            slots.push(val)
+
+            var hr = new NodeView()
+            hr.setPolygon([ new Vec2D(-width/2, 0), new Vec2D(width/2, 0) ], null, "#FFFFFF", 1)
+            node.addChild(hr)
+            hr.snapToBottomOfSibling(val)
+
+            prev = val
+        }
+
+        return { "root":node, "slots": slots }
+    }
+
+    _createAttributeBox(lbl, sibling ) {
+        var node = this._createValueBox(lbl, 20, "99")
+        this.addChild(node.root)
+        node.root.snapToBottomOfSibling(sibling, 15)
+        node.root.snapToLeftOfParent(30)
+        return node
+    }
+
+    // returns { "root":RootNode, "val":ValueNode, "lval":ValueNode, "hval":ValueNode }
     _createArmorBox(name, makeLightBox, makeHeavyBox) { //, size, value) {
         var size = 40
         var value = 9
