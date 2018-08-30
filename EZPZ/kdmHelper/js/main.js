@@ -6,6 +6,9 @@ class Config {
 	static get areSpritesCentered() {
 		return true;
 	}
+	static get isFullScreenApp() {
+		return true;
+	}
 }
 
 var game_create = function()

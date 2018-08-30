@@ -18,14 +18,69 @@ class Graphics {
 		this.useTextHeightHack = Config ? Config.useTextHeightHack : false;
 		this.verbose = false;
 		
+		if (!this.canvas.style.width) {
+			this.canvas.style.width = this.canvas.width
+			this.canvas.style.height = this.canvas.height
+		}
+
 		Service.Add("gfx", this);
+
+		document.addEventListener("fullscreenchange", this.onFullScreenChange.bind(this));
+		document.addEventListener("mozfullscreenchange", this.onFullScreenChange.bind(this));
+		document.addEventListener("webkitfullscreenchange", this.onFullScreenChange.bind(this));
+		document.addEventListener("msfullscreenchange", this.onFullScreenChange.bind(this));
 	}
 	
+	//https://davidwalsh.name/fullscreen
+	launchFullScreen() {
+		var element = this.canvas
+		if(element.requestFullscreen) {
+			element.requestFullscreen();
+		} else if(element.mozRequestFullScreen) {
+			element.mozRequestFullScreen();
+		} else if(element.webkitRequestFullscreen) {
+			element.webkitRequestFullscreen();
+		} else if(element.msRequestFullscreen) {
+			element.msRequestFullscreen();
+		}
+	}
+
+	onFullScreenChange(e) {
+		if (this.verbose) {
+			console.warn("full screen changed event")
+		}
+
+		if (this.isFullScreen()) {
+			this.canvas.style.width = screen.width
+			this.canvas.style.height = screen.height
+		} else {
+			this.canvas.style.width = this.canvas.width
+			this.canvas.style.height = this.canvas.height
+		}
+
+		EventBus.ui.dispatch("fullScreenChanged")
+	}
+
+	isFullScreen() {
+		var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
+		return fullscreenElement != null
+	}
+
+	exitFullScreen() {
+		if(document.exitFullscreen) {
+			document.exitFullscreen();
+		} else if(document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		} else if(document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		}
+	}
+
 	getWidth() {
-		return this.canvas.clientWidth;
+		return this.canvas.width //clientWidth;
 	}
 	getHeight() {
-		return this.canvas.clientHeight;
+		return this.canvas.height //clientHeight;
 	}
 	getSize() {
 		return new Vec2D(this.getWidth(), this.getHeight());

@@ -200,9 +200,12 @@ class GameplayStateView extends BaseStateView {
 		this._addButton("btnSettlementInfo", "S", (screenSize.x/2 - 50), (screenSize.y/2 - 100), "gfx/ui/btn_white_sm.sprite" )
 		this._addButton("btnMainMenu", "M", (screenSize.x/2 - 50), (screenSize.y/2 - 50), "gfx/ui/btn_white_sm.sprite" )
 
+		this._addButton("btnFullScreen", "FS", (screenSize.x/2 - 50), (-screenSize.y/2 + 50), "gfx/ui/btn_white_sm.sprite" )
+
 		this.SetListener("btnInnovationTree", this.onBtnInnovationTree)
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
 		this.SetListener("btnMainMenu", this.onBtnMainMenu)
+		this.SetListener("btnFullScreen", this.onBtnFullScreen)
 		this.SetListener("closeModalView", this.onBtnCloseModal)
 		this.SetListener("showChar", this.onBtnShowChar)
 
@@ -226,6 +229,15 @@ class GameplayStateView extends BaseStateView {
 
 	onBtnMainMenu(e) {
 		Service.Get("state").gotoState("menu");
+	}
+
+	onBtnFullScreen(e) {
+		var g = Service.Get("gfx")
+		if (g.isFullScreen()) {
+			g.exitFullScreen()
+		} else {
+			g.launchFullScreen()
+		}
 	}
 
 	onBtnCloseModal(e) {

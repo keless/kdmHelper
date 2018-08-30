@@ -35,10 +35,13 @@ class Application {
 		}
 
 		var updateLastMousePos = function(e) {
-			var canvas = Service.Get("gfx").canvas;
+			var g = Service.Get("gfx")
+			var canvas = g.canvas;
+			var scaleX = canvas.width / parseInt(canvas.style.width, 10);
+			var scaleY = canvas.height / parseInt(canvas.style.height, 10);
 			var mouseX = e.clientX - (canvas.left || canvas.offsetLeft);
 			var mouseY = e.clientY - (canvas.top || canvas.offsetTop);
-			appSelf.lastMousePos.setVal(mouseX, mouseY);
+			appSelf.lastMousePos.setVal(mouseX * scaleX, mouseY * scaleY);
 		}
 		
 		//todo: focusin - set selected, EventBus.ui.dispatch({evtName:"focus", hasFocus:true});
