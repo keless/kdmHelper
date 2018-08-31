@@ -228,6 +228,8 @@ class PerformReactionModalView extends ModalView {
         var btnDone = CreateSimpleButton("Done", "btnReactionDone")
         this.addChild(btnDone)
         btnDone.snapToBottomCenterOfSibling(cardView, 10)
+
+        //todo: show monster stats?
     }
 }
 
@@ -241,6 +243,8 @@ class ResolveMonsterTrapModalView extends PerformReactionModalView {
         this.cardsToDiscard = drawnCards
 
         this.SetListener("btnReactionDone", this.onBtnReactionDone)
+
+        //todo: show monster stats?
     }
 
     onBtnReactionDone(e) {
@@ -250,5 +254,25 @@ class ResolveMonsterTrapModalView extends PerformReactionModalView {
         this.pBattleStateModel.shuffleAllHLCardsTogether()
 
         this.topState.onResolveMonsterTrapComplete()
+    }
+}
+
+class ResolveMonsterAIModalView extends PerformReactionModalView {
+    constructor(battleStateModel, cardModel) {
+        var cardView = new CardView(cardModel, "gfx/imgs/WLimgAIBack.png")
+        super("perform AI card", cardView)
+
+        this.pBattleStateModel = battleStateModel
+        this.cardsToDiscard = [ cardModel ]
+
+        this.SetListener("btnReactionDone", this.onBtnReactionDone)
+
+        //todo: show monster stats?
+    }
+
+    onBtnReactionDone(e) {
+        this.pBattleStateModel.discardAICards( this.cardsToDiscard )
+
+        EventBus.ui.dispatch("closeModalView")
     }
 }

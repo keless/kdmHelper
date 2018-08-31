@@ -46,8 +46,6 @@ class GameplayStateModel extends BaseStateModel {
 				this.loadSavedSettlementJson(saveJson)
 			}
 		}
-
-		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
 	}
 
 	getMonsterHitPoints() {
@@ -99,18 +97,6 @@ class GameplayStateModel extends BaseStateModel {
 		this.deckHL.createDeckForMonster(monsterName)
 	}
 
-	onAIDeckClicked(e) {
-		console.log("AI deck clicked")
-		//pull a cardout of HL and discard it
-		if (this.deckAI.getNumCards() > 0) {
-			var card = this.deckAI.drawXCards(1)[0]
-			card.faceUp = true
-			this.deckAIDiscard.placeOnTop(card, true)
-		} else {
-			console.log("deck empty, aborting")
-		}
-	}
-
 	//return true if wound applied, false if no AI cards left (so should apply to last hitpoint, game over!)
 	woundTheMonsterAIDeck() {
 		if (this.deckAI.getNumCards() == 0 && this.deckAIDiscard.getNumCards() == 0) {
@@ -148,6 +134,18 @@ class GameplayStateModel extends BaseStateModel {
 	discardAICards( cardArray ) {
 		for (var card of cardArray) {
 			this.deckAIDiscard.placeOnTop(card, true)
+		}
+	}
+
+	// return CardAIModel or null
+	drawNextAICard() {
+		var drawnCards = this.drawXCardsFromDeckShufflingDiscardIfNeccessary(1, this.deckAI, this.deckAIDiscard)
+		if (drawnCards.length == 0) {
+			return null
+		} else {
+			var card = drawnCards[0]
+			card.faceUp = true
+			return card
 		}
 	}
 

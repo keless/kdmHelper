@@ -213,6 +213,7 @@ class GameplayStateView extends BaseStateView {
 		this.SetListener("showChar", this.onBtnShowChar)
 
 		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
+		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
 	}
 
 	_makeTokenNode(color) {
@@ -256,6 +257,16 @@ class GameplayStateView extends BaseStateView {
 		this._setModal(new MonsterWoundFlowModalView(this.pModel))
 	}
 	
+	onAIDeckClicked(e) {
+		var nextAICard = this.pModel.drawNextAICard()
+
+		if (nextAICard == null) {
+			console.log("deck empty, aborting")
+		} else {
+			this._setModal( new ResolveMonsterAIModalView(this.pModel, nextAICard) )
+		}
+	}
+
 	_clearModal() {
 		this.modalView.removeFromParent(true)
 		this.modalView = null

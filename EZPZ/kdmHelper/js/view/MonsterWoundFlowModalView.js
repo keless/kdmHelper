@@ -44,9 +44,12 @@ class MonsterWoundFlowModalView extends ModalView {
       console.log(" -- TRAP!! --")
       //2) if trap card, goto: TRAP_HAPPENED
       this.gotoSubstate(MWF_STATE.TRAP_HAPPENED, [drawnCards])
+    } else if (drawnCards.length == 1) {
+      //3.1) else if only one card drawn, goto: RESOLVE_HITS
+      this.gotoSubstate(MWF_STATE.RESOLVE_HITS, [drawnCards])
     } else {
       console.log("select order screen")
-      //3) else, goto: SELECT_ORDER
+      //3.2) else, goto: SELECT_ORDER
       this.gotoSubstate(MWF_STATE.SELECT_ORDER, [drawnCards, cardViews])
     }
   }
