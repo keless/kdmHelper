@@ -212,8 +212,14 @@ class GameplayStateView extends BaseStateView {
 		this.SetListener("closeModalView", this.onBtnCloseModal)
 		this.SetListener("showChar", this.onBtnShowChar)
 
+		this.SetListener("monsterDefeated", this.onMonsterDefeated, EventBus.game)
+
 		this.SetListener("hlDeckClicked", this.onHLDeckClicked)
 		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
+	}
+
+	onMonsterDefeated(e) {
+		alert("monster defeated")
 	}
 
 	_makeTokenNode(color) {
