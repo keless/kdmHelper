@@ -17,14 +17,17 @@ class GameplayStateModel extends BaseStateModel {
 
 		this.pState = state
 		this.deckAI = null
-		this.deckAIDiscard = new DeckModel()
+		this.deckAIDiscard = new DeckModel("AIDiscard")
 		this.deckHL = null
-		this.deckHLDiscard = new DeckModel()
+		this.deckHLDiscard = new DeckModel("HLDiscard")
 
+		this.deckWounds =  new DeckModel("AIWounds")
+		
 		this.settlement = new SettlementModel()
 
 		this.monsterName = "lion"
 		this.monsterLevel = 0
+		this.monsterModel = null
 
 		if (!saveGameID || saveGameID == "test") {
 			this.saveGameID = "test"
@@ -45,6 +48,10 @@ class GameplayStateModel extends BaseStateModel {
 		}
 
 		this.SetListener("aiDeckClicked", this.onAIDeckClicked)
+	}
+
+	getMonsterHitPoints() {
+		return this.deckAI.getNumCards() + this.deckAIDiscard.getNumCards() + 1
 	}
 
 	getBattleSurvivorByIdx( battleIdx ) {
@@ -83,6 +90,8 @@ class GameplayStateModel extends BaseStateModel {
 		this.monsterName = monsterName
 		this.monsterLevel = level
 
+		this.monsterModel = new MonsterModel(monsterName, level)
+
 		this.deckAI = new DeckAIModel()
 		this.deckAI.createDeckForMonster(monsterName, level)
 
@@ -102,6 +111,19 @@ class GameplayStateModel extends BaseStateModel {
 		}
 	}
 
+	//return true if wound applied, false if no AI cards left (so should apply to last hitpoint, game over!)
+	woundTheMonsterAIDeck() {
+		if (this.deckAI.getNumCards() == 0 && this.deckAIDiscard.getNumCards() == 0) {
+			return false //monster has no AI cards left!
+		}
+
+		var woundCard = this.drawXCardsFromDeckShufflingDiscardIfNeccessary(1, this.deckAI, this.deckAIDiscard)[0]
+
+		this.deckWounds.placeOnTop(woundCard)
+
+		return true
+	}
+
 	// functions for wound flow substates to call
 	drawHitLocations(numHits) {
 		var drawnCards = this.drawXCardsFromDeckShufflingDiscardIfNeccessary(numHits, this.deckHL, this.deckHLDiscard)
@@ -118,6 +140,11 @@ class GameplayStateModel extends BaseStateModel {
 			this.deckHLDiscard.placeOnTop(card)
 		}
 	}
+
+	shuffleAllHLCardsTogether() {
+		this.deckHL.shuffleInDiscardPile(this.deckHLDiscard)
+	}
+
 	discardAICards( cardArray ) {
 		for (var card of cardArray) {
 			this.deckAIDiscard.placeOnTop(card)

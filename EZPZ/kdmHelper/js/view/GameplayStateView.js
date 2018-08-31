@@ -174,6 +174,9 @@ class GameplayStateView extends BaseStateView {
 			EventBus.ui.dispatch("aiDeckClicked")
 		})
 
+		this.deckViewWound = new DeckView(this.pModel.deckWounds, "gfx/imgs/WLimgAIBack.png")
+		deckWoundStackNode.addChild(this.deckViewWound)
+
 		//draggable tokens
 		var tokenY = -100
 		for (var i=0; i<10; i++) {
@@ -215,7 +218,7 @@ class GameplayStateView extends BaseStateView {
 	_makeTokenNode(color) {
 		var tokenNode = new NodeView()
 		tokenNode.setCircle(20, color)
-		tokenNode.makeDraggable()
+		tokenNode.makeDraggable(null, true)
 		return tokenNode
 	}
 

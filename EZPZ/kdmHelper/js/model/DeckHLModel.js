@@ -1,8 +1,7 @@
 class DeckHLModel extends DeckModel {
   constructor() {
-    super()
+    super("HL")
 
-    this.name = "HL"
     this.verbose = true
     //inherited: 
     // this.cards = []

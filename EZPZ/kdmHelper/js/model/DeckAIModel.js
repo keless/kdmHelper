@@ -1,8 +1,7 @@
 class DeckAIModel extends DeckModel {
   constructor() {
-    super()
+    super("AI")
 
-    this.name = "AI"
     this.verbose = false
     //inherited: 
     // this.cards = []

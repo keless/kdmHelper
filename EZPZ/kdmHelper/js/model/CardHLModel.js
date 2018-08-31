@@ -2,13 +2,13 @@ class CardHLModel extends CardModel {
   constructor() {
     super()
 
-    this.hasFailure = false
-    this.hasCrit = false
-    this.hasInjury = false
-    this.hasWound = false
-    this.hasReflex = false
+    this.hasFailure = false //monster reaction when wound fails
+    this.hasCrit = false    //monster can be crit
+    this.hasInjury = false  //permanent injury state if crit
+    this.hasWound = false   //monster reaction when wound succeeds
+    this.hasReflex = false  //monster reaction if no crit
 
-    this.isImpervioius = false
+    this.isImpervious = false
     this.isFirstStrike = false
     this.isDense = false
     this.isTrap = false

@@ -1,6 +1,6 @@
 class CardAIModel extends CardModel {
   constructor() {
-    super()
+    super("AI")
 
     this.isMood = false
   }

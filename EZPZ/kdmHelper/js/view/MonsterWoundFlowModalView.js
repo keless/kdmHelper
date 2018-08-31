@@ -19,17 +19,16 @@ class MonsterWoundFlowModalView extends ModalView {
         this._setModal( new MWF_AskNumHits( this ) )
       }break;
       case MWF_STATE.TRAP_HAPPENED: {
-        //xxx todo
+        this._setModal( new ResolveMonsterTrapModalView(this, params[0] ))
       }break;
       case MWF_STATE.SELECT_ORDER: {
         this._setModal( new MWF_OrderHits(this, params[0], params[1]) )
       }break;
       case MWF_STATE.RESOLVE_HITS: {
-        //xxx todo
+        this._setModal( new ResolveMonsterWoundModalView(this, params[0]) )
       }
     }
   }
-
 
   onAskNumHitsComplete( drawnCards, cardViews, trapDrawn ) {
     //detatch from root
@@ -41,11 +40,10 @@ class MonsterWoundFlowModalView extends ModalView {
 
     console.log("onAskNumHitsComplete - got " + drawnCards.length + " cards")
 
-    var hasTrap = trapDrawn //drawnCards.find((e)=>{ return e.hasOwnProperty("trap") })
-    if (hasTrap) {
+    if (trapDrawn) {
       console.log(" -- TRAP!! --")
       //2) if trap card, goto: TRAP_HAPPENED
-      this.gotoSubstate(MWF_STATE.TRAP_HAPPENED)
+      this.gotoSubstate(MWF_STATE.TRAP_HAPPENED, [drawnCards])
     } else {
       console.log("select order screen")
       //3) else, goto: SELECT_ORDER
@@ -55,7 +53,17 @@ class MonsterWoundFlowModalView extends ModalView {
 
   onOrderConfirm( sortedCardModels ) {
     this._clearModal()
-    this.gotoSubstate(MWF_STATE.RESOLVE_HITS, sortedCardModels)
+    this.gotoSubstate(MWF_STATE.RESOLVE_HITS, [sortedCardModels])
+  }
+
+  onResolveMonsterWoundsComplete() {
+    // all done
+    EventBus.ui.dispatch("closeModalView")
+  }
+
+  onResolveMonsterTrapComplete() {
+    // all done
+    EventBus.ui.dispatch("closeModalView")
   }
 
   _clearModal() {
@@ -77,27 +85,6 @@ var MWF_STATE = Object.freeze({
     "SELECT_ORDER": 3,
     "RESOLVE_HITS": 4,
 })
-
-class MWF_ResolveHits extends ModalView {
-  constructor(MWF, cardModels) {
-    var screenSize = Graphics.ScreenSize
-    super(screenSize.x, screenSize.y, "rgba(0,0,0,0)")
-
-    this.topState = MWF
-    this.cardModels = cardModels
-
-    //todo:
-
-    //monster stats (toughness, mv, spd, dmg, curr hitpoints, etc)
-
-    //show current card (large)
-
-    //show next two cards, if available (small)
-
-    //show options for card (hit, crit, reflex, stopHits etc) 
-
-  }
-}
 
 class MWF_OrderHits extends ModalView {
   constructor(MWF, cardModels, cardViews) {
@@ -132,10 +119,11 @@ class MWF_OrderHits extends ModalView {
     this.btnCancel.visible = false
 
     // attach existing cardViews to new root
+    var marginX2 = 100*2
+    var dragZone = new Rect2D(-(screenSize.x - marginX2)/2, -(screenSize.y - marginX2)/2, (screenSize.x - marginX2), screenSize.y - marginX2)
     for (var cv of cardViews) {
       this.addChild(cv)
-      var marginX2 = 100*2
-      cv.makeDraggable(new Rect2D(-(screenSize.x - marginX2)/2, -(screenSize.y - marginX2)/2, (screenSize.x - marginX2), screenSize.y - marginX2))
+      cv.makeDraggable(dragZone, true)
     }
 
     this.SetListener("btnDone", this.onBtnDone)
@@ -191,13 +179,6 @@ class MWF_AskNumHits extends ModalView {
     label.setLabel("Draw Hit Location cards", "24px Arial", "#FFFFFF")
     this.addChild(label)
     label.snapToTopOfParent(10)
-
-    /*
-    this.btnDraw = CreateSimpleButton("Draw", "btnDraw")
-    this.addChild(this.btnDraw)
-    this.btnDraw.snapToBottomOfSibling(label)
-    this.btnDraw.snapToLeftOfParent(50)
-    */
 
     //HL deck - place it the same way GameplayStateView places it
     var playerPanelHeight = 150

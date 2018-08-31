@@ -247,6 +247,14 @@ class NodeView extends BaseListener {
 		}
 		return this.pos
 	}
+
+	get scaledSize() {
+		if (this.scale != 1.0) {
+			return new Vec2D( this.size.x * this.scale, this.size.y * this.scale )
+		} else {
+			return this.size
+		}
+	}
 	
 	setUserData( data ) {
 		this.pUser = data;
@@ -256,13 +264,13 @@ class NodeView extends BaseListener {
 	}
 	
 	snapToLeftOfParent(offset = 0) {
-		this.pos.x = -(this.parent.size.x - this.size.x)/2 + offset
+		this.pos.x = -(this.parent.scaledSize.x - this.scaledSize.x)/2 + offset
 	}
 	snapToRightOfParent(offset = 0) {
-		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
+		this.pos.x = (this.parent.scaledSize.x - this.scaledSize.x)/2 + offset
 	}
 	snapToTopOfParent(offset = 0) {
-		this.pos.y = -(this.parent.size.y - this.size.y)/2 + offset
+		this.pos.y = -(this.parent.scaledSize.y - this.scaledSize.y)/2 + offset
 	}
 	snapToXCenterOfParent(offset = 0) {
 		this.pos.x = 0 + offset
@@ -275,10 +283,10 @@ class NodeView extends BaseListener {
 		this.snapToTopOfParent(offsetY)
 	}
 	snapToRightOfParent(offset = 0) {
-		this.pos.x = (this.parent.size.x - this.size.x)/2 + offset
+		this.pos.x = (this.parent.scaledSize.x - this.scaledSize.x)/2 + offset
 	}
 	snapToBottomOfParent(offset = 0) {
-		this.pos.y = (this.parent.size.y - this.size.y)/2 + offset
+		this.pos.y = (this.parent.scaledSize.y - this.scaledSize.y)/2 + offset
 	}
 	snapToTopLeftOfParent(offsetX, offsetY = offsetX) {
 		this.snapToLeftOfParent(offsetX)
@@ -298,23 +306,23 @@ class NodeView extends BaseListener {
 	}
 	snapToTopOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.y = sibling.pos.y - ((sibling.size.y + this.size.y)/2) + offset
+		this.pos.y = sibling.pos.y - ((sibling.scaledSize.y + this.scaledSize.y)/2) + offset
 	}
 	snapToBottomOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.y = sibling.pos.y + ((sibling.size.y + this.size.y)/2) + offset
+		this.pos.y = sibling.pos.y + ((sibling.scaledSize.y + this.scaledSize.y)/2) + offset
 	}
 	snapToRightOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.x = sibling.pos.x + ((sibling.size.x + this.size.x)/2) + offset
+		this.pos.x = sibling.pos.x + ((sibling.scaledSize.x + this.scaledSize.x)/2) + offset
 	}
 	snapToLeftOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.x = sibling.pos.x - ((sibling.size.x + this.size.x)/2) + offset
+		this.pos.x = sibling.pos.x - ((sibling.scaledSize.x + this.scaledSize.x)/2) + offset
 	}
 	snapToBottomOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.y = sibling.pos.y + (sibling.size.y/2) + this.size.y/2 + offset
+		this.pos.y = sibling.pos.y + (sibling.scaledSize.y/2) + this.scaledSize.y/2 + offset
 	}
 	snapToRightCenterOfSibling(sibling, offset) {
 		this.snapToRightOfSibling(sibling, offset)
@@ -342,11 +350,11 @@ class NodeView extends BaseListener {
 	}
 	alignToLeftOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.x = ((sibling.pos.x - (sibling.size.x/2)) + (this.size.x/2)) + offset
+		this.pos.x = ((sibling.pos.x - (sibling.scaledSize.x/2)) + (this.scaledSize.x/2)) + offset
 	}
 	alignToRightOfSibling(sibling, offset = 0) {
 		if(sibling.parent != this.parent) { console.warn("sibling must have same parent as self"); return; }
-		this.pos.x = ((sibling.pos.x + (sibling.size.x/2)) - (this.size.x/2)) + offset
+		this.pos.x = ((sibling.pos.x + (sibling.scaledSize.x/2)) - (this.scaledSize.x/2)) + offset
 	}
 
 	setCircle( radius, fillStyle, strokeStyle ) {
@@ -671,8 +679,9 @@ class NodeView extends BaseListener {
 	}
 
 	// rectBounds - a Rec2D that represents the area the node can be dragged inside of
-	makeDraggable( rectBounds ) {
+	makeDraggable( rectBounds, bringToFrontOnDrag ) {
 		this.isDraggable = true;
+		this.bringToFrontOnDrag = bringToFrontOnDrag || false
 		this.dragStart = new Vec2D();
 		if(rectBounds) {
 			this.dragBounds = rectBounds.clone();
@@ -737,6 +746,10 @@ class NodeView extends BaseListener {
 
 				if(inside) {
 					this._startDragging();
+					if( this.bringToFrontOnDrag) {
+						this.bringToFrontOfSiblings()
+					}
+
 					e.isDone = true;
 					if(e.isDone) return;
 				}
@@ -828,6 +841,12 @@ class NodeView extends BaseListener {
 		this.parent = null;
 	}
 	
+	bringToFrontOfSiblings() {
+		var parent = this.parent
+		this.removeFromParent(false)
+		parent.addChild(this)
+	}
+
 	removeChild(child, shouldDestroy) {
 		shouldDestroy = shouldDestroy || false;
 		var childIdx = this.children.indexOf(child);

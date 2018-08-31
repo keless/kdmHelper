@@ -16,6 +16,64 @@ class CardView extends NodeView {
       this.sprFront.visible = true
       //xxx this.sprBack.visible = false
     }
+
+    //temporarily add helper info 
+    var lbl = new NodeView()
+    lbl.setLabelWithOutline(model.name, "12px Arial")
+    this.sprFront.addChild(lbl)
+    lbl.snapToTopCenterOfParent(5)
+
+    var prev =  lbl
+
+    if (model.hasReflex) {
+      var lblNode = this._tempCreateAttributeLabel("reflex")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.hasWound) {
+      var lblNode = this._tempCreateAttributeLabel("wound")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.hasFailure) {
+      var lblNode = this._tempCreateAttributeLabel("failure")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.hasCrit) {
+      var lblNode = this._tempCreateAttributeLabel("crit")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.isImpervious) {
+      var lblNode = this._tempCreateAttributeLabel("impervious")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.hasInjury) {
+      var lblNode = this._tempCreateAttributeLabel("injury")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+    if (model.isTrap) {
+      var lblNode = this._tempCreateAttributeLabel("trap")
+      this.sprFront.addChild(lblNode)
+      lblNode.snapToBottomCenterOfSibling(prev, 5)
+      prev = lblNode
+    }
+
+  }
+
+  _tempCreateAttributeLabel(name) {
+    var lblNode = new NodeView()
+    lblNode.setLabelWithOutline(name, "10px Arial")
+    return lblNode
   }
 
   loadBack(img) {

@@ -1,9 +1,9 @@
 class DeckModel extends EventBus {
-  constructor() {
+  constructor(name) {
     super("DeckModel")
-    this.verbose = true
+    this.verbose = false
 
-    this.name = "some deck"
+    this.name = name
 
     //note: this.cards[0] is the "bottom" card
     this.cards = []
@@ -44,6 +44,7 @@ class DeckModel extends EventBus {
 
   clearDeck() {
     this.cards = []
+    this.dispatch("updated")
   }
 
   // place a card  on "top" of deck-- should NOT already be in the deck
@@ -58,7 +59,7 @@ class DeckModel extends EventBus {
   }
 
   shuffleInDiscardPile( discardPile ) {
-    this.cards.concat( discardPile.cards )
+    this.cards = this.cards.concat( discardPile.cards )
     discardPile.clearDeck()
     
     this.shuffleDeck()
@@ -123,5 +124,7 @@ class DeckModel extends EventBus {
         console.log("  " + card.name)
       }
     }
+
+    this.dispatch("updated")
   }
 }
