@@ -48,10 +48,12 @@ class DeckModel extends EventBus {
   }
 
   // place a card  on "top" of deck-- should NOT already be in the deck
-  placeOnTop(card) {
+  placeOnTop(card, faceUp) {
     if(this.cards.includes(card)) {
       console.error("trying to place a card on top that already exists in deck")
     }
+
+    card.faceUp = faceUp
 
     this.cards.push(card)
     console.log("placed card on top " + card.name)
@@ -59,9 +61,16 @@ class DeckModel extends EventBus {
   }
 
   shuffleInDiscardPile( discardPile ) {
+    //flip discard pile face down
+    for(var card of discardPile.cards) {
+      card.faceUp = false
+    }
+
+    //move cards to this deck
     this.cards = this.cards.concat( discardPile.cards )
     discardPile.clearDeck()
     
+    //now shuffle!
     this.shuffleDeck()
   }
 

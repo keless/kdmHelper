@@ -105,7 +105,7 @@ class GameplayStateModel extends BaseStateModel {
 		if (this.deckAI.getNumCards() > 0) {
 			var card = this.deckAI.drawXCards(1)[0]
 			card.faceUp = true
-			this.deckAIDiscard.placeOnTop(card)
+			this.deckAIDiscard.placeOnTop(card, true)
 		} else {
 			console.log("deck empty, aborting")
 		}
@@ -119,7 +119,7 @@ class GameplayStateModel extends BaseStateModel {
 
 		var woundCard = this.drawXCardsFromDeckShufflingDiscardIfNeccessary(1, this.deckAI, this.deckAIDiscard)[0]
 
-		this.deckWounds.placeOnTop(woundCard)
+		this.deckWounds.placeOnTop(woundCard, false)
 
 		return true
 	}
@@ -137,7 +137,7 @@ class GameplayStateModel extends BaseStateModel {
 
 	discardHLCards( cardArray ) {
 		for (var card of cardArray) {
-			this.deckHLDiscard.placeOnTop(card)
+			this.deckHLDiscard.placeOnTop(card, true)
 		}
 	}
 
@@ -147,7 +147,7 @@ class GameplayStateModel extends BaseStateModel {
 
 	discardAICards( cardArray ) {
 		for (var card of cardArray) {
-			this.deckAIDiscard.placeOnTop(card)
+			this.deckAIDiscard.placeOnTop(card, true)
 		}
 	}
 
