@@ -40,6 +40,7 @@ class CreateSurvivorModalView extends ModalView {
     this.addChild(btnFemale)
     btnFemale.pos.setVec( this.highlightFemale.pos )
 
+    this.didSubmit = false
     this.SetListener("textInputSubmitted", this.onNameComplete)
     this.SetListener("btnMale", this.onBtnMale)
     this.SetListener("btnFemale", this.onBtnFemale)
@@ -61,13 +62,16 @@ class CreateSurvivorModalView extends ModalView {
   }
 
   onNameComplete(e) {
-    var name = this.inputName.getTextInputValue()
-    this.survivorModel.name = name
-
-    this.survivorModel.giveStartingEquipment()
-    //change UI to select
-
-    EventBus.ui.dispatch("createSurvivorCompleted")
+    if (!this.didSubmit) {
+      var name = this.inputName.getTextInputValue()
+      this.survivorModel.name = name
+  
+      this.survivorModel.giveStartingEquipment()
+      //change UI to select
+  
+      this.didSubmit = true
+      EventBus.ui.dispatch("createSurvivorCompleted")
+    }
   }
 
 } 
