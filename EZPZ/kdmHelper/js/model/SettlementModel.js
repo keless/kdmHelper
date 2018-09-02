@@ -1,7 +1,7 @@
 
 class SettlementModel {
     constructor() {
-        this.name = "settlement name"
+        this.name = ""
         this.survivors = []
 
         this.resources = [] // { name:"Monster Bone", count:1 }
