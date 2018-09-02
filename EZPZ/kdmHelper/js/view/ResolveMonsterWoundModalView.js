@@ -194,6 +194,22 @@ class ResolveMonsterWoundModalView extends ModalView {
             if(this.cardModels.length > 2) {
                 var nextCard2 = new CardView(this.cardModels[2], this.backImgPath)
                 nextCard2.scale = 0.8
+
+                if (this.cardModels.length > 3) {
+                    var badge = new NodeView()
+                    badge.setCircle(15, "#FF0000", "#FF0000")
+                    badge.pos.setVal(40, -70)
+                    nextCard2.addChild(badge)
+                
+                    var numCards = this.cardModels.length - 3
+                
+                    var badgeLabel = new NodeView()
+                    badgeLabel.setLabel("+" + numCards, "20px Arial", "#FFFFFF")
+                    badgeLabel.pos.setVal(0, 6)
+                    badge.addChild(badgeLabel)
+                }
+                
+
                 this.cardAnchor.addChild(nextCard2)
                 nextCard2.snapToBottomOfParent()
                 nextCard2.snapToRightOfSibling(nextCard1)
