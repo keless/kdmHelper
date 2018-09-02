@@ -1,5 +1,7 @@
-class SurvivorModel {
+class SurvivorModel extends EventBus {
   constructor() {
+    super()
+
     this.name = "Survivor"
     this.isMale = false
     this.survivalPts = 0
@@ -17,8 +19,9 @@ class SurvivorModel {
     this.disorders = [] //string array
     this.permanentInjuries = []
     this.abilities = []
+    this.equipment = []
 
-    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders", "permanentInjuries", "abilities", "weaponProficiency", "weaponXP", "courage", "courageSpecialty", "understanding", "understandingSpecialty"]
+    this.serializeSimpleValues = ["name", "isMale", "survivalPts", "huntXP", "fightingArts", "disorders", "permanentInjuries", "abilities", "weaponProficiency", "weaponXP", "courage", "courageSpecialty", "understanding", "understandingSpecialty", "equipment"]
 
     //unserialized variables
     this.tokens = []
@@ -85,6 +88,26 @@ class SurvivorModel {
     }
   }
 
+  updateName(name) {
+    this.name = name
+
+    this.dispatch("update")
+  }
+
+  giveStartingEquipment() {
+    this.giveEquipment("Founding Stone")
+    this.giveEquipment("Cloth")
+  }
+
+  //return true if succesful, false otherwise
+  giveEquipment(equipmentName) {
+    if(this.equipment.length >= SurvivorModel.MAX_EQUIPMENT) {
+      return false
+    }
+
+    this.equipment.push(equipmentName)
+  }
+
   loadFromJson(json) {
     this._setSimpleValues(this, json, this.serializeSimpleValues)
   }
@@ -114,6 +137,8 @@ SurvivorModel.MAX_WEAPON_XP = 8
 SurvivorModel.MAX_COURAGE = 9
 
 SurvivorModel.MAX_UNDERSTANDING = 9
+
+SurvivorModel.MAX_EQUIPMENT = 9
 
 SurvivorModel.LOCATIONS = Object.freeze({
   "head":"Head",

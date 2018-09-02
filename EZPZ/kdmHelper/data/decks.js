@@ -489,7 +489,7 @@ var g_decks = {
   ],
   "Equipment": [
     {
-      " name": "Cloth",
+      "name": "Cloth",
       "set": "starter",
       "location": "waist",
       "armor": 1,
@@ -497,7 +497,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/starter_cloth.png"
     },
     {
-      " name": "Founding Stone",
+      "name": "Founding Stone",
       "set": "starter",
       "location": "weapon",
       "arr_keywords": [
@@ -511,7 +511,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/starter_foundingstone.png"
     },
     {
-      " name": "Newborn",
+      "name": "Newborn",
       "set": "rare",
       "arr_keywords": [
         "item",
@@ -522,7 +522,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_newborn.png"
     },
     {
-      " name": "Blue Lantern",
+      "name": "Blue Lantern",
       "set": "rare",
       "arr_keywords": [
         "item",
@@ -537,7 +537,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_bluelantern.png"
     },
     {
-      " name": "Regal Faults",
+      "name": "Regal Faults",
       "set": "rare",
       "location": "waist",
       "armor": 1,
@@ -550,7 +550,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_regalfaults.png"
     },
     {
-      " name": "Bloodskin",
+      "name": "Bloodskin",
       "set": "rare",
       "arr_keywords": [
         "item",
@@ -560,7 +560,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_bloodskin.png"
     },
     {
-      " name": "Dormant Twilight Cloak",
+      "name": "Dormant Twilight Cloak",
       "set": "rare",
       "location": "head",
       "armor": 1,
@@ -578,7 +578,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_dormanttwilightcloak.png"
     },
     {
-      " name": "Final Lantern",
+      "name": "Final Lantern",
       "set": "rare",
       "arr_keywords": [
         "item",
@@ -588,7 +588,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_finallantern.png"
     },
     {
-      " name": "Forsaker Mask",
+      "name": "Forsaker Mask",
       "set": "rare",
       "location": "head",
       "armor": 1,
@@ -606,7 +606,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/rare_forsakermask.png"
     },
     {
-      " name": "Almanac",
+      "name": "Almanac",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -616,7 +616,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_almanac.png"
     },
     {
-      " name": "Brain Mint",
+      "name": "Brain Mint",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -625,7 +625,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_brainmint.png"
     },
     {
-      " name": "Bug Trap",
+      "name": "Bug Trap",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -634,7 +634,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_bugtrap.png"
     },
     {
-      " name": "Elder Earrings",
+      "name": "Elder Earrings",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -643,7 +643,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_elderearrings.png"
     },
     {
-      " name": "First Aid Kit",
+      "name": "First Aid Kit",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -652,7 +652,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_firstaidkit.png"
     },
     {
-      " name": "Musk Bomb",
+      "name": "Musk Bomb",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -663,7 +663,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_muskbomb.png"
     },
     {
-      " name": "Speed Powder",
+      "name": "Speed Powder",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -672,7 +672,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_speedpowder.png"
     },
     {
-      " name": "Scavenger Kit",
+      "name": "Scavenger Kit",
       "set": "barber",
       "arr_keywords": [
         "item",
@@ -682,7 +682,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/barber_scavengerkit.png"
     },
     {
-      " name": "Bone Club",
+      "name": "Bone Club",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -700,7 +700,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_boneclub.png"
     },
     {
-      " name": "Bone Blade",
+      "name": "Bone Blade",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -716,7 +716,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_boneblade.png"
     },
     {
-      " name": "Bone Darts",
+      "name": "Bone Darts",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -733,7 +733,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_bonedarts.png"
     },
     {
-      " name": "Bone Pickaxe",
+      "name": "Bone Pickaxe",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -749,7 +749,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_bonepickaxe.png"
     },
     {
-      " name": "Bone Sickle",
+      "name": "Bone Sickle",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -765,7 +765,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_bonesickle.png"
     },
     {
-      " name": "Bone Dagger",
+      "name": "Bone Dagger",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -781,7 +781,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_bonedagger.png"
     },
     {
-      " name": "Bone Axe",
+      "name": "Bone Axe",
       "set": "bone",
       "location": "weapon",
       "arr_keywords": [
@@ -800,7 +800,7 @@ var g_decks = {
       "img": "gfx/imgs/decks/equipment/bone_boneaxe.png"
     },
     {
-      " name": "Skull Helm",
+      "name": "Skull Helm",
       "set": "bone",
       "location": "head",
       "armor": 3,

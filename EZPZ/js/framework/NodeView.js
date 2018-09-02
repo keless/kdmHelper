@@ -641,7 +641,7 @@ class NodeView extends BaseListener {
   	
 	getTextInputValue() {
 		if( this.textInput ) {
-		return this.textInput.value();
+			return this.textInput.value();
 		}
 		return null;
 	}

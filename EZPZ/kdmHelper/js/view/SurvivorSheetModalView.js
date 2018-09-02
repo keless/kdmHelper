@@ -3,6 +3,17 @@ class SurvivorSheetModalView extends ModalView {
     constructor(survivorModel, settlementModel) {
         super(750, 530)
 
+        var survivorSheet = new SurvivorSheet(survivorModel, settlementModel)
+        this.addChild(survivorSheet)
+    }
+} 
+
+class SurvivorSheet extends NodeView {
+    constructor(survivorModel, settlementModel) {
+        super()
+
+        this.setRect(750, 530, "#000000")
+
         this.lblName = null
         this.valSurvival = null
         this.valLimit = null
@@ -206,9 +217,9 @@ class SurvivorSheetModalView extends ModalView {
         understanding.root.snapToRightCenterOfSibling(courage.root, 15)
         this.valUnderstandingSpecialization = understanding.val
 
-        
-
         this.updateFromModel()
+
+        this.SetListener("update", this.updateFromModel, this.pModel)
     }
 
     updateFromModel() {
