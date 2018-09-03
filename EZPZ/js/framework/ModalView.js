@@ -1,5 +1,5 @@
 class ModalView extends NodeView {
-    constructor(w, h, fillStyle) {
+    constructor(w, h, fillStyle, dontDismissWhenClickingOutside) {
         super()
 
         fillStyle = fillStyle || "#222222"
@@ -7,9 +7,14 @@ class ModalView extends NodeView {
         // Make modal: size of whole screen, and eats clicks
         var screenSize = Graphics.ScreenSize
         this.setRect(screenSize.x, screenSize.y, "rgba(0,0,0,0.45)")
-        //this.size.setVec(screenSize)
-        //this.pos.setVal(this.size.x/2, this.size.y/2)
-        this.setClick(()=>{ self.onBtnClose() }, true, true)
+
+        if (dontDismissWhenClickingOutside) {
+            //make sure there is _some_ way to dismiss the view
+            this.eatClicks()
+        } else {
+            this.setClick(()=>{ self.onBtnClose() }, true, true)
+        }
+        
 
         this.contentView = new NodeView()
         this.contentView.setRect(w, h, fillStyle)

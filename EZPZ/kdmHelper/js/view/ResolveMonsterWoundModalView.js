@@ -231,7 +231,7 @@ class ResolveMonsterWoundModalView extends ModalView {
 class PerformReactionModalView extends ModalView {
     constructor(title, cardView) {
         var screenSize = Graphics.ScreenSize
-        super(screenSize.x * 0.8, screenSize.y * 0.8, "rgb(0,0,0)")
+        super(screenSize.x * 0.8, screenSize.y * 0.8, "rgb(0,0,0)", true)
 
         this.addChild(cardView)
         cardView.pos.setVal(0,0)
