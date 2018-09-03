@@ -14,7 +14,7 @@ class CardView extends NodeView {
 
     if (this.pModel.faceUp) {
       this.sprFront.visible = true
-      //xxx this.sprBack.visible = false
+      this.sprBack.visible = false
     }
 
     //temporarily add helper info 
@@ -24,7 +24,7 @@ class CardView extends NodeView {
     lbl.snapToTopCenterOfParent(5)
 
     var prev =  lbl
-
+    /*
     if (model.hasReflex) {
       var lblNode = this._tempCreateAttributeLabel("reflex")
       this.sprFront.addChild(lblNode)
@@ -67,6 +67,7 @@ class CardView extends NodeView {
       lblNode.snapToBottomCenterOfSibling(prev, 5)
       prev = lblNode
     }
+    */
 
   }
 
@@ -89,7 +90,7 @@ class CardView extends NodeView {
 
     var self = this
     RP.loadImage(this.pModel.imgPath, (e)=> {
-      self.sprFront.setImageStretch(self.pModel.imgPath, 0,0, 112, 177)
+      self.sprFront.setImageStretch(self.pModel.imgPath, 112, 177)
     })
 
     this.sprFront.visible = false

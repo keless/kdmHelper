@@ -253,6 +253,7 @@ class ResolveMonsterTrapModalView extends PerformReactionModalView {
     constructor(MWF, drawnCards) {
         var trapCardModel = drawnCards.find((e)=>{ return e.isTrap })
         var trapCardView = new CardView(trapCardModel, "gfx/imgs/WLimgHLBack.png")
+        trapCardView.scale = 2
         super("perform Trap reaction", trapCardView)
         this.topState = MWF
         this.pBattleStateModel = MWF.pBattleStateModel
@@ -276,6 +277,7 @@ class ResolveMonsterTrapModalView extends PerformReactionModalView {
 class ResolveMonsterAIModalView extends PerformReactionModalView {
     constructor(battleStateModel, cardModel) {
         var cardView = new CardView(cardModel, "gfx/imgs/WLimgAIBack.png")
+        cardView.scale = 2
         super("perform AI card", cardView)
 
         this.pBattleStateModel = battleStateModel

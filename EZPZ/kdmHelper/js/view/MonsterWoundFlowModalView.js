@@ -126,7 +126,8 @@ class MWF_OrderHits extends ModalView {
     var dragZone = new Rect2D(-(screenSize.x - marginX2)/2, -(screenSize.y - marginX2)/2, (screenSize.x - marginX2), screenSize.y - marginX2)
     for (var cv of cardViews) {
       this.addChild(cv)
-      cv.makeDraggable(dragZone, true)
+      var createScaleFn = function(view, value) { return ()=>{  view.scale = value  } }
+      cv.makeDraggable(dragZone, true, createScaleFn(cv, 2), createScaleFn(cv, 1))
     }
 
     this.SetListener("btnDone", this.onBtnDone)

@@ -679,9 +679,15 @@ class NodeView extends BaseListener {
 	}
 
 	// rectBounds - a Rec2D that represents the area the node can be dragged inside of
-	makeDraggable( rectBounds, bringToFrontOnDrag ) {
+	makeDraggable( rectBounds, bringToFrontOnDrag, fnOnDragStart, fnOnDragEnd ) {
 		this.isDraggable = true;
 		this.bringToFrontOnDrag = bringToFrontOnDrag || false
+		if (fnOnDragStart) {
+			this.fnOnDragStart = fnOnDragStart
+		}
+		if (fnOnDragEnd) {
+			this.fnOnDragEnd = fnOnDragEnd
+		}
 		this.dragStart = new Vec2D();
 		if(rectBounds) {
 			this.dragBounds = rectBounds.clone();
@@ -757,12 +763,18 @@ class NodeView extends BaseListener {
 		}
 	}
 
+
 	_startDragging() {
 		this.isDragging = true;
 		var app = Service.Get("app");
 		this.dragStart.setVec(app.lastMousePos);
 		this.SetListener("onMouseMove", this._handleDragging);
 		this.SetListener("onMouseUp", this._stopDragging);
+
+		if (this.fnOnDragStart) {
+			this.fnOnDragStart()
+		}
+		
 	}
 
 	_handleDragging(e) {
@@ -779,6 +791,10 @@ class NodeView extends BaseListener {
 		this.isDragging = false;
 		this.RemoveListener("onMouseMove", this._handleDragging);
 		this.RemoveListener("onMouseUp", this._stopDragging);
+
+		if (this.fnOnDragEnd) {
+			this.fnOnDragEnd()
+		}
 	}
   
 	OnKeyDown(e, x,y) {
