@@ -82,7 +82,7 @@ class CreateFirstSurvivorsStateView extends BaseStateView {
     
             saveData.save(this.saveGameID, saveGame)
 
-            Service.Get("state").gotoState("gameplay", this.saveGameID);
+            Service.Get("state").gotoState("gameplay", [this.saveGameID, "lion", 0]);
         }
     }
 }

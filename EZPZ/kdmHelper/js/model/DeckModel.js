@@ -5,7 +5,7 @@ class DeckModel extends EventBus {
 
     this.name = name
 
-    //note: this.cards[0] is the "bottom" card
+    //note: this.cards[0] is the "bottom" card,  "top" is at the end of the array aka LIFO
     this.cards = []
   }
 
@@ -37,7 +37,8 @@ class DeckModel extends EventBus {
     if (count > this.cards.length) {
       console.warn("drawXCards asked to remove more cards than exist in the deck")
     }
-    var drawnCards = this.cards.splice(0, count)
+    //draw from the "top" (end of array)
+    var drawnCards = this.cards.splice(  this.cards.length - count , count)
     this.dispatch("updated")
     return drawnCards
   }

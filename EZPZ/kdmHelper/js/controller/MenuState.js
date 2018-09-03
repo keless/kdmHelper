@@ -76,13 +76,14 @@ class MenuStateView extends BaseStateView {
 	}
 	
 	onBtnTest() {
-		Service.Get("state").gotoState("newgame", "test");
+		Service.Get("state").gotoState("gameplay", ["test", "lion", 0]);
 	}
 	onBtnNew(e) {
 		Service.Get("state").gotoState("newgame", e.saveGameID);
 	}
 	onBtnLoad(e) {
-		Service.Get("state").gotoState("gameplay", e.saveGameID);
+		//todo; dont load directly into a fight
+		Service.Get("state").gotoState("gameplay", [e.saveGameID, "lion", 1]);
 	}
 	onBtnDel(e) {
 		if (confirm("Are you sure you want to delete this save?")) {

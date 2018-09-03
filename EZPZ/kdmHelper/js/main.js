@@ -46,7 +46,7 @@ var game_create = function()
 			"gfx/imgs/REimgEX.png",
 			"gfx/imgs/MimgLAWS.png"
 			];
-	stateController.gotoState("loading", [resources, "gameplay", "test"]);
+	stateController.gotoState("loading", [resources, "gameplay", ["test", "lion", 0]]);
 	
 	app.Play();
 };

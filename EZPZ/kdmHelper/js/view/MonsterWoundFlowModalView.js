@@ -2,8 +2,6 @@ class MonsterWoundFlowModalView extends ModalView {
   constructor(battleStateModel) {
     super(750, 600, "rgba(0,0,0, 0.0)")
 
-    this.monsterName = battleStateModel.monsterName
-    this.monsterLevel = battleStateModel.monsterLevel
     this.pBattleStateModel = battleStateModel
 
     this.subState = MWF_STATE.INIT

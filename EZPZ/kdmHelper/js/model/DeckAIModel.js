@@ -80,8 +80,13 @@ class DeckAIModel extends DeckModel {
       console.error("rules specify too many (" +numAdvanced+ ") advanced cards for monster " + name + " : lvl " + level)
       return false
     }
-    var randomAdvanced = this._extractXCardsFromArray(numAdvanced, sortedCards["advanced"])
-    jsonDeck = jsonDeck.concat(randomAdvanced.cards)
+
+    if (name == "lion" && level == 0) {
+      jsonDeck = jsonDeck.concat(this._getCardJsons(sortedCards["advanced"], ["Maul", "Terrifying Roar", "Enraged"]))
+    } else {
+      var randomAdvanced = this._extractXCardsFromArray(numAdvanced, sortedCards["advanced"])
+      jsonDeck = jsonDeck.concat(randomAdvanced.cards)
+    }
 
     //3.4) get basic cards
     var numBasic = rules.basic
@@ -89,8 +94,12 @@ class DeckAIModel extends DeckModel {
       console.error("rules specify too many (" +numBasic+ ") basic cards for monster " + name + " : lvl " + level)
       return false
     }
-    var randomBasic = this._extractXCardsFromArray(numBasic, sortedCards["basic"])
-    jsonDeck = jsonDeck.concat(randomBasic.cards)
+    if (name == "lion" && level == 0) {
+      jsonDeck = jsonDeck.concat(this._getCardJsons(sortedCards["basic"], ["Claw", "Chomp", "Size Up", "Power Swat", "Grasp"]))
+    } else {
+      var randomBasic = this._extractXCardsFromArray(numBasic, sortedCards["basic"])
+      jsonDeck = jsonDeck.concat(randomBasic.cards)
+    }
 
     //4) create the cardModels
     this.cards = this._createDeckFromJsonArray(jsonDeck)
@@ -98,8 +107,26 @@ class DeckAIModel extends DeckModel {
     //5) shuffle deck!
     this.shuffleDeck()
 
+    if (name == "lion" && level == 0) {
+      //make "Claw" the first card
+      var cardIdx = this.cards.findIndex((e)=>{ return e.name == "Claw" })
+      if (cardIdx == -1) { 
+        console.error("couldnt find special card for lion 0")
+      }
+      var clawCard = this.cards.splice( cardIdx, 1 )[0]
+      this.cards.push(clawCard)
+    }
+
     return true
   }
 
+  _getCardJsons(array, nameArr) {
+    var result = []
+    for (var name of nameArr) {
+      var cardJson = array.find((e)=> { return e.name == name })
+      result.push(cardJson)
+    }
 
+    return result
+  }
 }

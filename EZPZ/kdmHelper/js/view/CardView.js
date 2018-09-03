@@ -14,7 +14,7 @@ class CardView extends NodeView {
 
     if (this.pModel.faceUp) {
       this.sprFront.visible = true
-      this.sprBack.visible = false
+      //this.sprBack.visible = false
     }
 
     //temporarily add helper info 

@@ -21,13 +21,23 @@ class DeckHLModel extends DeckModel {
     return deck
   }
 
-  createDeckForMonster(name) {
+  createDeckForMonster(name, level) {
     //1) get cards for the given monster, and sort them by type
     var monsterCards = this.getAllJsonCardsForMonster(name, g_decks["HLDecks"])
 
     this.cards = this._createDeckFromJsonArray(monsterCards)
 
     this.shuffleDeck()
+
+    if (name == "lion" && level == 0) {
+      //make "Strange Hand" the first card
+      var cardIdx = this.cards.findIndex((e)=>{ return e.name == "Strange Hand" })
+      if (cardIdx == -1) { 
+        console.error("couldnt find special card for lion 0")
+      }
+      var shCard = this.cards.splice( cardIdx, 1 )[0]
+      this.cards.push(shCard)
+    }
 
     return true
   }

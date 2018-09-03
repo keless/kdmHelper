@@ -1,10 +1,14 @@
 "use strict"; //ES6
 
 class GameplayState extends AppState {
-	constructor(saveGameID) { 
+	constructor(params) { 
 		super();
 
-		this.model = new GameplayStateModel(this, saveGameID);
+		var saveGameID = params[0] || "test"
+		var monsterName = params[1]  || "lion"
+		var level = params[2] || 0
+
+		this.model = new GameplayStateModel(this, saveGameID, monsterName, level);
 		this.view = new GameplayStateView(this.model);
 	}
 	
@@ -12,7 +16,7 @@ class GameplayState extends AppState {
 
 // conforms to ICastPhysics 
 class GameplayStateModel extends BaseStateModel {
-	constructor( state, saveGameID ) {
+	constructor( state, saveGameID, monsterName, level ) {
 		super()
 
 		this.pState = state
@@ -25,8 +29,8 @@ class GameplayStateModel extends BaseStateModel {
 		
 		this.settlement = new SettlementModel()
 
-		this.monsterName = "lion"
-		this.monsterLevel = 0
+		this.monsterName = monsterName
+		this.monsterLevel = level
 		this.monsterModel = null
 
 		if (!saveGameID || saveGameID == "test") {
@@ -58,12 +62,12 @@ class GameplayStateModel extends BaseStateModel {
 	}
 
 	createNewSettlement() {
-		this.loadForMonster("lion", 0)
+		this.loadForMonster()
 		this.settlement._testCreateSurvivors()
 	}
 
 	_createTestSettlement() {
-		this.loadForMonster("lion", 1)
+		this.loadForMonster()
 
 		this.settlement._testCreateSurvivors()
 		this.settlement._testCreateResources()
@@ -71,7 +75,7 @@ class GameplayStateModel extends BaseStateModel {
 	}
 
 	loadSavedSettlementJson(json) {
-		this.loadForMonster("lion", 1) //todo: replace this when we save actual battle state
+		this.loadForMonster() //todo: replace this when we save actual battle state
 		this.settlement.loadFromJson(json.settlement)
 	}
 	saveSettlementJson(saveGameID) {
@@ -84,17 +88,14 @@ class GameplayStateModel extends BaseStateModel {
 		saveData.save(saveGameID, saveGame)
 	}
 
-	loadForMonster(monsterName, level) {
-		this.monsterName = monsterName
-		this.monsterLevel = level
-
-		this.monsterModel = new MonsterModel(monsterName, level)
+	loadForMonster() {
+		this.monsterModel = new MonsterModel(this.monsterName, this.monsterLevel)
 
 		this.deckAI = new DeckAIModel()
-		this.deckAI.createDeckForMonster(monsterName, level)
+		this.deckAI.createDeckForMonster(this.monsterName, this.monsterLevel)
 
 		this.deckHL = new DeckHLModel()
-		this.deckHL.createDeckForMonster(monsterName)
+		this.deckHL.createDeckForMonster(this.monsterName, this.monsterLevel)
 	}
 
 	//return true if wound applied, false if no AI cards left (so should apply to last hitpoint, game over!)
