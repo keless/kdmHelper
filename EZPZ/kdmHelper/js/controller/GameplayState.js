@@ -14,6 +14,10 @@ class GameplayState extends AppState {
 	
 }
 
+GameplayState.battleLog = function(message) {
+	EventBus.game.dispatch({ "evtName":"battleLog", "log":message})
+}
+
 // conforms to ICastPhysics 
 class GameplayStateModel extends BaseStateModel {
 	constructor( state, saveGameID, monsterName, level ) {
@@ -33,6 +37,8 @@ class GameplayStateModel extends BaseStateModel {
 		this.monsterLevel = level
 		this.monsterModel = null
 
+		this.battleLog = []
+
 		if (!saveGameID || saveGameID == "test") {
 			this.saveGameID = "test"
 			console.log("load TEST settlement")
@@ -50,6 +56,13 @@ class GameplayStateModel extends BaseStateModel {
 				this.loadSavedSettlementJson(saveJson)
 			}
 		}
+
+		this.SetListener("battleLog", this.onBattleLog, EventBus.game)
+	}
+
+	onBattleLog(e) {
+		this.battleLog.push(e.log)
+		EventBus.ui.dispatch("battleLogUpdate")
 	}
 
 	getMonsterHitPoints() {

@@ -86,6 +86,7 @@ class ResolveMonsterWoundModalView extends ModalView {
     }
 
     onBtnWound() {
+        GameplayState.battleLog("Resolve HL: " + this.cardModels[0].name + " Success")
         var cardModel = this.cardModels[0]
 
         if (!cardModel.isImpervious) {
@@ -95,6 +96,7 @@ class ResolveMonsterWoundModalView extends ModalView {
             //check if monster is dead
             if (!woundApplied) {
                 //todo: monster died! game over!
+                GameplayState.battleLog("Monster Defeated!")
                 EventBus.game.dispatch("monsterDefeated")
                 this.topState.onResolveMonsterWoundsComplete()
                 return
@@ -111,6 +113,7 @@ class ResolveMonsterWoundModalView extends ModalView {
     }
 
     onBtnCrit() {
+        GameplayState.battleLog("Resolve HL: " + this.cardModels[0].name + " Crit")
         var cardModel = this.cardModels[0]
         if(!cardModel.hasCrit) {
             this.onBtnWound()
@@ -125,12 +128,14 @@ class ResolveMonsterWoundModalView extends ModalView {
             //check if monster is dead
             if (!woundApplied) {
                 //todo: monster died! game over!
+                GameplayState.battleLog("Monster Defeated!")
                 EventBus.game.dispatch("monsterDefeated")
                 this.topState.onResolveMonsterWoundsComplete()
                 return
             }
 
             if (cardModel.hasInjury) {
+                GameplayState.battleLog("TODO: apply permanent injury status")
                 //TODO: apply permanent injury status
                 console.log("todo: apply permanent Injury status to monster")
             }
@@ -140,6 +145,7 @@ class ResolveMonsterWoundModalView extends ModalView {
     }
 
     onBtnFail() {
+        GameplayState.battleLog("Resolve HL: " + this.cardModels[0].name + " FAILED")
         var cardModel = this.cardModels[0]
         if (cardModel.hasReflex) {
             this.showInstruction("perform Reflex reaction")
@@ -151,6 +157,7 @@ class ResolveMonsterWoundModalView extends ModalView {
     }
 
     showInstruction(msg) {
+        GameplayState.battleLog(msg)
         console.log("show instruction: " + msg)
         var cardView = this.currentCardView
         cardView.removeFromParent(false)
@@ -185,6 +192,8 @@ class ResolveMonsterWoundModalView extends ModalView {
         this.cardAnchor.addChild(cardView)
         cardView.snapToBottomOfParent()
         this.currentCardView = cardView
+
+        GameplayState.battleLog("Resolve HL: " + this.cardModels[0].name)
 
         if (this.cardModels.length > 1) {
             var nextCard1 = new CardView(this.cardModels[1], this.backImgPath)
@@ -262,6 +271,8 @@ class ResolveMonsterTrapModalView extends PerformReactionModalView {
         this.SetListener("btnReactionDone", this.onBtnReactionDone)
 
         //todo: show monster stats?
+
+        GameplayState.battleLog("TRAP: " + trapCardModel.name)
     }
 
     onBtnReactionDone(e) {
@@ -286,6 +297,8 @@ class ResolveMonsterAIModalView extends PerformReactionModalView {
         this.SetListener("btnReactionDone", this.onBtnReactionDone)
 
         //todo: show monster stats?
+
+        GameplayState.battleLog("Monster AI: " + cardModel.name)
     }
 
     onBtnReactionDone(e) {

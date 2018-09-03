@@ -9,13 +9,12 @@ class ModalView extends NodeView {
         this.setRect(screenSize.x, screenSize.y, "rgba(0,0,0,0.45)")
 
         if (dontDismissWhenClickingOutside) {
-            //make sure there is _some_ way to dismiss the view
+            //note: make sure there is _some_ way to dismiss the view
             this.eatClicks()
         } else {
             this.setClick(()=>{ self.onBtnClose() }, true, true)
         }
         
-
         this.contentView = new NodeView()
         this.contentView.setRect(w, h, fillStyle)
         var self = this
