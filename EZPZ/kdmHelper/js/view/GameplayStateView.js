@@ -204,11 +204,13 @@ class GameplayStateView extends BaseStateView {
 		this._addButton("btnMainMenu", "M", (screenSize.x/2 - 50), (screenSize.y/2 - 50), "gfx/ui/btn_white_sm.sprite" )
 
 		this._addButton("btnFullScreen", "FS", (screenSize.x/2 - 50), (-screenSize.y/2 + 50), "gfx/ui/btn_white_sm.sprite" )
+		this._addButton("btnBattleLog", "L", (screenSize.x/2 - 50), (-screenSize.y/2 + 100), "gfx/ui/btn_white_sm.sprite" )
 
 		this.SetListener("btnInnovationTree", this.onBtnInnovationTree)
 		this.SetListener("btnSettlementInfo", this.onBtnSettlementInfo)
 		this.SetListener("btnMainMenu", this.onBtnMainMenu)
 		this.SetListener("btnFullScreen", this.onBtnFullScreen)
+		this.SetListener("btnBattleLog", this.onBtnBattleLog)
 		this.SetListener("closeModalView", this.onBtnCloseModal)
 		this.SetListener("showChar", this.onBtnShowChar)
 
@@ -247,6 +249,24 @@ class GameplayStateView extends BaseStateView {
 			g.exitFullScreen()
 		} else {
 			g.launchFullScreen()
+		}
+	}
+
+	onBtnBattleLog(e) {
+		if (this.battleLog) {
+			this.battleLog.removeFromParent(true)
+			this.battleLog = null
+		} else {
+			this.battleLog = new TableView(600, 600)
+			this.rootView.addChild(this.battleLog)
+
+			var battleLogs = this.pModel.battleLog
+			for (var i=battleLogs.length-1; i >= 0; i--) {
+				var cell = new NodeView()
+				cell.setLabel(battleLogs[i], "10px Arial", "#FFFFFF")
+				this.battleLog.addCell( cell )
+			}
+			
 		}
 	}
 
